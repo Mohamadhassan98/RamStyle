@@ -28,7 +28,6 @@ export default function HomePage(props) {
             <Footer/>
         </React.Fragment>
     );
-
 }
 
 HomePage.propTypes = {

@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -53,7 +53,6 @@ export default function LogIn() {
 
     return (
         <div className={classes.root}>
-
             <Grid item xs container direction="column" spacing={2}>
                 <Grid item>
                     <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
@@ -116,7 +115,6 @@ export default function LogIn() {
                     </Button>
                 </Grid>
             </Grid>
-
         </div>
     );
 }

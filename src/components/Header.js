@@ -16,6 +16,13 @@ import PropTypes from 'prop-types';
 import FlexBoxContainer from "../tools/FlexBoxContainer";
 import FlexBoxItem from "../tools/FlexBoxItem";
 import {strings} from "../values/strings";
+import Button from "@material-ui/core/Button";
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
+import Paper from "@material-ui/core/Paper";
+import Popper from "@material-ui/core/Popper";
+import Grow from "@material-ui/core/Grow";
+import {urls} from "../values/urls";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -81,10 +88,29 @@ const useStyles = makeStyles(theme => ({
     offset: theme.mixins.toolbar,
     icons: {
         color: theme.palette.text.secondary
+    },
+    logo: {
+        color: theme.palette.text.secondary
     }
 }));
 
-export default function UpperHeader(props) {
+export default function Header(props) {
+
+    const [open, setOpen] = React.useState(false);
+    const anchorRef = React.useRef(null);
+    const [hoverOnMenu, setHoverOnMenu] = React.useState(false);
+    const [hoverOnButton, setHoverOnButton] = React.useState(false);
+
+    const onLoginPressed = () => {
+        if (props.history.location.pathname !== urls.auth)
+            props.history.push(urls.auth);
+    };
+
+    const onLogoPressed = () => {
+        if (props.history.location.pathname !== urls.home) {
+            props.history.push(urls.home);
+        }
+    };
 
     const trigger = useScrollTrigger({
         disableHysteresis: false,
@@ -95,6 +121,13 @@ export default function UpperHeader(props) {
 
     const classes = useStyles();
 
+    function handleListKeyDown(event) {
+        if (event.key === 'Tab') {
+            event.preventDefault();
+            setOpen(false);
+        }
+    }
+
     return (
         <React.Fragment>
             <ElevationScroll>
@@ -104,6 +137,52 @@ export default function UpperHeader(props) {
                         <AppBar>
                             <Toolbar/>
                             <Toolbar>
+                                <FlexBoxContainer alignItems='center' justifyItems='flex-start'>
+                                    <FlexBoxItem>
+                                        <Button variant='text' aria-haspopup
+                                                onMouseEnter={() => setHoverOnButton(true)}
+                                                onMouseLeave={() => setHoverOnButton(false)}
+                                                style={{color: 'white'}}>
+                                            {strings.productCategories}
+                                        </Button>
+                                        <Popper
+                                            open={hoverOnButton || hoverOnMenu}
+                                            anchorEl={anchorRef.current}
+                                            role={undefined}
+                                            placement='top-start'
+                                            style={{
+                                                position: 'absolute',
+                                                top: 'auto',
+                                                left: 'auto',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyItems: 'flex-start',
+                                                marginTop: 40
+                                            }}
+                                            transition
+                                            disablePortal>
+                                            {({TransitionProps}) => (
+                                                <Grow
+                                                    {...TransitionProps}
+                                                    style={{transformOrigin: 'center top'}}
+                                                >
+                                                    <Paper
+                                                        onMouseLeave={() => setHoverOnMenu(false)}
+                                                        onMouseEnter={() => setHoverOnMenu(true)}
+                                                    >
+                                                        <MenuList autoFocusItem={open} id="menu-list-grow"
+                                                                  disableListWrap
+                                                                  onKeyDown={handleListKeyDown}>
+                                                            <MenuItem>محصولات لبنی</MenuItem>
+                                                            <MenuItem>کودک و نوجوان</MenuItem>
+                                                            <MenuItem>آشپزخانه</MenuItem>
+                                                        </MenuList>
+                                                    </Paper>
+                                                </Grow>
+                                            )}
+                                        </Popper>
+                                    </FlexBoxItem>
+                                </FlexBoxContainer>
                             </Toolbar>
                         </AppBar>
                     </Slide>
@@ -131,7 +210,9 @@ export default function UpperHeader(props) {
                                     </FlexBoxItem>
                                     <FlexBoxItem justifySelf='center'>
                                         <Typography variant='h6' align='center'>
-                                            {strings.appName}
+                                            <Button variant='text' onClick={onLogoPressed} className={classes.logo}>
+                                                {strings.appName}
+                                            </Button>
                                         </Typography>
                                     </FlexBoxItem>
                                     <FlexBoxItem justifySelf='flex-end'>
@@ -140,14 +221,14 @@ export default function UpperHeader(props) {
                                             <FlexBoxItem flexBasis={null}>
                                                 {showButtons &&
                                                 <IconButton>
-                                                    <ShoppingCart style={{color: "white"}}/>
+                                                    <ShoppingCart className={classes.icons}/>
                                                 </IconButton>
                                                 }
                                             </FlexBoxItem>
                                             <FlexBoxItem flexBasis={null}>
                                                 {showButtons &&
                                                 <IconButton>
-                                                    <AccountCircle style={{color: "white"}}/>
+                                                    <AccountCircle onClick={onLoginPressed} style={{color: "white"}}/>
                                                 </IconButton>
                                                 }
                                             </FlexBoxItem>
@@ -166,10 +247,10 @@ export default function UpperHeader(props) {
     );
 }
 
-UpperHeader.propTypes = {
+Header.propTypes = {
     showButtons: PropTypes.bool
 };
 
-UpperHeader.defaultProps = {
+Header.defaultProps = {
     showButtons: true
 };

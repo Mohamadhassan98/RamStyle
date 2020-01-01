@@ -54,7 +54,8 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function FullWidthTabs() {
+export default function FullWidthTabs(props) {
+    props.setShowHeaderButtons(false);
     const classes = useStyles();
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
@@ -107,3 +108,7 @@ export default function FullWidthTabs() {
         </Grid>
     );
 }
+
+FullWidthTabs.propTypes = {
+    setShowHeaderButtons: PropTypes.func.isRequired
+};
