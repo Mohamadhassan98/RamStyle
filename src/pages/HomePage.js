@@ -1,23 +1,23 @@
 import React from "react";
 import AutoRotatingCarousel from "../components/CarouselAutoRotate";
-import item1 from "../assets/carousel-item-1.jpg";
 import Brands from "../components/Brands";
 import PropTypes from 'prop-types';
 import WeAreGood from "../components/WeAreGood";
 import OurApplication from "../components/OurApplication";
-import Footer from "../components/Footer";
+import {assets} from "../values/assets";
 
 export default function HomePage(props) {
 
     props.setShowHeaderButtons(true);
+    props.setShowFooter(true);
     return (
         <React.Fragment>
             <AutoRotatingCarousel open hideArrows={false}>
-                <img src={item1} style={{
+                <img src={assets.carouselItem1} style={{
                     width: '100%',
                     maxHeight: '100%'
                 }}/>
-                <img src={item1} style={{
+                <img src={assets.carouselItem1} style={{
                     width: '100%',
                     maxHeight: '100%'
                 }}/>
@@ -25,11 +25,11 @@ export default function HomePage(props) {
             <Brands/>
             <WeAreGood/>
             <OurApplication/>
-            <Footer/>
         </React.Fragment>
     );
 }
 
 HomePage.propTypes = {
-    setShowHeaderButtons: PropTypes.func.isRequired
+    setShowHeaderButtons: PropTypes.func.isRequired,
+    setShowFooter: PropTypes.func.isRequired
 };

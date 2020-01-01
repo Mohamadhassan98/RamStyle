@@ -25,6 +25,13 @@ function Index() {
                 primary: "#000000",
                 secondary: "#FFFFFF"
             }
+        },
+        overrides: {
+            MuiInputLabel: {
+                root: {
+                    color: '#000000'
+                }
+            }
         }
     });
 

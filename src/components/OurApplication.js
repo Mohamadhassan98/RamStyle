@@ -1,21 +1,17 @@
 import React from 'react';
 import '../App.css';
-import mobile from '../assets/mobile.png';
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
-import myket from '../assets/myket.png';
-import googlePlay from '../assets/play.png';
-import bazaar from '../assets/cafe-bazaar.png';
 import Button from "@material-ui/core/Button";
 import {flexbox} from "@material-ui/system";
 import FlexBoxContainer from "../tools/FlexBoxContainer";
 import FlexBoxItem from "../tools/FlexBoxItem";
 import {makeStyles} from "@material-ui/core";
-import background from '../assets/background.jpeg';
+import {assets} from "../values/assets";
 
 const useStyle = makeStyles(theme => ({
     container: {
-        backgroundImage: `url(${background})`,
+        backgroundImage: `url(${assets.ourAppBackground})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover'
     },
@@ -54,17 +50,17 @@ export default function OurApplication() {
                             <FlexBoxContainer justifyContent='space-around'>
                                 <FlexBoxItem>
                                     <Button>
-                                        <img src={googlePlay} className={classes.img}/>
+                                        <img src={assets.googlePlay} className={classes.img}/>
                                     </Button>
                                 </FlexBoxItem>
                                 <FlexBoxItem>
                                     <Button>
-                                        <img src={myket} className={classes.img}/>
+                                        <img src={assets.myket} className={classes.img}/>
                                     </Button>
                                 </FlexBoxItem>
                                 <FlexBoxItem>
                                     <Button>
-                                        <img src={bazaar} className={classes.img}/>
+                                        <img src={assets.bazaar} className={classes.img}/>
                                     </Button>
                                 </FlexBoxItem>
                             </FlexBoxContainer>
@@ -74,7 +70,7 @@ export default function OurApplication() {
                 <FlexBoxItem>
                     <FlexBoxContainer flexDirection='column'>
                         <FlexBoxItem>
-                            <img src={mobile} className='img'/>
+                            <img src={assets.ourApp} className='img'/>
                         </FlexBoxItem>
                     </FlexBoxContainer>
                 </FlexBoxItem>

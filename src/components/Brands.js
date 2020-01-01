@@ -1,7 +1,6 @@
 import React from 'react';
 import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
-import '../App.css';
 import ItemsCarousel from 'react-items-carousel';
 import {Container, makeStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -10,8 +9,8 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Samsung from '../assets/samsung-logo.svg';
 import {strings} from "../values/strings";
+import {assets} from "../values/assets";
 
 // noinspection JSCheckFunctionSignatures
 const useStyles = makeStyles(theme => ({
@@ -29,9 +28,13 @@ const useStyles = makeStyles(theme => ({
 //fixme RightToLeft Chelides
 //fixme disable elevation
 export default function Brands() {
+
     const classes = useStyles();
+
     const [activeItemIndex, setActiveItemIndex] = React.useState(0);
+
     const chevronWidth = 40;
+
     return (
         <div className={classes.container}>
             <Container>
@@ -63,7 +66,7 @@ export default function Brands() {
                                 <CardActionArea>
                                     <CardMedia
                                         component="img"
-                                        image={Samsung}
+                                        image={assets.brandItem1}
                                         title="Contemplative Reptile"
                                     />
                                     <CardContent>
@@ -77,7 +80,7 @@ export default function Brands() {
                                 <CardActionArea>
                                     <CardMedia
                                         component="img"
-                                        image={Samsung}
+                                        image={assets.brandItem1}
                                         title="Contemplative Reptile"
                                     />
                                     <CardContent>
@@ -91,7 +94,7 @@ export default function Brands() {
                                 <CardActionArea>
                                     <CardMedia
                                         component="img"
-                                        image={Samsung}
+                                        image={assets.brandItem1}
                                         title="Contemplative Reptile"
                                     />
                                     <CardContent>
@@ -105,7 +108,7 @@ export default function Brands() {
                                 <CardActionArea>
                                     <CardMedia
                                         component="img"
-                                        image={Samsung}
+                                        image={assets.brandItem1}
                                         title="Contemplative Reptile"
                                     />
                                     <CardContent>
@@ -119,7 +122,7 @@ export default function Brands() {
                                 <CardActionArea>
                                     <CardMedia
                                         component="img"
-                                        image={Samsung}
+                                        image={assets.brandItem1}
                                         title="Contemplative Reptile"
                                     />
                                     <CardContent>
@@ -133,7 +136,7 @@ export default function Brands() {
                                 <CardActionArea>
                                     <CardMedia
                                         component="img"
-                                        image={Samsung}
+                                        image={assets.brandItem1}
                                         title="Contemplative Reptile"
                                     />
                                     <CardContent>

@@ -55,7 +55,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function FullWidthTabs(props) {
+
     props.setShowHeaderButtons(false);
+    props.setShowFooter(false);
+
     const classes = useStyles();
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
@@ -110,5 +113,6 @@ export default function FullWidthTabs(props) {
 }
 
 FullWidthTabs.propTypes = {
-    setShowHeaderButtons: PropTypes.func.isRequired
+    setShowHeaderButtons: PropTypes.func.isRequired,
+    setShowFooter: PropTypes.func.isRequired
 };
