@@ -18,6 +18,12 @@ const useStyles = makeStyles(theme => ({
     paper: {
         marginTop: theme.spacing(3),
         marginBottom: theme.spacing(3)
+    },
+    typography: {
+        cursor: 'pointer'
+    },
+    flexItem: {
+        marginLeft: 5
     }
 }));
 
@@ -61,9 +67,7 @@ export default function ProfilePage(props) {
                     <FlexBoxItem>
                         <FlexBoxContainer alignItems='center'>
                             <FlexBoxItem flexBasis={null} className={classes.root}>
-                                <Typography style={{
-                                    cursor: 'pointer'
-                                }}>
+                                <Typography className={classes.typography}>
                                     <Link onClick={() => onItemClicked(0)}>
                                         {currentItems()[0]}
                                     </Link>
@@ -73,9 +77,7 @@ export default function ProfilePage(props) {
                                 <Typography>|</Typography>
                             </FlexBoxItem>
                             <FlexBoxItem flexBasis={null} className={classes.root}>
-                                <Typography style={{
-                                    cursor: 'pointer'
-                                }}>
+                                <Typography className={classes.typography}>
                                     <Link onClick={() => onItemClicked(1)}>
                                         {currentItems()[1]}
                                     </Link>
@@ -83,12 +85,8 @@ export default function ProfilePage(props) {
                             </FlexBoxItem>
                         </FlexBoxContainer>
                     </FlexBoxItem>
-                    <FlexBoxItem flexBasis={null} justifySelf='flex-end' style={{
-                        marginLeft: 5
-                    }}>
-                        <Typography style={{
-                            cursor: 'pointer'
-                        }}>
+                    <FlexBoxItem flexBasis={null} justifySelf='flex-end' className={classes.flexItem}>
+                        <Typography className={classes.typography}>
                             {strings.logout}
                         </Typography>
                     </FlexBoxItem>

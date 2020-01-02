@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SwipableViews from 'react-swipeable-views';
+import SwipeableViews from 'react-swipeable-views';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -10,7 +10,7 @@ import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Signup from "../components/Signup";
-import LogIn from "../components/Login";
+import Login from "../components/Login";
 
 
 export function TabPanel(props) {
@@ -54,6 +54,9 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+//fixme extract strings
+//fixme better name for function, huh?
+//fixme scrollbar under page (empty Grid item?)
 export default function FullWidthTabs(props) {
 
     props.setShowHeaderButtons(false);
@@ -91,18 +94,18 @@ export default function FullWidthTabs(props) {
                                 <Tab label="ثبت نام" {...a11yProps(1)} />
                             </Tabs>
                         </AppBar>
-                        <SwipableViews
+                        <SwipeableViews
                             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                             index={value}
                             onChangeIndex={handleChangeIndex}
                         >
                             <TabPanel value={value} index={0} dir={theme.direction}>
-                                <LogIn/>
+                                <Login/>
                             </TabPanel>
                             <TabPanel value={value} index={1} dir={theme.direction}>
                                 <Signup/>
                             </TabPanel>
-                        </SwipableViews>
+                        </SwipeableViews>
                     </div>
                 </Paper>
             </Grid>

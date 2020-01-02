@@ -30,7 +30,9 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function LogIn() {
+//fixme all states together
+//fixme extract string and persianize them
+export default function Login() {
     const classes = useStyles();
     const [values, setValues] = React.useState({
         username: '',
@@ -40,11 +42,11 @@ export default function LogIn() {
     });
 
     const handleChange = prop => event => {
-        setValues({ ...values, [prop]: event.target.value });
+        setValues({...values, [prop]: event.target.value});
     };
 
     const handleClickShowPassword = () => {
-        setValues({ ...values, showPassword: !values.showPassword });
+        setValues({...values, showPassword: !values.showPassword});
     };
 
     const handleMouseDownPassword = event => {
@@ -87,7 +89,7 @@ export default function LogIn() {
                                         onMouseDown={handleMouseDownPassword}
                                         edge="end"
                                     >
-                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                        {values.showPassword ? <Visibility/> : <VisibilityOff/>}
                                     </IconButton>
                                 </InputAdornment>
                             }

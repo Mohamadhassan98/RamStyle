@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -28,6 +28,8 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+//fixme all states together
+//fixme extract strings
 export default function Signup() {
     const classes = useStyles();
     const [values, setValues] = React.useState({
@@ -37,11 +39,11 @@ export default function Signup() {
     });
 
     const handleChange = prop => event => {
-        setValues({ ...values, [prop]: event.target.value });
+        setValues({...values, [prop]: event.target.value});
     };
 
     const handleClickShowPassword = () => {
-        setValues({ ...values, showPassword: !values.showPassword });
+        setValues({...values, showPassword: !values.showPassword});
     };
 
     const handleMouseDownPassword = event => {
@@ -50,7 +52,6 @@ export default function Signup() {
 
     return (
         <div className={classes.root}>
-
             <Grid item xs container direction="column" spacing={2}>
                 <Grid item>
                     <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
@@ -85,7 +86,7 @@ export default function Signup() {
                                         onMouseDown={handleMouseDownPassword}
                                         edge="end"
                                     >
-                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                        {values.showPassword ? <Visibility/> : <VisibilityOff/>}
                                     </IconButton>
                                 </InputAdornment>
                             }
@@ -113,7 +114,7 @@ export default function Signup() {
                                         onMouseDown={handleMouseDownPassword}
                                         edge="end"
                                     >
-                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                        {values.showPassword ? <Visibility/> : <VisibilityOff/>}
                                     </IconButton>
                                 </InputAdornment>
                             }
@@ -128,7 +129,6 @@ export default function Signup() {
                     </Button>
                 </Grid>
             </Grid>
-
         </div>
     );
 }

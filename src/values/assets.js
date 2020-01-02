@@ -12,6 +12,9 @@ import Twitter from '../assets/twitter-logo.png';
 import Instagram from '../assets/instagram-logo.png';
 import Aparat from '../assets/aparat.svg';
 import LinkedIn from '../assets/linkedin-icon.png';
+import eTrust from '../assets/logo.png';
+import DefaultPic from '../assets/default.png';
+
 
 export const assets = {
     carouselItem1: item1,
@@ -27,5 +30,7 @@ export const assets = {
     twitter: Twitter,
     instagram: Instagram,
     aparat: Aparat,
-    linkedin: LinkedIn
+    linkedin: LinkedIn,
+    eTrust: eTrust,
+    defaultProfile: DefaultPic
 };

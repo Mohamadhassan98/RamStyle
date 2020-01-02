@@ -7,7 +7,6 @@ import IconButton from "@material-ui/core/IconButton";
 import {AccountCircle, ShoppingCart} from "@material-ui/icons";
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
 import ScrollTop from "../pages/ScrollTop";
 import ElevationScroll from "../tools/ElevateOnScroll";
 import Container from "@material-ui/core/Container";
@@ -23,6 +22,8 @@ import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import Grow from "@material-ui/core/Grow";
 import {urls} from "../values/urls";
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import InputBase from "@material-ui/core/InputBase";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -91,12 +92,17 @@ const useStyles = makeStyles(theme => ({
     },
     logo: {
         color: theme.palette.text.secondary
-    }
+    },
+    button: {
+        color: theme.palette.text.secondary
+    },
 }));
 
 export default function Header(props) {
 
-    const [open, setOpen] = React.useState(false);
+    const [productCategoryOpen, setProductCategoryOpen] = React.useState(false);
+    const [searchOptions, setSearchOptions] = React.useState(['یخچال', 'سماور']);
+    const [searchOptionsOpen, setSearchOptionsOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
     const [hoverOnMenu, setHoverOnMenu] = React.useState(false);
     const [hoverOnButton, setHoverOnButton] = React.useState(false);
@@ -124,7 +130,7 @@ export default function Header(props) {
     function handleListKeyDown(event) {
         if (event.key === 'Tab') {
             event.preventDefault();
-            setOpen(false);
+            setProductCategoryOpen(false);
         }
     }
 
@@ -142,7 +148,7 @@ export default function Header(props) {
                                         <Button variant='text' aria-haspopup
                                                 onMouseEnter={() => setHoverOnButton(true)}
                                                 onMouseLeave={() => setHoverOnButton(false)}
-                                                style={{color: 'white'}}>
+                                                className={classes.button}>
                                             {strings.productCategories}
                                         </Button>
                                         <Popper
@@ -151,6 +157,7 @@ export default function Header(props) {
                                             role={undefined}
                                             placement='top-start'
                                             style={{
+                                                /*ignore classes this time*/
                                                 position: 'absolute',
                                                 top: 'auto',
                                                 left: 'auto',
@@ -170,7 +177,8 @@ export default function Header(props) {
                                                         onMouseLeave={() => setHoverOnMenu(false)}
                                                         onMouseEnter={() => setHoverOnMenu(true)}
                                                     >
-                                                        <MenuList autoFocusItem={open} id="menu-list-grow"
+                                                        <MenuList autoFocusItem={productCategoryOpen}
+                                                                  id="menu-list-grow"
                                                                   disableListWrap
                                                                   onKeyDown={handleListKeyDown}>
                                                             <MenuItem>محصولات لبنی</MenuItem>
@@ -197,13 +205,31 @@ export default function Header(props) {
                                             <div className={classes.searchIcon}>
                                                 <SearchIcon/>
                                             </div>
-                                            <InputBase
-                                                placeholder={strings.toolbarSearchLabel}
-                                                classes={{
-                                                    root: classes.inputRoot,
-                                                    input: classes.inputInput
-                                                }}
-                                                inputProps={{'aria-label': 'search'}}
+                                            <Autocomplete
+                                                freeSolo
+                                                options={searchOptions}
+                                                // open={searchOptionsOpen}
+                                                renderInput={(params) =>
+                                                    (<InputBase
+                                                        {...params}
+                                                        placeholder={strings.toolbarSearchLabel}
+                                                        classes={{
+                                                            root: classes.inputRoot,
+                                                            input: classes.inputInput
+                                                        }}
+                                                        // inputProps={{'aria-label': 'search'}}
+                                                        // onChange={() => setSearchOptionsOpen(true)}
+                                                    />)
+                                                    // <TextField
+                                                    // placeholder={strings.toolbarSearchLabel}
+                                                    // variant="outlined"
+                                                    // fullWidth
+                                                    // classes={{
+                                                    //     root: classes.inputRoot,
+                                                    //     input: classes.inputInput
+                                                    // }}
+                                                    // />
+                                                }
                                             />
                                         </div>
                                         }
@@ -228,7 +254,7 @@ export default function Header(props) {
                                             <FlexBoxItem flexBasis={null}>
                                                 {showButtons &&
                                                 <IconButton>
-                                                    <AccountCircle onClick={onLoginPressed} style={{color: "white"}}/>
+                                                    <AccountCircle onClick={onLoginPressed} className={classes.icons}/>
                                                 </IconButton>
                                                 }
                                             </FlexBoxItem>

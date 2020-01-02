@@ -43,6 +43,7 @@ const useStyles = makeStyles({
     },
 });
 
+//extract strings
 export default function MySales() {
     const classes = useStyles();
 

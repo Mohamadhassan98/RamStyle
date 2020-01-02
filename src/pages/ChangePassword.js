@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import {Visibility, VisibilityOff} from "@material-ui/icons";
+import {strings} from "../values/strings";
 
 const useStyle = makeStyles(theme => ({
     textField: {
@@ -32,7 +33,7 @@ export default function ChangePassword(props) {
                         id='oldPassword'
                         autoFocus
                         name='oldPassword'
-                        label='رمز عبور فعلی'
+                        label={strings.oldPassword}
                         value={oldPassword}
                         onChange={event => setOldPassword(event.target.value)}
                         variant='outlined'
@@ -57,7 +58,7 @@ export default function ChangePassword(props) {
                         id='newPassword'
                         className={classes.textField}
                         name='newPassword'
-                        label='رمز عبور جدید'
+                        label={strings.newPassword}
                         value={newPassword}
                         variant='outlined'
                         onChange={event => setNewPassword(event.target.value)}
@@ -82,7 +83,7 @@ export default function ChangePassword(props) {
                         className={classes.textField}
                         id='confirmPassword'
                         name='confirmPassword'
-                        label='تکرار رمز عبور'
+                        label={strings.confirmPassword}
                         value={confirmPassword}
                         variant='outlined'
                         onChange={event => setConfirmPassword(event.target.value)}
@@ -104,7 +105,7 @@ export default function ChangePassword(props) {
                 </FlexBoxItem>
                 <FlexBoxItem display='flex' justifyContent='center'>
                     <Button variant='contained' color='primary'>
-                        ثبت تغییرات
+                        {strings.saveChanges}
                     </Button>
                 </FlexBoxItem>
             </Container>

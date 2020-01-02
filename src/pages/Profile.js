@@ -1,10 +1,11 @@
 import React from "react";
 import {Container, makeStyles, TextField} from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
-import DefaultPic from '../assets/default.png';
 import FlexBoxItem from "../tools/FlexBoxItem";
 import Button from "@material-ui/core/Button";
 import PropTypes from 'prop-types';
+import {assets} from "../values/assets";
+import {strings} from "../values/strings";
 
 const useStyle = makeStyles(theme => ({
     avatar: {
@@ -30,7 +31,7 @@ export default function Profile(props) {
         <React.Fragment>
             <Container maxWidth='xs'>
                 <FlexBoxItem display='flex' justifyContent='center'>
-                    <Avatar src={DefaultPic} className={classes.avatar}/>
+                    <Avatar src={assets.defaultProfile} className={classes.avatar}/>
                 </FlexBoxItem>
                 <FlexBoxItem display='flex'>
                     <TextField
@@ -38,7 +39,7 @@ export default function Profile(props) {
                         id='name'
                         autoFocus
                         name='name'
-                        label='نام'
+                        label={strings.name}
                         value={name}
                         onChange={event => setName(event.target.value)}
                         variant='filled'
@@ -50,7 +51,7 @@ export default function Profile(props) {
                         id='lastName'
                         className={classes.textField}
                         name='lastName'
-                        label='نام خانوادگی'
+                        label={strings.lastName}
                         value={lastName}
                         variant='filled'
                         onChange={event => setLastName(event.target.value)}
@@ -62,7 +63,7 @@ export default function Profile(props) {
                         className={classes.textField}
                         id='username'
                         name='username'
-                        label='نام کاربری'
+                        label={strings.username}
                         value={username}
                         variant='filled'
                         onChange={event => setUsername(event.target.value)}
@@ -74,7 +75,7 @@ export default function Profile(props) {
                         id='email'
                         className={classes.textField}
                         name='email'
-                        label='ایمیل'
+                        label={strings.email}
                         value={email}
                         variant='filled'
                         onChange={event => setEmail(event.target.value)}
@@ -83,7 +84,7 @@ export default function Profile(props) {
                 </FlexBoxItem>
                 <FlexBoxItem display='flex' justifyContent='center'>
                     <Button variant='contained' color='primary'>
-                        ثبت تغییرات
+                        {strings.saveChanges}
                     </Button>
                 </FlexBoxItem>
             </Container>

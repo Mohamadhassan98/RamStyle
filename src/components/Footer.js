@@ -1,32 +1,38 @@
 import React from "react";
-import {Container, Typography} from "@material-ui/core";
-import eTrust from '../assets/logo.png';
+import {Container, makeStyles, Typography} from "@material-ui/core";
 import FlexBoxContainer from "../tools/FlexBoxContainer";
 import FlexBoxItem from "../tools/FlexBoxItem";
 import Link from "@material-ui/core/Link";
 import {assets} from "../values/assets";
 import PropTypes from 'prop-types';
 
-const classes = {
-    maxWidth: '25px'
-};
+const useStyle = makeStyles(theme => ({
+    root: {
+        minHeight: '100vh'
+    },
+    container: {
+        backgroundColor: theme.palette.secondary.main
+    },
+    logo: {
+        maxWidth: '25px'
+    }
+}));
 
 export default function Footer(props) {
 
+    const classes = useStyle();
     const {show, children} = props;
 
     return (
         <div>
             {show ?
-                <FlexBoxContainer flexDirection='column' style={{
-                    minHeight: '100vh'
-                }} justifyContent='space-between'>
+                <FlexBoxContainer flexDirection='column' className={classes.root} justifyContent='space-between'>
                     <FlexBoxItem flexBasis={null}>
                         {children}
                     </FlexBoxItem>
                     <FlexBoxItem flexBasis={null}>
                         <Container maxWidth='xl'>
-                            <FlexBoxContainer justifyContent='space-between'>
+                            <FlexBoxContainer justifyContent='space-between' className={classes.container}>
                                 <FlexBoxItem justifySelf='center'>
                                     <FlexBoxContainer flexDirection='column' justifyContent='center'>
                                         <FlexBoxItem>
@@ -148,7 +154,7 @@ export default function Footer(props) {
                                 <FlexBoxItem flexBasis='150%'>
                                     <FlexBoxContainer flexDirection='column' alignItems='center'>
                                         <FlexBoxItem>
-                                            <img src={eTrust} alt='E-trust logo'/>
+                                            <img src={assets.eTrust} alt='E-trust logo'/>
                                         </FlexBoxItem>
                                         <FlexBoxItem>
                                             <FlexBoxContainer flexDirection='column'>
@@ -161,18 +167,19 @@ export default function Footer(props) {
                                                     <FlexBoxContainer>
                                                         <FlexBoxItem flexBasis={null}>
                                                             <img src={assets.instagram} alt='instagram logo'
-                                                                 style={classes}/>
+                                                                 className={classes.logo}/>
                                                         </FlexBoxItem>
                                                         <FlexBoxItem flexBasis={null}>
                                                             <img src={assets.twitter} alt='twitter logo'
-                                                                 style={classes}/>
+                                                                 className={classes.logo}/>
                                                         </FlexBoxItem>
                                                         <FlexBoxItem flexBasis={null}>
-                                                            <img src={assets.aparat} alt='aparat logo' style={classes}/>
+                                                            <img src={assets.aparat} alt='aparat logo'
+                                                                 className={classes.logo}/>
                                                         </FlexBoxItem>
                                                         <FlexBoxItem flexBasis={null}>
                                                             <img src={assets.linkedin} alt='LinkedIn logo'
-                                                                 style={classes}/>
+                                                                 className={classes.logo}/>
                                                         </FlexBoxItem>
                                                     </FlexBoxContainer>
                                                 </FlexBoxItem>

@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 //fixme disable elevation
+//fixme extract strings
 export default function WeAreGood() {
 
     const classes = useStyles();
