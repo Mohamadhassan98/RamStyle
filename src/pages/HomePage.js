@@ -10,7 +10,8 @@ import {makeStyles} from "@material-ui/core";
 const useStyle = makeStyles(theme => ({
     img: {
         width: '100%',
-        maxHeight: '100%'
+        height: 500
+        // maxHeight: '100%'
     }
 }));
 
@@ -22,10 +23,16 @@ export default function HomePage(props) {
     props.setShowFooter(true);
     return (
         <React.Fragment>
-            <AutoRotatingCarousel open hideArrows={false}>
-                <img src={assets.carouselItem1} className={classes.img}/>
-                <img src={assets.carouselItem1} className={classes.img}/>
-            </AutoRotatingCarousel>
+            <div style={{
+                marginTop: 10
+            }}>
+                <AutoRotatingCarousel open hideArrows={false}>
+                    {/*<img src={assets.carouselItem1} className={classes.img}/>*/}
+                    <img src={assets.carouselItem2} className={classes.img}/>
+                    {/*<img src={assets.carouselItem3} className={classes.img}/>*/}
+                    <img src={assets.carouselItem4} className={classes.img}/>
+                </AutoRotatingCarousel>
+            </div>
             <Brands/>
             <WeAreGood/>
             <OurApplication/>

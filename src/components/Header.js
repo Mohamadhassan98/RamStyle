@@ -116,7 +116,7 @@ export default function Header(props) {
 
     const onLogoPressed = () => {
         if (props.history.location.pathname !== urls.home) {
-            props.history.push(urls.home);
+            props.history.push({pathname: urls.home});
         }
     };
 

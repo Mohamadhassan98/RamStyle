@@ -32,7 +32,6 @@ const useStyles = makeStyles(theme => ({
         flexWrap: "wrap",
     },
     gridList: {
-        // width: 500,
         height: 'auto',
         marginTop: 100,
         flexBasis: '100%',
