@@ -32,5 +32,5 @@ export const assets = {
     aparat: Aparat,
     linkedin: LinkedIn,
     eTrust: eTrust,
-    defaultProfile: DefaultPic
+    defaultProfile: DefaultPic,
 };

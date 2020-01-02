@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import {urls} from "./values/urls";
 import ProfilePage from "./pages/ProfilePage";
 import Footer from "./components/Footer";
+import Products from "./pages/Products";
 
 
 export default function App(props) {
@@ -25,6 +26,7 @@ export default function App(props) {
                 <Route path={urls.profile}
                        render={() => <ProfilePage {...props} setShowHeaderButtons={setHeaderButtonShow}
                                                   setShowFooter={setShowFooter}/>}/>
+                <Route path='/category/1' render={() => <Products/>}/>
             </Footer>
         </div>
     );

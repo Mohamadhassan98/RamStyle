@@ -10,15 +10,16 @@ import {strings} from "../values/strings";
 
 const useStyle = makeStyles(theme => ({
     container: {
-        backgroundImage: `url(${assets.ourAppBackground})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover'
+        background: theme.palette.secondary.light
     },
     img: {
         height: '50px'
     },
     flexContainer: {
         minHeight: '100%'
+    },
+    mobile: {
+        height: 500
     }
 }));
 
@@ -66,7 +67,7 @@ export default function OurApplication() {
                 <FlexBoxItem>
                     <FlexBoxContainer flexDirection='column'>
                         <FlexBoxItem>
-                            <img src={assets.ourApp}/>
+                            <img src={assets.ourApp} className={classes.mobile}/>
                         </FlexBoxItem>
                     </FlexBoxContainer>
                 </FlexBoxItem>

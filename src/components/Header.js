@@ -102,10 +102,12 @@ export default function Header(props) {
 
     const [productCategoryOpen, setProductCategoryOpen] = React.useState(false);
     const [searchOptions, setSearchOptions] = React.useState(['یخچال', 'سماور']);
-    const [searchOptionsOpen, setSearchOptionsOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
     const [hoverOnMenu, setHoverOnMenu] = React.useState(false);
     const [hoverOnButton, setHoverOnButton] = React.useState(false);
+    const onItemClicked = () => {
+        props.history.push('/category/1');
+    };
 
     const onLoginPressed = () => {
         if (props.history.location.pathname !== urls.auth)
@@ -181,7 +183,7 @@ export default function Header(props) {
                                                                   id="menu-list-grow"
                                                                   disableListWrap
                                                                   onKeyDown={handleListKeyDown}>
-                                                            <MenuItem>محصولات لبنی</MenuItem>
+                                                            <MenuItem onClick={onItemClicked}>محصولات لبنی</MenuItem>
                                                             <MenuItem>کودک و نوجوان</MenuItem>
                                                             <MenuItem>آشپزخانه</MenuItem>
                                                         </MenuList>
