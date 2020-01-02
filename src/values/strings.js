@@ -20,5 +20,8 @@ export const strings = {
     email: 'ایمیل',
     username: 'نام کاربری',
     applicationsTitle: `${appName} همیشه همراه شما`,
-    applicationsBody: `با نصب اپلیکیشن ${appName} بر روی گوشی همراه خود، جدیدترین اخبار را دریافت کنید و از هیچ تخفیفی بی اطلاع نمانید.`
+    applicationsBody: `با نصب اپلیکیشن ${appName} بر روی گوشی همراه خود، جدیدترین اخبار را دریافت کنید و از هیچ تخفیفی بی اطلاع نمانید.`,
+    show: 'نمایش',
+    product: 'محصول',
+    from: 'از',
 };

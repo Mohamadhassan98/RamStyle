@@ -26,7 +26,8 @@ export default function App(props) {
                 <Route path={urls.profile}
                        render={() => <ProfilePage {...props} setShowHeaderButtons={setHeaderButtonShow}
                                                   setShowFooter={setShowFooter}/>}/>
-                <Route path='/category/1' render={() => <Products/>}/>
+                <Route path='/category/1' render={() => <Products {...props} setShowHeaderButtons={setHeaderButtonShow}
+                                                                  setShowFooter={setShowFooter}/>}/>
             </Footer>
         </div>
     );
