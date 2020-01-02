@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
         wrap: 'nowrap',
         overflow: 'hidden',
         textAlign: 'center',
+        boxShadow:"none",
     },
 }));
 
