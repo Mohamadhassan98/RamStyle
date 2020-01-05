@@ -26,6 +26,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import axios from 'axios';
+import {serverUrls} from "../values/serverurls";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -120,14 +122,15 @@ export default function Header(props) {
 
     const [productCategoryOpen, setProductCategoryOpen] = React.useState(false);
     const [searchOptionsOpen, setSearchOptionsOpen] = React.useState(false);
-    const [searchOptions, setSearchOptions] = React.useState([
-        {
-            title: 'سماور'
-        },
-        {
-            title: 'یخچال'
-        }
-    ]);
+    const [searchOptions, setSearchOptions] = React.useState([]);
+
+    React.useEffect(() => {
+        axios.get(serverUrls.allCategories).then(response => {
+
+        }).catch(error => {
+
+        });
+    }, []);
 
 
     const [searchLoading, setSearchLoading] = React.useState(false);
