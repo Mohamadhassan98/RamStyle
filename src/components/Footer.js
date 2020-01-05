@@ -8,10 +8,10 @@ import PropTypes from 'prop-types';
 
 const useStyle = makeStyles(theme => ({
     root: {
-        minHeight: '100vh'
+        minHeight: '100vh',
     },
     container: {
-        backgroundColor: theme.palette.secondary.main
+        backgroundColor: theme.palette.secondary.main,
     },
     logo: {
         maxWidth: '25px'
@@ -31,7 +31,7 @@ export default function Footer(props) {
                         {children}
                     </FlexBoxItem>
                     <FlexBoxItem flexBasis={null}>
-                        <Container maxWidth='xl'>
+                        <Container maxWidth='lg'>
                             <FlexBoxContainer justifyContent='space-between' className={classes.container}>
                                 <FlexBoxItem justifySelf='center'>
                                     <FlexBoxContainer flexDirection='column' justifyContent='center'>

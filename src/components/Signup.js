@@ -11,11 +11,12 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
+import {strings} from "../values/strings";
 
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
-        flexWrap: 'wrap',
+        flexWrap: 'nowrap',
     },
     margin: {
         margin: theme.spacing(1),
@@ -28,22 +29,22 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-//fixme all states together
-//fixme extract strings
 export default function Signup() {
     const classes = useStyles();
     const [values, setValues] = React.useState({
         username: '',
         password: '',
+        confirmPassword: '',
         showPassword: false,
+        showConfirmPassword: false,
     });
 
     const handleChange = prop => event => {
         setValues({...values, [prop]: event.target.value});
     };
 
-    const handleClickShowPassword = () => {
-        setValues({...values, showPassword: !values.showPassword});
+    const handleClickShowPassword = prop => event => {
+        setValues({...values, ['show' + prop]: !(values['show' + prop])});
     };
 
     const handleMouseDownPassword = event => {
@@ -52,17 +53,17 @@ export default function Signup() {
 
     return (
         <div className={classes.root}>
-            <Grid item xs container direction="column" spacing={2}>
+            <Grid container direction="column" spacing={2}>
                 <Grid item>
                     <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-username">
-                            Username
+                            {strings.username}
                         </InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-username"
                             value={values.username}
                             onChange={handleChange('username')}
-                            placeholder={'Username'}
+                            placeholder={strings.username}
                             labelWidth={70}
                         />
                     </FormControl>
@@ -70,19 +71,19 @@ export default function Signup() {
                 <Grid item>
                     <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">
-                            Password
+                            {strings.password}
                         </InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-password"
                             type={values.showPassword ? 'text' : 'password'}
                             value={values.password}
                             onChange={handleChange('password')}
-                            placeholder={'Password'}
+                            placeholder={strings.password}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
                                         aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
+                                        onClick={handleClickShowPassword('Password')}
                                         onMouseDown={handleMouseDownPassword}
                                         edge="end"
                                     >
@@ -90,42 +91,46 @@ export default function Signup() {
                                     </IconButton>
                                 </InputAdornment>
                             }
-                            labelWidth={70}
+                            labelWidth={65}
                         />
-                        <FormHelperText id="standard-password-helper-text">password condition</FormHelperText>
+                        <FormHelperText id="standard-password-helper-text">
+                            {strings.passwordHelper}
+                        </FormHelperText>
                     </FormControl>
                 </Grid>
                 <Grid item>
                     <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-password">
-                            Password
+                        <InputLabel htmlFor="outlined-adornment-confirmPassword">
+                            {strings.confirmPassword}
                         </InputLabel>
                         <OutlinedInput
-                            id="outlined-adornment-password"
-                            type={values.showPassword ? 'text' : 'password'}
-                            value={values.password}
-                            onChange={handleChange('password')}
-                            placeholder={'Password'}
+                            id="outlined-adornment-confirmPassword"
+                            type={values.showConfirmPassword ? 'text' : 'password'}
+                            value={values.confirmPassword}
+                            onChange={handleChange('ConfirmPassword')}
+                            placeholder={strings.confirmPassword}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
                                         aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
+                                        onClick={handleClickShowPassword('ConfirmPassword')}
                                         onMouseDown={handleMouseDownPassword}
                                         edge="end"
                                     >
-                                        {values.showPassword ? <Visibility/> : <VisibilityOff/>}
+                                        {values.showConfirmPassword ? <Visibility/> : <VisibilityOff/>}
                                     </IconButton>
                                 </InputAdornment>
                             }
-                            labelWidth={70}
+                            labelWidth={90}
                         />
-                        <FormHelperText id="standard-password-helper-text">password condition</FormHelperText>
+                        <FormHelperText id="standard-confirm-password-helper-text">
+                            {strings.passwordHelper}
+                        </FormHelperText>
                     </FormControl>
                 </Grid>
                 <Grid item>
                     <Button variant="contained" color="primary">
-                        ثبت نام
+                        {strings.signUp}
                     </Button>
                 </Grid>
             </Grid>

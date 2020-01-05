@@ -7,7 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import {AccountCircle, ShoppingCart} from "@material-ui/icons";
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from "@material-ui/core/Typography";
-import ScrollTop from "../pages/ScrollTop";
+import ScrollTop from "../tools/ScrollTop";
 import ElevationScroll from "../tools/ElevateOnScroll";
 import Container from "@material-ui/core/Container";
 import Slide from "@material-ui/core/Slide";
@@ -21,7 +21,7 @@ import MenuList from "@material-ui/core/MenuList";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import Grow from "@material-ui/core/Grow";
-import {urls} from "../values/urls";
+import {baseUrls} from "../values/urls";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -121,35 +121,36 @@ const useStyles = makeStyles(theme => ({
 export default function Header(props) {
 
     const [productCategoryOpen, setProductCategoryOpen] = React.useState(false);
+    const [productCategories, setProductCategories] = React.useState([]);
     const [searchOptionsOpen, setSearchOptionsOpen] = React.useState(false);
     const [searchOptions, setSearchOptions] = React.useState([]);
+    const [searchQuery, setSearchQuery] = React.useState('');
 
     React.useEffect(() => {
         axios.get(serverUrls.allCategories).then(response => {
-
+            setProductCategories(response.data);
         }).catch(error => {
-
+            //TODO show appropriate error page
         });
     }, []);
-
 
     const [searchLoading, setSearchLoading] = React.useState(false);
 
     const anchorRef = React.useRef(null);
     const [hoverOnMenu, setHoverOnMenu] = React.useState(false);
     const [hoverOnButton, setHoverOnButton] = React.useState(false);
-    const onItemClicked = () => {
-        props.history.push('/category/1');
+    const onItemClicked = (item) => {
+        props.history.push(`${baseUrls.categories}/${item.id}`);
     };
 
     const onLoginPressed = () => {
-        if (props.history.location.pathname !== urls.auth)
-            props.history.push(urls.auth);
+        if (props.history.location.pathname !== baseUrls.auth)
+            props.history.push(baseUrls.auth);
     };
 
     const onLogoPressed = () => {
-        if (props.history.location.pathname !== urls.home) {
-            props.history.push({pathname: urls.home});
+        if (props.history.location.pathname !== baseUrls.home) {
+            props.history.push({pathname: baseUrls.home});
         }
     };
 
@@ -216,9 +217,13 @@ export default function Header(props) {
                                                                   id="menu-list-grow"
                                                                   disableListWrap
                                                                   onKeyDown={handleListKeyDown}>
-                                                            <MenuItem onClick={onItemClicked}>محصولات لبنی</MenuItem>
-                                                            <MenuItem>کودک و نوجوان</MenuItem>
-                                                            <MenuItem>آشپزخانه</MenuItem>
+                                                            {productCategories.map(category => (
+                                                                <MenuItem
+                                                                    onClick={() => onItemClicked(category)}>{category.name}</MenuItem>
+                                                            ))}
+                                                            {/*<MenuItem onClick={onItemClicked}>محصولات لبنی</MenuItem>*/}
+                                                            {/*<MenuItem>کودک و نوجوان</MenuItem>*/}
+                                                            {/*<MenuItem>آشپزخانه</MenuItem>*/}
                                                         </MenuList>
                                                     </Paper>
                                                 </Grow>
@@ -243,6 +248,8 @@ export default function Header(props) {
                                                 onClose={() => setSearchOptionsOpen(false)}
                                                 freeSolo
                                                 id="free-solo-2-demo"
+                                                inputValue={searchQuery}
+                                                onInputChange={(event, value) => setSearchQuery(value)}
                                                 options={searchOptions.map(option => option.title)}
                                                 renderInput={params => (
                                                     <TextField

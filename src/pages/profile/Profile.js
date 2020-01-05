@@ -1,11 +1,10 @@
 import React from "react";
 import {Container, makeStyles, TextField} from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
-import FlexBoxItem from "../tools/FlexBoxItem";
+import FlexBoxItem from "../../tools/FlexBoxItem";
 import Button from "@material-ui/core/Button";
-import PropTypes from 'prop-types';
-import {assets} from "../values/assets";
-import {strings} from "../values/strings";
+import {assets} from "../../values/assets";
+import {strings} from "../../values/strings";
 
 const useStyle = makeStyles(theme => ({
     avatar: {
@@ -19,7 +18,6 @@ const useStyle = makeStyles(theme => ({
 
 export default function Profile(props) {
 
-    props.setShowHeaderButtons(true);
     const [name, setName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
     const [username, setUsername] = React.useState('');
@@ -91,7 +89,3 @@ export default function Profile(props) {
         </React.Fragment>
     );
 }
-
-Profile.propTypes = {
-    setShowHeaderButtons: PropTypes.func.isRequired
-};

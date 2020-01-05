@@ -13,6 +13,9 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
+import {strings} from "../values/strings";
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -28,11 +31,12 @@ const useStyles = makeStyles(theme => ({
     textField: {
         width: 300,
     },
+    checkboxIcon: {
+        color: theme.palette.secondary.dark
+    }
 }));
 
-//fixme all states together
-//fixme extract string and persianize them
-export default function Login() {
+export default function Signin() {
     const classes = useStyles();
     const [values, setValues] = React.useState({
         username: '',
@@ -42,7 +46,11 @@ export default function Login() {
     });
 
     const handleChange = prop => event => {
-        setValues({...values, [prop]: event.target.value});
+        if (prop === "checkedLogin") {
+            setValues({...values, [prop]: event.target.checked});
+        } else {
+            setValues({...values, [prop]: event.target.value});
+        }
     };
 
     const handleClickShowPassword = () => {
@@ -59,13 +67,13 @@ export default function Login() {
                 <Grid item>
                     <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-username">
-                            Username
+                            {strings.username}
                         </InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-username"
                             value={values.username}
                             onChange={handleChange('username')}
-                            placeholder={'Username'}
+                            placeholder={strings.username}
                             labelWidth={70}
                         />
                     </FormControl>
@@ -73,14 +81,14 @@ export default function Login() {
                 <Grid item>
                     <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">
-                            Password
+                            {strings.password}
                         </InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-password"
                             type={values.showPassword ? 'text' : 'password'}
                             value={values.password}
                             onChange={handleChange('password')}
-                            placeholder={'Password'}
+                            placeholder={strings.password}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
@@ -93,9 +101,11 @@ export default function Login() {
                                     </IconButton>
                                 </InputAdornment>
                             }
-                            labelWidth={70}
+                            labelWidth={65}
                         />
-                        <FormHelperText id="standard-password-helper-text">password condition</FormHelperText>
+                        <FormHelperText id="standard-password-helper-text">
+                            {strings.passwordHelper}
+                        </FormHelperText>
                     </FormControl>
                 </Grid>
                 <Grid item>
@@ -105,18 +115,20 @@ export default function Login() {
                                 checked={values.checkedLogin}
                                 onChange={handleChange('checkedLogin')}
                                 value="checkedLogin"
-                                color="primary"
+                                checkedIcon={<CheckBoxOutlineBlankIcon className={classes.checkboxIcon}/>}
+                                icon={<CheckBoxIcon className={classes.checkboxIcon}/>}
                             />
                         }
-                        label="مرا به خاطرت نگه دار"
+                        label={strings.remember}
                     />
                 </Grid>
                 <Grid item>
                     <Button variant="contained" color="primary">
-                        ورود
+                        {strings.signIn}
                     </Button>
                 </Grid>
             </Grid>
+
         </div>
     );
 }

@@ -1,7 +1,16 @@
-export const urls = {
+export const baseUrls = {
     home: '/',
-    auth: '/auth/',
+    auth: '/auth',
     profile: '/profile',
-    mySales: '/profile/my-sales',
-    changePassword: '/profile/change-password'
+    categories: (id) => `/categories/${id}`,
+};
+
+export const profileUrls = {
+    profile: '/',
+    mySales: '/my-sales',
+    changePassword: '/change-password'
+};
+
+export const routeUrls = {
+    categoryRoute: `${baseUrls.categories}/:id`
 };
