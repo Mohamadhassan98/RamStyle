@@ -23,7 +23,9 @@ import Popper from "@material-ui/core/Popper";
 import Grow from "@material-ui/core/Grow";
 import {urls} from "../values/urls";
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import InputBase from "@material-ui/core/InputBase";
+import TextField from "@material-ui/core/TextField";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -64,7 +66,21 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center'
     },
     inputRoot: {
-        color: 'inherit'
+        color: 'inherit',
+        marginRight: 30,
+        marginTop: -10,
+        marginBottom: -10,
+        '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+                borderColor: 'transparent',
+            },
+            '&:hover fieldset': {
+                borderColor: 'transparent',
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: 'transparent',
+            },
+        },
     },
     inputInput: {
         padding: theme.spacing(1, 1, 1, 7),
@@ -72,7 +88,9 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         [theme.breakpoints.up('xs')]: {
             width: 200
-        }
+        },
+        borderRadius: 5,
+        borderColor: 'transparent'
     },
     sectionDesktop: {
         display: 'none',
@@ -101,7 +119,19 @@ const useStyles = makeStyles(theme => ({
 export default function Header(props) {
 
     const [productCategoryOpen, setProductCategoryOpen] = React.useState(false);
-    const [searchOptions, setSearchOptions] = React.useState(['یخچال', 'سماور']);
+    const [searchOptionsOpen, setSearchOptionsOpen] = React.useState(false);
+    const [searchOptions, setSearchOptions] = React.useState([
+        {
+            title: 'سماور'
+        },
+        {
+            title: 'یخچال'
+        }
+    ]);
+
+
+    const [searchLoading, setSearchLoading] = React.useState(false);
+
     const anchorRef = React.useRef(null);
     const [hoverOnMenu, setHoverOnMenu] = React.useState(false);
     const [hoverOnButton, setHoverOnButton] = React.useState(false);
@@ -204,34 +234,38 @@ export default function Header(props) {
                                     <FlexBoxItem>
                                         {showButtons &&
                                         <div className={classes.search}>
-                                            <div className={classes.searchIcon}>
-                                                <SearchIcon/>
-                                            </div>
                                             <Autocomplete
+                                                open={searchOptionsOpen}
+                                                onOpen={() => setSearchOptionsOpen(true)}
+                                                onClose={() => setSearchOptionsOpen(false)}
                                                 freeSolo
-                                                options={searchOptions}
-                                                // open={searchOptionsOpen}
-                                                renderInput={(params) =>
-                                                    (<InputBase
+                                                id="free-solo-2-demo"
+                                                options={searchOptions.map(option => option.title)}
+                                                renderInput={params => (
+                                                    <TextField
                                                         {...params}
                                                         placeholder={strings.toolbarSearchLabel}
+                                                        margin="none"
+                                                        variant="outlined"
                                                         classes={{
                                                             root: classes.inputRoot,
                                                             input: classes.inputInput
                                                         }}
-                                                        // inputProps={{'aria-label': 'search'}}
-                                                        // onChange={() => setSearchOptionsOpen(true)}
-                                                    />)
-                                                    // <TextField
-                                                    // placeholder={strings.toolbarSearchLabel}
-                                                    // variant="outlined"
-                                                    // fullWidth
-                                                    // classes={{
-                                                    //     root: classes.inputRoot,
-                                                    //     input: classes.inputInput
-                                                    // }}
-                                                    // />
-                                                }
+                                                        InputProps={{
+                                                            ...params.InputProps,
+                                                            startAdornment: <InputAdornment position='start'>
+                                                                <SearchIcon className={classes.icons}/>
+                                                            </InputAdornment>,
+                                                            endAdornment:
+                                                                <React.Fragment>
+                                                                    {searchLoading ? <CircularProgress color="inherit"
+                                                                                                       size={20}/> : null}
+                                                                    {params.InputProps.endAdornment}
+                                                                </React.Fragment>
+                                                        }}
+                                                        fullWidth
+                                                    />
+                                                )}
                                             />
                                         </div>
                                         }

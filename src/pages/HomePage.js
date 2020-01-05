@@ -6,12 +6,15 @@ import WeAreGood from "../components/WeAreGood";
 import OurApplication from "../components/OurApplication";
 import {assets} from "../values/assets";
 import {makeStyles} from "@material-ui/core";
+import {strings} from "../values/strings";
 
 const useStyle = makeStyles(theme => ({
     img: {
         width: '100%',
         height: 500
-        // maxHeight: '100%'
+    },
+    container: {
+        marginTop: 10
     }
 }));
 
@@ -19,13 +22,15 @@ export default function HomePage(props) {
 
     const classes = useStyle();
 
+    React.useEffect(() => {
+        document.title = strings.appName;
+    }, []);
+
     props.setShowHeaderButtons(true);
     props.setShowFooter(true);
     return (
         <React.Fragment>
-            <div style={{
-                marginTop: 10
-            }}>
+            <div className={classes.container}>
                 <AutoRotatingCarousel open hideArrows={false}>
                     {/*<img src={assets.carouselItem1} className={classes.img}/>*/}
                     <img src={assets.carouselItem2} className={classes.img}/>
