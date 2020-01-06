@@ -1,7 +1,6 @@
 import React from 'react';
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import FlexBoxContainer from "../tools/FlexBoxContainer";
 import FlexBoxItem from "../tools/FlexBoxItem";
 import {makeStyles} from "@material-ui/core";
@@ -13,14 +12,15 @@ const useStyle = makeStyles(theme => ({
         background: theme.palette.secondary.light
     },
     img: {
-        height: '50px'
+        height: '50px',
+        cursor: 'pointer'
     },
     flexContainer: {
         minHeight: '100%'
     },
     mobile: {
         height: 500
-    }
+    },
 }));
 
 
@@ -46,19 +46,19 @@ export default function OurApplication() {
                         <FlexBoxItem>
                             <FlexBoxContainer justifyContent='space-around'>
                                 <FlexBoxItem>
-                                    <Button>
+                                    <Typography>
                                         <img src={assets.googlePlay} className={classes.img}/>
-                                    </Button>
+                                    </Typography>
                                 </FlexBoxItem>
                                 <FlexBoxItem>
-                                    <Button>
+                                    <Typography>
                                         <img src={assets.myket} className={classes.img}/>
-                                    </Button>
+                                    </Typography>
                                 </FlexBoxItem>
                                 <FlexBoxItem>
-                                    <Button>
+                                    <Typography>
                                         <img src={assets.bazaar} className={classes.img}/>
-                                    </Button>
+                                    </Typography>
                                 </FlexBoxItem>
                             </FlexBoxContainer>
                         </FlexBoxItem>

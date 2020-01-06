@@ -2,9 +2,9 @@ import React from "react";
 import {Container, makeStyles, Typography} from "@material-ui/core";
 import FlexBoxContainer from "../tools/FlexBoxContainer";
 import FlexBoxItem from "../tools/FlexBoxItem";
-import Link from "@material-ui/core/Link";
 import {assets} from "../values/assets";
 import PropTypes from 'prop-types';
+import {strings} from "../values/strings";
 
 const useStyle = makeStyles(theme => ({
     root: {
@@ -15,6 +15,9 @@ const useStyle = makeStyles(theme => ({
     },
     logo: {
         maxWidth: '25px'
+    },
+    typography: {
+        cursor: 'pointer'
     }
 }));
 
@@ -34,119 +37,107 @@ export default function Footer(props) {
                         <Container maxWidth='lg'>
                             <FlexBoxContainer justifyContent='space-between' className={classes.container}>
                                 <FlexBoxItem justifySelf='center'>
-                                    <FlexBoxContainer flexDirection='column' justifyContent='center'>
+                                    <FlexBoxContainer flexDirection='column' justifyContent='center'
+                                                      alignItems='center'>
                                         <FlexBoxItem>
                                             <Typography variant='h6' align='center'>
-                                                راهنمای خرید از رم استایل
+                                                {strings.saleHelp}
                                             </Typography>
                                         </FlexBoxItem>
                                         <FlexBoxItem>
-                                            <Typography variant='subtitle1' align='center'>
-                                                <Link>
-                                                    نحوه ثبت سفارش
-                                                </Link>
+                                            <Typography variant='subtitle1' component='span' align='center'
+                                                        className={classes.typography}>
+                                                {strings.orderRegisterHelp}
                                             </Typography>
                                         </FlexBoxItem>
                                         <FlexBoxItem>
-                                            <Typography variant='subtitle1' align='center'>
-                                                <Link>
-                                                    رویه ارسال سفارش
-                                                </Link>
+                                            <Typography variant='subtitle1' component='span' align='center'
+                                                        className={classes.typography}>
+                                                {strings.sendOrderProcedure}
                                             </Typography>
                                         </FlexBoxItem>
                                         <FlexBoxItem>
-                                            <Typography variant='subtitle1' align='center'>
-                                                <Link>
-                                                    شیوه های پرداخت
-                                                </Link>
+                                            <Typography variant='subtitle1' component='span' align='center'
+                                                        className={classes.typography}>
+                                                {strings.paymentMethods}
                                             </Typography>
                                         </FlexBoxItem>
                                     </FlexBoxContainer>
                                 </FlexBoxItem>
                                 <FlexBoxItem>
-                                    <FlexBoxContainer flexDirection='column'>
+                                    <FlexBoxContainer flexDirection='column' alignItems='center'>
                                         <FlexBoxItem>
                                             <Typography variant='h6' align='center'>
-                                                خدمات مشتریان
+                                                {strings.customerServices}
                                             </Typography>
                                         </FlexBoxItem>
                                         <FlexBoxItem>
-                                            <Typography variant='subtitle1' align='center'>
-                                                <Link>
-                                                    پاسخ به پرسش های متداول
-                                                </Link>
+                                            <Typography variant='subtitle1' component='span' align='center'
+                                                        className={classes.typography}>
+                                                {strings.faq}
                                             </Typography>
                                         </FlexBoxItem>
                                         <FlexBoxItem>
-                                            <Typography variant='subtitle1' align='center'>
-                                                <Link>
-                                                    رویه بازگرداندن کالا
-                                                </Link>
+                                            <Typography variant='subtitle1' component='span' align='center'
+                                                        className={classes.typography}>
+                                                {strings.productReturnProcedure}
                                             </Typography>
                                         </FlexBoxItem>
                                         <FlexBoxItem>
-                                            <Typography variant='subtitle1' align='center'>
-                                                <Link>
-                                                    شرایط استفاده
-                                                </Link>
+                                            <Typography variant='subtitle1' component='span' align='center'
+                                                        className={classes.typography}>
+                                                {strings.termsOfUse}
                                             </Typography>
                                         </FlexBoxItem>
                                         <FlexBoxItem>
-                                            <Typography variant='subtitle1' align='center'>
-                                                <Link>
-                                                    حریم خصوصی
-                                                </Link>
+                                            <Typography variant='subtitle1' component='span' align='center'
+                                                        className={classes.typography}>
+                                                {strings.privacy}
                                             </Typography>
                                         </FlexBoxItem>
                                         <FlexBoxItem>
-                                            <Typography variant='subtitle1' align='center'>
-                                                <Link>
-                                                    گزارش اشکال
-                                                </Link>
+                                            <Typography variant='subtitle1' component='span' align='center'
+                                                        className={classes.typography}>
+                                                {strings.reportBug}
                                             </Typography>
                                         </FlexBoxItem>
                                     </FlexBoxContainer>
                                 </FlexBoxItem>
                                 <FlexBoxItem>
-                                    <FlexBoxContainer flexDirection='column'>
+                                    <FlexBoxContainer flexDirection='column' alignItems='center'>
                                         <FlexBoxItem>
                                             <Typography variant='h6' align='center'>
-                                                با رم استایل
+                                                {strings.withUs}
                                             </Typography>
                                         </FlexBoxItem>
                                         <FlexBoxItem>
-                                            <Typography variant='subtitle1' align='center'>
-                                                <Link>
-                                                    اتاق خبر رم استایل
-                                                </Link>
+                                            <Typography variant='subtitle1' component='span' align='center'
+                                                        className={classes.typography}>
+                                                {strings.appForum}
                                             </Typography>
                                         </FlexBoxItem>
                                         <FlexBoxItem>
-                                            <Typography variant='subtitle1' align='center'>
-                                                <Link>
-                                                    فروش در رم استایل
-                                                </Link>
+                                            <Typography variant='subtitle1' component='span' align='center'
+                                                        className={classes.typography}>
+                                                {strings.saleWithUs}
                                             </Typography>
                                         </FlexBoxItem>
                                         <FlexBoxItem>
-                                            <Typography variant='subtitle1' align='center'>
-                                                <Link>
-                                                    فرصت های شغلی
-                                                </Link>
+                                            <Typography variant='subtitle1' component='span' align='center'
+                                                        className={classes.typography}>
+                                                {strings.jobOpportunities}
                                             </Typography>
                                         </FlexBoxItem>
                                         <FlexBoxItem>
-                                            <Typography variant='subtitle1' align='center'>
-                                                <Link>
-                                                    تماس با رم استایل
-                                                </Link>
+                                            <Typography variant='subtitle1' component='span' align='center'
+                                                        className={classes.typography}>
+                                                {strings.contactUs}
                                             </Typography>
                                         </FlexBoxItem>
                                         <FlexBoxItem>
-                                            <Typography variant='subtitle1' align='center'>
-                                                <Link>
-                                                    درباره ما
-                                                </Link>
+                                            <Typography variant='subtitle1' component='span' align='center'
+                                                        className={classes.typography}>
+                                                {strings.aboutUs}
                                             </Typography>
                                         </FlexBoxItem>
                                     </FlexBoxContainer>
@@ -160,7 +151,7 @@ export default function Footer(props) {
                                             <FlexBoxContainer flexDirection='column'>
                                                 <FlexBoxItem>
                                                     <Typography align='center'>
-                                                        رم استایل را در شبکه های اجتماعی دنبال کنید
+                                                        {strings.followUs}
                                                     </Typography>
                                                 </FlexBoxItem>
                                                 <FlexBoxItem>

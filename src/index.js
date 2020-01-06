@@ -41,6 +41,11 @@ function Index() {
                 indicator: {
                     background: "#34a8a2"
                 }
+            },
+            MuiLink: {
+                underlineNone: {
+                    cursor: "pointer"
+                }
             }
         }
     });

@@ -137,7 +137,7 @@ export default function Signin() {
                                 icon={<CheckBoxIcon className={classes.checkboxIcon}/>}
                             />
                         }
-                        label={strings.remember}
+                        label={strings.rememberMe}
                     />
                 </Grid>
                 <Grid item>

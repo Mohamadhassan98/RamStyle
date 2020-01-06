@@ -15,7 +15,6 @@ import PropTypes from 'prop-types';
 import FlexBoxContainer from "../tools/FlexBoxContainer";
 import FlexBoxItem from "../tools/FlexBoxItem";
 import {strings} from "../values/strings";
-import Button from "@material-ui/core/Button";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import Paper from "@material-ui/core/Paper";
@@ -111,10 +110,12 @@ const useStyles = makeStyles(theme => ({
         color: theme.palette.text.secondary
     },
     logo: {
-        color: theme.palette.text.secondary
+        color: theme.palette.text.secondary,
+        cursor: 'pointer'
     },
     button: {
-        color: theme.palette.text.secondary
+        color: theme.palette.text.secondary,
+        cursor: 'pointer'
     },
 }));
 
@@ -140,7 +141,7 @@ export default function Header(props) {
     const [hoverOnMenu, setHoverOnMenu] = React.useState(false);
     const [hoverOnButton, setHoverOnButton] = React.useState(false);
     const onItemClicked = (item) => {
-        props.history.push(`${baseUrls.categories}/${item.id}`);
+        props.history.push(`${baseUrls.categories(item.id)}`);
     };
 
     const onLoginPressed = () => {
@@ -181,12 +182,12 @@ export default function Header(props) {
                             <Toolbar>
                                 <FlexBoxContainer alignItems='center' justifyItems='flex-start'>
                                     <FlexBoxItem>
-                                        <Button variant='text' aria-haspopup
-                                                onMouseEnter={() => setHoverOnButton(true)}
-                                                onMouseLeave={() => setHoverOnButton(false)}
-                                                className={classes.button}>
+                                        <Typography variant='subtitle2' aria-haspopup
+                                                    onMouseEnter={() => setHoverOnButton(true)}
+                                                    onMouseLeave={() => setHoverOnButton(false)}
+                                                    className={classes.button}>
                                             {strings.productCategories}
-                                        </Button>
+                                        </Typography>
                                         <Popper
                                             open={hoverOnButton || hoverOnMenu}
                                             anchorEl={anchorRef.current}
@@ -280,12 +281,16 @@ export default function Header(props) {
                                         </div>
                                         }
                                     </FlexBoxItem>
-                                    <FlexBoxItem justifySelf='center'>
-                                        <Typography variant='h6' align='center'>
-                                            <Button variant='text' onClick={onLogoPressed} className={classes.logo}>
-                                                {strings.appName}
-                                            </Button>
-                                        </Typography>
+                                    <FlexBoxItem justifyContent='center'>
+                                        <FlexBoxContainer flexDirection='column' alignItems='center'>
+                                            <FlexBoxItem>
+                                                <Typography variant='h6' align='center' onClick={onLogoPressed}
+                                                            component='span'
+                                                            className={classes.logo}>
+                                                    {strings.appName}
+                                                </Typography>
+                                            </FlexBoxItem>
+                                        </FlexBoxContainer>
                                     </FlexBoxItem>
                                     <FlexBoxItem justifySelf='flex-end'>
                                         <FlexBoxContainer justifyContent='flex-end' alignItems='center'
