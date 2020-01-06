@@ -38,23 +38,27 @@ const useStyles = makeStyles(theme => ({
 
 export default function Signin() {
     const classes = useStyles();
-    const [values, setValues] = React.useState({
-        username: '',
-        password: '',
-        showPassword: false,
-        checkedLogin: true,
-    });
+    const [username, setUsername] = React.useState("");
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [showPassword, setShowPassword] = React.useState(false);
+    const [checkedLogin, setCheckedLogin] = React.useState(true);
+
 
     const handleChange = prop => event => {
         if (prop === "checkedLogin") {
-            setValues({...values, [prop]: event.target.checked});
-        } else {
-            setValues({...values, [prop]: event.target.value});
+            setCheckedLogin(event.target.checked);
+        } else if (prop === "username") {
+            setUsername(event.target.value);
+        } else if (prop === "email") {
+            setEmail(event.target.value);
+        } else if (prop === "password") {
+            setPassword(event.target.value);
         }
     };
 
     const handleClickShowPassword = () => {
-        setValues({...values, showPassword: !values.showPassword});
+        setShowPassword(!showPassword);
     };
 
     const handleMouseDownPassword = event => {
@@ -71,10 +75,24 @@ export default function Signin() {
                         </InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-username"
-                            value={values.username}
+                            value={username}
                             onChange={handleChange('username')}
                             placeholder={strings.username}
                             labelWidth={70}
+                        />
+                    </FormControl>
+                </Grid>
+                <Grid item>
+                    <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
+                        <InputLabel htmlFor="outlined-adornment-username">
+                            {strings.email}
+                        </InputLabel>
+                        <OutlinedInput
+                            id="outlined-adornment-username"
+                            value={email}
+                            onChange={handleChange('email')}
+                            placeholder={strings.email}
+                            labelWidth={40}
                         />
                     </FormControl>
                 </Grid>
@@ -85,8 +103,8 @@ export default function Signin() {
                         </InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-password"
-                            type={values.showPassword ? 'text' : 'password'}
-                            value={values.password}
+                            type={showPassword ? 'text' : 'password'}
+                            value={password}
                             onChange={handleChange('password')}
                             placeholder={strings.password}
                             endAdornment={
@@ -97,7 +115,7 @@ export default function Signin() {
                                         onMouseDown={handleMouseDownPassword}
                                         edge="end"
                                     >
-                                        {values.showPassword ? <Visibility/> : <VisibilityOff/>}
+                                        {showPassword ? <Visibility/> : <VisibilityOff/>}
                                     </IconButton>
                                 </InputAdornment>
                             }
@@ -112,7 +130,7 @@ export default function Signin() {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                checked={values.checkedLogin}
+                                checked={checkedLogin}
                                 onChange={handleChange('checkedLogin')}
                                 value="checkedLogin"
                                 checkedIcon={<CheckBoxOutlineBlankIcon className={classes.checkboxIcon}/>}
