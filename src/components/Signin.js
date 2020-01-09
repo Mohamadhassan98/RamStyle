@@ -16,6 +16,10 @@ import Button from '@material-ui/core/Button';
 import {strings} from "../values/strings";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import axios from 'axios';
+import {serverUrls} from "../values/serverurls";
+import PropTypes from 'prop-types';
+import {baseUrls} from "../values/urls";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -36,14 +40,15 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function Signin() {
+//fixme remove placeholders
+export default function Signin(props) {
+
     const classes = useStyles();
     const [username, setUsername] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [showPassword, setShowPassword] = React.useState(false);
     const [checkedLogin, setCheckedLogin] = React.useState(true);
-
 
     const handleChange = prop => event => {
         if (prop === "checkedLogin") {
@@ -63,6 +68,23 @@ export default function Signin() {
 
     const handleMouseDownPassword = event => {
         event.preventDefault();
+    };
+
+    const onSignInButtonClicked = () => {
+        axios.post(serverUrls.signIn, {
+            username: username,
+            password: password,
+            email: email,
+            keep: checkedLogin
+        }).then(response => {
+            // response is 201!
+            props.setLoggedIn(true);
+            props.history.push(baseUrls.home);
+        }).catch(error => {
+            // TODO Show appropriate Error
+            window.alert('TODO: Show appropriate Error');
+            console.log(error);
+        });
     };
 
     return (
@@ -141,12 +163,15 @@ export default function Signin() {
                     />
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" onClick={onSignInButtonClicked}>
                         {strings.signIn}
                     </Button>
                 </Grid>
             </Grid>
-
         </div>
     );
 }
+
+Signin.propTypes = {
+    setLoggedIn: PropTypes.func.isRequired
+};

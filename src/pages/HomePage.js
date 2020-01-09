@@ -28,13 +28,12 @@ export default function HomePage(props) {
 
     props.setShowHeaderButtons(true);
     props.setShowFooter(true);
+
     return (
         <React.Fragment>
             <div className={classes.container}>
                 <AutoRotatingCarousel open hideArrows={false}>
-                    {/*<img src={assets.carouselItem1} className={classes.img}/>*/}
                     <img src={assets.carouselItem2} className={classes.img}/>
-                    {/*<img src={assets.carouselItem3} className={classes.img}/>*/}
                     <img src={assets.carouselItem4} className={classes.img}/>
                 </AutoRotatingCarousel>
             </div>

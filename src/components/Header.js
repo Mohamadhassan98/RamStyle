@@ -128,12 +128,26 @@ export default function Header(props) {
     const [searchQuery, setSearchQuery] = React.useState('');
 
     React.useEffect(() => {
-        axios.get(serverUrls.allCategories).then(response => {
-            setProductCategories(response.data);
-        }).catch(error => {
-            //TODO show appropriate error page
-        });
-    }, []);
+        setProductCategories(props.productCategories);
+    }, [props.productCategories]);
+
+    React.useEffect(() => {
+        if (searchQuery.toString().length >= 3) {
+            console.log('requesting...');
+            setSearchLoading(true);
+            axios.get(serverUrls.allProducts, {
+                params: {
+                    search: searchQuery
+                }
+            }).then(response => {
+                setSearchOptions(response.data);
+                setSearchLoading(false);
+            }).catch(error => {
+                //TODO show appropriate error page
+                setSearchLoading(false);
+            });
+        }
+    }, [searchQuery]);
 
     const [searchLoading, setSearchLoading] = React.useState(false);
 
@@ -145,8 +159,11 @@ export default function Header(props) {
     };
 
     const onLoginPressed = () => {
-        if (props.history.location.pathname !== baseUrls.auth)
+        if (props.isLoggedIn) {
+            props.history.push(baseUrls.profile);
+        } else {
             props.history.push(baseUrls.auth);
+        }
     };
 
     const onLogoPressed = () => {
@@ -222,9 +239,6 @@ export default function Header(props) {
                                                                 <MenuItem
                                                                     onClick={() => onItemClicked(category)}>{category.name}</MenuItem>
                                                             ))}
-                                                            {/*<MenuItem onClick={onItemClicked}>محصولات لبنی</MenuItem>*/}
-                                                            {/*<MenuItem>کودک و نوجوان</MenuItem>*/}
-                                                            {/*<MenuItem>آشپزخانه</MenuItem>*/}
                                                         </MenuList>
                                                     </Paper>
                                                 </Grow>
@@ -325,7 +339,9 @@ export default function Header(props) {
 }
 
 Header.propTypes = {
-    showButtons: PropTypes.bool
+    showButtons: PropTypes.bool,
+    productCategories: PropTypes.array.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired
 };
 
 Header.defaultProps = {

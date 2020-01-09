@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 
 //fixme RightToLeft Chelides
 //fixme disable elevation
-export default function Brands() {
+export default function Brands(props) {
 
     const classes = useStyles();
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import {Container, TextField} from "@material-ui/core";
-import {flexbox} from "@material-ui/system";
 import Typography from "@material-ui/core/Typography";
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -16,13 +15,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import PropTypes from 'prop-types';
 import {strings} from "../values/strings";
 
-const useFlex = {
-    item: flexbox({
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    })
-};
 const useStyles = makeStyles(theme => ({
 
     root: {

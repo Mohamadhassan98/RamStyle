@@ -4,11 +4,12 @@ import {Box} from "@material-ui/core";
 
 export default function FlexBoxItem(props) {
 
-    const {alignSelf, alignSelfSafety, justifySelf, justifySelfSafety} = props;
+    const {alignSelfSafety, justifySelfSafety, ...others} = props;
+    const {alignSelf, justifySelf} = others;
     const alignSelfSafetyOff = alignSelfSafety === 'off' || !['start', 'flex-start', 'self-start', 'end', 'flex-end', 'self-end', 'center'].includes(alignSelf);
     const justifySelfSafetyOff = justifySelfSafety === 'off' || !['start', 'flex-start', 'self-start', 'end', 'flex-end', 'self-end', 'center', 'left', 'right'].includes(justifySelf);
     const computedProps = {
-        ...props,
+        ...others,
         alignSelf: alignSelfSafetyOff ? alignSelf : `${alignSelfSafety} ${alignSelf}`,
         justifySelf: justifySelfSafetyOff ? justifySelf : `${justifySelfSafety} ${justifySelf}`
     };

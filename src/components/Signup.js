@@ -29,15 +29,16 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function Signup() {
+//fixme remove placeholders
+export default function Signup(props) {
+
     const classes = useStyles();
     const [username, setUsername] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState("");
     const [showPassword, setShowPassword] = React.useState(false);
-    const [showConfirmPassword, setshowConfirmPassword] = React.useState(false);
-
+    const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
     const handleChange = prop => event => {
         if (prop === "username") {
@@ -55,7 +56,7 @@ export default function Signup() {
         if (prop === "password") {
             setShowPassword(!showPassword);
         } else if (prop === "confirmPassword") {
-            setshowConfirmPassword(!showConfirmPassword);
+            setShowConfirmPassword(!showConfirmPassword);
         }
     };
 
@@ -162,4 +163,4 @@ export default function Signup() {
             </Grid>
         </div>
     );
-}
+};

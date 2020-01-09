@@ -12,6 +12,8 @@ import Grid from '@material-ui/core/Grid';
 import Signup from "../components/Signup";
 import Signin from "../components/Signin";
 import {Container} from "@material-ui/core";
+import {Redirect} from 'react-router-dom';
+import {baseUrls} from "../values/urls";
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -75,6 +77,7 @@ export default function SignInUp(props) {
 
     return (
         <Container className={classes.root}>
+            {props.isLoggedIn && <Redirect to={baseUrls.profile}/>}
             <Grid container spacing={3}>
                 <Grid item xs>
                     <Paper className={classes.paper}>
@@ -87,8 +90,8 @@ export default function SignInUp(props) {
                                     variant="fullWidth"
                                     aria-label="full width tabs example"
                                 >
-                                    <Tab label="ورود" {...a11yProps(0)} />
-                                    <Tab label="ثبت نام" {...a11yProps(1)} />
+                                    <Tab label="ورود" {...a11yProps(0)}/>
+                                    <Tab label="ثبت نام" {...a11yProps(1)}/>
                                 </Tabs>
                             </AppBar>
                             <SwipeableViews
@@ -97,10 +100,10 @@ export default function SignInUp(props) {
                                 onChangeIndex={handleChangeIndex}
                             >
                                 <TabPanel value={value} index={0} dir={theme.direction}>
-                                    <Signin/>
+                                    <Signin {...props}/>
                                 </TabPanel>
                                 <TabPanel value={value} index={1} dir={theme.direction}>
-                                    <Signup/>
+                                    <Signup {...props}/>
                                 </TabPanel>
                             </SwipeableViews>
                         </div>
@@ -113,5 +116,7 @@ export default function SignInUp(props) {
 
 SignInUp.propTypes = {
     setShowHeaderButtons: PropTypes.func.isRequired,
-    setShowFooter: PropTypes.func.isRequired
+    setShowFooter: PropTypes.func.isRequired,
+    setLoggedIn: PropTypes.func.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired
 };

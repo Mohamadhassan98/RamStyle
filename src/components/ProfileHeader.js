@@ -6,6 +6,8 @@ import {baseUrls, profileUrls} from "../values/urls";
 import Typography from "@material-ui/core/Typography";
 import {Container, Link, makeStyles, Paper} from "@material-ui/core";
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import {serverUrls} from "../values/serverurls";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -31,8 +33,6 @@ export default function ProfileHeader(props) {
 
     const classes = useStyles();
 
-    console.log(props);
-
     const currentItems = () => {
         switch (props.history.location.pathname) {
             case `${baseUrls.profile}${profileUrls.changePassword}`:
@@ -56,6 +56,16 @@ export default function ProfileHeader(props) {
                 props.history.push(`${baseUrls.profile}${profileUrls.mySales}`);
                 break;
         }
+    };
+
+    const onLogOutClicked = () => {
+        axios.get(serverUrls.logOut).then(response => {
+            props.setLoggedIn(false);
+            props.history.push(baseUrls.home);
+        }).catch(error => {
+            //TODO Show appropriate error
+            window.alert('TODO: Show appropriate error');
+        });
     };
 
     return (
@@ -84,7 +94,7 @@ export default function ProfileHeader(props) {
                         </FlexBoxContainer>
                     </FlexBoxItem>
                     <FlexBoxItem flexBasis={null} justifySelf='flex-end' className={classes.flexItem}>
-                        <Typography className={classes.typography}>
+                        <Typography className={classes.typography} onClick={onLogOutClicked}>
                             {strings.logout}
                         </Typography>
                     </FlexBoxItem>
@@ -96,5 +106,6 @@ export default function ProfileHeader(props) {
 
 ProfileHeader.propTypes = {
     setShowHeaderButtons: PropTypes.func.isRequired,
-    setShowFooter: PropTypes.func.isRequired
+    setShowFooter: PropTypes.func.isRequired,
+    setLoggedIn: PropTypes.func.isRequired
 };

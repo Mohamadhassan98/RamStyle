@@ -1,6 +1,6 @@
 import React from "react";
-import {Route, Switch} from "react-router-dom";
-import {profileUrls} from "../../values/urls";
+import {Redirect, Route, Switch} from "react-router-dom";
+import {baseUrls, profileUrls} from "../../values/urls";
 import ProfileHeader from "../../components/ProfileHeader";
 import Profile from "./Profile";
 import ChangePassword from "./ChangePassword";
@@ -12,9 +12,13 @@ export default function Index(props) {
 
     props.setShowHeaderButtons(true);
     props.setShowFooter(true);
+
     const matchUrl = props.match.url;
+    const {isLoggedIn, setLoggedIn} = props;
+
     return (
         <Container>
+            {!isLoggedIn && <Redirect to={baseUrls.auth}/>}
             <ProfileHeader {...props}/>
             <Switch>
                 <Route exact path={`${matchUrl}`} render={(props) => <Profile {...props}/>}/>
@@ -28,5 +32,7 @@ export default function Index(props) {
 
 Index.propTypes = {
     setShowHeaderButtons: PropTypes.func.isRequired,
-    setShowFooter: PropTypes.func.isRequired
+    setShowFooter: PropTypes.func.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
+    setLoggedIn: PropTypes.func.isRequired
 };
