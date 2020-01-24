@@ -1,5 +1,5 @@
 import React from "react";
-import {Redirect, Route, Switch} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router";
 import {baseUrls, profileUrls} from "../../values/urls";
 import ProfileHeader from "../../components/ProfileHeader";
 import Profile from "./Profile";

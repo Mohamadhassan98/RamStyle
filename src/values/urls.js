@@ -1,3 +1,5 @@
+import {strings} from "./strings";
+
 export const baseUrls = {
     home: '/',
     auth: '/auth',
@@ -12,5 +14,14 @@ export const profileUrls = {
 };
 
 export const routeUrls = {
-    categoryRoute: `${baseUrls.categories}/:id`
+    home: baseUrls.home,
+    categoryRoute: `/${baseUrls.categories.name}/:id`,
+    auth: baseUrls.auth,
+    profile: baseUrls.profile,
+    mySales: `${baseUrls.profile}${profileUrls.mySales}`,
+    changePassword: `${baseUrls.profile}${profileUrls.changePassword}`
+};
+
+export const pageTitles = {
+    home: `${strings.appName}`
 };

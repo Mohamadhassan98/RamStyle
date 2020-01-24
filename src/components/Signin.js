@@ -71,12 +71,15 @@ export default function Signin(props) {
     };
 
     const onSignInButtonClicked = () => {
-        axios.post(serverUrls.signIn, {
+        const data = {
             username: username,
             password: password,
             email: email,
-            keep: checkedLogin
-        }).then(response => {
+        };
+        if (checkedLogin) {
+            data.keep = true;
+        }
+        axios.post(serverUrls.signIn, data).then(response => {
             // response is 201!
             props.setLoggedIn(true);
             props.history.push(baseUrls.home);

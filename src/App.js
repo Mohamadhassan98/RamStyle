@@ -2,7 +2,7 @@ import React from 'react';
 import {Route} from 'react-router-dom';
 import Header from "./components/Header";
 import {Index} from './pages';
-import {baseUrls} from "./values/urls";
+import {routeUrls} from "./values/urls";
 import Footer from "./components/Footer";
 import axios from 'axios';
 import {serverUrls} from "./values/serverurls";
@@ -28,10 +28,10 @@ export default function App(props) {
             <Footer show={showFooter}>
                 <Header showButtons={headerButtonsShow} {...props} productCategories={productCategories}
                         isLoggedIn={isLoggedIn}/>
-                <Route path={baseUrls.home} render={(props) => <Index {...props} setShowFooter={setShowFooter}
-                                                                      setShowHeaderButtons={setHeaderButtonShow}
-                                                                      isLoggedIn={isLoggedIn}
-                                                                      setLoggedIn={setLoggedIn}/>}/>
+                <Route path={routeUrls.home} render={(props) => <Index {...props} setShowFooter={setShowFooter}
+                                                                       setShowHeaderButtons={setHeaderButtonShow}
+                                                                       isLoggedIn={isLoggedIn}
+                                                                       setLoggedIn={setLoggedIn}/>}/>
             </Footer>
         </div>
     );
