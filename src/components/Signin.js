@@ -20,6 +20,8 @@ import axios from 'axios';
 import {serverUrls} from "../values/serverurls";
 import PropTypes from 'prop-types';
 import {baseUrls} from "../values/urls";
+import {useCookies} from 'react-cookie';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -49,6 +51,7 @@ export default function Signin(props) {
     const [password, setPassword] = React.useState("");
     const [showPassword, setShowPassword] = React.useState(false);
     const [checkedLogin, setCheckedLogin] = React.useState(true);
+    const [cookies, setCookies, removeCookies] = useCookies(['csrftoken']);
 
     const handleChange = prop => event => {
         if (prop === "checkedLogin") {
@@ -82,6 +85,10 @@ export default function Signin(props) {
         axios.post(serverUrls.signIn, data).then(response => {
             // response is 201!
             props.setLoggedIn(true);
+            const csrf = cookies['csrftoken'];
+            if (csrf) {
+                axios.defaults.headers['X-CSRFToken'] = csrf;
+            }
             props.history.push(baseUrls.home);
         }).catch(error => {
             // TODO Show appropriate Error
@@ -158,8 +165,8 @@ export default function Signin(props) {
                                 checked={checkedLogin}
                                 onChange={handleChange('checkedLogin')}
                                 value="checkedLogin"
-                                checkedIcon={<CheckBoxOutlineBlankIcon className={classes.checkboxIcon}/>}
-                                icon={<CheckBoxIcon className={classes.checkboxIcon}/>}
+                                icon={<CheckBoxOutlineBlankIcon className={classes.checkboxIcon}/>}
+                                checkedIcon={<CheckBoxIcon className={classes.checkboxIcon}/>}
                             />
                         }
                         label={strings.rememberMe}

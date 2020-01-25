@@ -7,8 +7,17 @@ import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 import RTL from "./tools/RTL";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {CssBaseline} from "@material-ui/core";
+import {useCookies} from 'react-cookie';
+import axios from 'axios';
 
 function Index() {
+
+    const [cookies, setCookies, removeCookies] = useCookies(['csrftoken']);
+    const csrf = cookies['csrftoken'];
+    if (csrf) {
+        axios.defaults.headers['X-CSRFToken'] = csrf;
+    }
+
     const theme = createMuiTheme({
         direction: "rtl",
         typography: {
