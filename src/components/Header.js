@@ -7,7 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import {AccountCircle, ShoppingCart} from "@material-ui/icons";
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from "@material-ui/core/Typography";
-import ScrollTop from "../pages/ScrollTop";
+import ScrollTop from "../tools/ScrollTop";
 import ElevationScroll from "../tools/ElevateOnScroll";
 import Container from "@material-ui/core/Container";
 import Slide from "@material-ui/core/Slide";
@@ -15,15 +15,18 @@ import PropTypes from 'prop-types';
 import FlexBoxContainer from "../tools/FlexBoxContainer";
 import FlexBoxItem from "../tools/FlexBoxItem";
 import {strings} from "../values/strings";
-import Button from "@material-ui/core/Button";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import Grow from "@material-ui/core/Grow";
-import {urls} from "../values/urls";
+import {baseUrls} from "../values/urls";
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import InputBase from "@material-ui/core/InputBase";
+import TextField from "@material-ui/core/TextField";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import axios from 'axios';
+import {serverUrls} from "../values/serverurls";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -64,7 +67,21 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center'
     },
     inputRoot: {
-        color: 'inherit'
+        color: 'inherit',
+        marginRight: 30,
+        marginTop: -10,
+        marginBottom: -10,
+        '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+                borderColor: 'transparent',
+            },
+            '&:hover fieldset': {
+                borderColor: 'transparent',
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: 'transparent',
+            },
+        },
     },
     inputInput: {
         padding: theme.spacing(1, 1, 1, 7),
@@ -72,7 +89,9 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         [theme.breakpoints.up('xs')]: {
             width: 200
-        }
+        },
+        borderRadius: 5,
+        borderColor: 'transparent'
     },
     sectionDesktop: {
         display: 'none',
@@ -91,32 +110,65 @@ const useStyles = makeStyles(theme => ({
         color: theme.palette.text.secondary
     },
     logo: {
-        color: theme.palette.text.secondary
+        color: theme.palette.text.secondary,
+        cursor: 'pointer'
     },
     button: {
-        color: theme.palette.text.secondary
+        color: theme.palette.text.secondary,
+        cursor: 'pointer'
     },
 }));
 
 export default function Header(props) {
 
     const [productCategoryOpen, setProductCategoryOpen] = React.useState(false);
-    const [searchOptions, setSearchOptions] = React.useState(['یخچال', 'سماور']);
+    const [productCategories, setProductCategories] = React.useState([]);
+    const [searchOptionsOpen, setSearchOptionsOpen] = React.useState(false);
+    const [searchOptions, setSearchOptions] = React.useState([]);
+    const [searchQuery, setSearchQuery] = React.useState('');
+
+    React.useEffect(() => {
+        setProductCategories(props.productCategories);
+    }, [props.productCategories]);
+
+    React.useEffect(() => {
+        if (searchQuery.toString().length >= 3) {
+            console.log('requesting...');
+            setSearchLoading(true);
+            axios.get(serverUrls.allProducts, {
+                params: {
+                    search: searchQuery
+                }
+            }).then(response => {
+                setSearchOptions(response.data);
+                setSearchLoading(false);
+            }).catch(error => {
+                //TODO show appropriate error page
+                setSearchLoading(false);
+            });
+        }
+    }, [searchQuery]);
+
+    const [searchLoading, setSearchLoading] = React.useState(false);
+
     const anchorRef = React.useRef(null);
     const [hoverOnMenu, setHoverOnMenu] = React.useState(false);
     const [hoverOnButton, setHoverOnButton] = React.useState(false);
-    const onItemClicked = () => {
-        props.history.push('/category/1');
+    const onItemClicked = (item) => {
+        props.history.push(`${baseUrls.categories(item.id)}`);
     };
 
     const onLoginPressed = () => {
-        if (props.history.location.pathname !== urls.auth)
-            props.history.push(urls.auth);
+        if (props.isLoggedIn) {
+            props.history.push(baseUrls.profile);
+        } else {
+            props.history.push(baseUrls.auth);
+        }
     };
 
     const onLogoPressed = () => {
-        if (props.history.location.pathname !== urls.home) {
-            props.history.push(urls.home);
+        if (props.history.location.pathname !== baseUrls.home) {
+            props.history.push({pathname: baseUrls.home});
         }
     };
 
@@ -147,12 +199,12 @@ export default function Header(props) {
                             <Toolbar>
                                 <FlexBoxContainer alignItems='center' justifyItems='flex-start'>
                                     <FlexBoxItem>
-                                        <Button variant='text' aria-haspopup
-                                                onMouseEnter={() => setHoverOnButton(true)}
-                                                onMouseLeave={() => setHoverOnButton(false)}
-                                                className={classes.button}>
+                                        <Typography variant='subtitle2' aria-haspopup
+                                                    onMouseEnter={() => setHoverOnButton(true)}
+                                                    onMouseLeave={() => setHoverOnButton(false)}
+                                                    className={classes.button}>
                                             {strings.productCategories}
-                                        </Button>
+                                        </Typography>
                                         <Popper
                                             open={hoverOnButton || hoverOnMenu}
                                             anchorEl={anchorRef.current}
@@ -183,9 +235,10 @@ export default function Header(props) {
                                                                   id="menu-list-grow"
                                                                   disableListWrap
                                                                   onKeyDown={handleListKeyDown}>
-                                                            <MenuItem onClick={onItemClicked}>محصولات لبنی</MenuItem>
-                                                            <MenuItem>کودک و نوجوان</MenuItem>
-                                                            <MenuItem>آشپزخانه</MenuItem>
+                                                            {productCategories.map(category => (
+                                                                <MenuItem
+                                                                    onClick={() => onItemClicked(category)}>{category.name}</MenuItem>
+                                                            ))}
                                                         </MenuList>
                                                     </Paper>
                                                 </Grow>
@@ -204,44 +257,54 @@ export default function Header(props) {
                                     <FlexBoxItem>
                                         {showButtons &&
                                         <div className={classes.search}>
-                                            <div className={classes.searchIcon}>
-                                                <SearchIcon/>
-                                            </div>
                                             <Autocomplete
+                                                open={searchOptionsOpen}
+                                                onOpen={() => setSearchOptionsOpen(true)}
+                                                onClose={() => setSearchOptionsOpen(false)}
                                                 freeSolo
-                                                options={searchOptions}
-                                                // open={searchOptionsOpen}
-                                                renderInput={(params) =>
-                                                    (<InputBase
+                                                id="free-solo-2-demo"
+                                                inputValue={searchQuery}
+                                                onInputChange={(event, value) => setSearchQuery(value)}
+                                                options={searchOptions.map(option => option.title)}
+                                                renderInput={params => (
+                                                    <TextField
                                                         {...params}
                                                         placeholder={strings.toolbarSearchLabel}
+                                                        margin="none"
+                                                        variant="outlined"
                                                         classes={{
                                                             root: classes.inputRoot,
                                                             input: classes.inputInput
                                                         }}
-                                                        // inputProps={{'aria-label': 'search'}}
-                                                        // onChange={() => setSearchOptionsOpen(true)}
-                                                    />)
-                                                    // <TextField
-                                                    // placeholder={strings.toolbarSearchLabel}
-                                                    // variant="outlined"
-                                                    // fullWidth
-                                                    // classes={{
-                                                    //     root: classes.inputRoot,
-                                                    //     input: classes.inputInput
-                                                    // }}
-                                                    // />
-                                                }
+                                                        InputProps={{
+                                                            ...params.InputProps,
+                                                            startAdornment: <InputAdornment position='start'>
+                                                                <SearchIcon className={classes.icons}/>
+                                                            </InputAdornment>,
+                                                            endAdornment:
+                                                                <React.Fragment>
+                                                                    {searchLoading ? <CircularProgress color="inherit"
+                                                                                                       size={20}/> : null}
+                                                                    {params.InputProps.endAdornment}
+                                                                </React.Fragment>
+                                                        }}
+                                                        fullWidth
+                                                    />
+                                                )}
                                             />
                                         </div>
                                         }
                                     </FlexBoxItem>
-                                    <FlexBoxItem justifySelf='center'>
-                                        <Typography variant='h6' align='center'>
-                                            <Button variant='text' onClick={onLogoPressed} className={classes.logo}>
-                                                {strings.appName}
-                                            </Button>
-                                        </Typography>
+                                    <FlexBoxItem justifyContent='center'>
+                                        <FlexBoxContainer flexDirection='column' alignItems='center'>
+                                            <FlexBoxItem>
+                                                <Typography variant='h6' align='center' onClick={onLogoPressed}
+                                                            component='span'
+                                                            className={classes.logo}>
+                                                    {strings.appName}
+                                                </Typography>
+                                            </FlexBoxItem>
+                                        </FlexBoxContainer>
                                     </FlexBoxItem>
                                     <FlexBoxItem justifySelf='flex-end'>
                                         <FlexBoxContainer justifyContent='flex-end' alignItems='center'
@@ -276,7 +339,9 @@ export default function Header(props) {
 }
 
 Header.propTypes = {
-    showButtons: PropTypes.bool
+    showButtons: PropTypes.bool,
+    productCategories: PropTypes.array.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired
 };
 
 Header.defaultProps = {

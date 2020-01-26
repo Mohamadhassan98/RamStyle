@@ -6,8 +6,18 @@ import * as serviceWorker from './serviceWorker';
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 import RTL from "./tools/RTL";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {CssBaseline} from "@material-ui/core";
+import {useCookies} from 'react-cookie';
+import axios from 'axios';
 
 function Index() {
+
+    const [cookies, setCookies, removeCookies] = useCookies(['csrftoken']);
+    const csrf = cookies['csrftoken'];
+    if (csrf) {
+        axios.defaults.headers['X-CSRFToken'] = csrf;
+    }
+
     const theme = createMuiTheme({
         direction: "rtl",
         typography: {
@@ -19,17 +29,31 @@ function Index() {
             },
             secondary: {
                 light: '#E3F6F5',
-                main: '#BAE8E8'
+                main: '#BAE8E8',
+                dark: '#34a8a2'
             },
             text: {
                 primary: "#000000",
                 secondary: "#FFFFFF"
+            },
+            background: {
+                default: '#f5f5f5',
             }
         },
         overrides: {
             MuiInputLabel: {
                 root: {
-                    color: '#000000'
+                    color: '#000000',
+                },
+            },
+            MuiTabs: {
+                indicator: {
+                    background: "#34a8a2"
+                }
+            },
+            MuiLink: {
+                underlineNone: {
+                    cursor: "pointer"
                 }
             }
         }
@@ -37,15 +61,17 @@ function Index() {
 
     return (
         <ThemeProvider theme={theme}>
-            <RTL>
-                <div className="App">
-                    <BrowserRouter>
-                        <Switch>
-                            <Route path='/' component={App}/>
-                        </Switch>
-                    </BrowserRouter>
-                </div>
-            </RTL>
+            <CssBaseline>
+                <RTL>
+                    <div className="App">
+                        <BrowserRouter>
+                            <Switch>
+                                <Route path='/' component={App}/>
+                            </Switch>
+                        </BrowserRouter>
+                    </div>
+                </RTL>
+            </CssBaseline>
         </ThemeProvider>
     );
 }

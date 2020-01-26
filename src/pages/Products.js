@@ -1,6 +1,5 @@
 import React from 'react';
 import {Container, TextField} from "@material-ui/core";
-import {flexbox} from "@material-ui/system";
 import Typography from "@material-ui/core/Typography";
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -13,14 +12,9 @@ import FlexBoxContainer from "../tools/FlexBoxContainer";
 import FlexBoxItem from "../tools/FlexBoxItem";
 import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import PropTypes from 'prop-types';
+import {strings} from "../values/strings";
 
-const useFlex = {
-    item: flexbox({
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    })
-};
 const useStyles = makeStyles(theme => ({
 
     root: {
@@ -30,14 +24,19 @@ const useStyles = makeStyles(theme => ({
         flexWrap: "wrap",
     },
     gridList: {
-        // width: 500,
         height: 'auto',
         marginTop: 100,
         flexBasis: '100%',
     },
 }));
 
-export default function Products() {
+
+//fixme GridList to FlexBox @Zahrakml
+export default function Products(props) {
+
+    props.setShowFooter(true);
+    props.setShowHeaderButtons(true);
+
     const onTextChanged = (event) => {
         setSearchInput({
             [event.target.name]: event.target.value
@@ -75,80 +74,7 @@ export default function Products() {
     const [input, setSearchInput] = React.useState("");
     const classes = useStyles();
     const theme = createMuiTheme();
-    {/*<Container className="Container" style={{
-            marginTop: 25, minHeight: '100vh'
-        }}>
-            <FlexBoxContainer flexDirection="column" justifyContent='space-between'>2 children
-                <FlexBoxItem>
-                    <FlexBoxContainer flexDirection='column'>3 children
-                        <FlexBoxItem>
-                            <FlexBoxContainer flexDirection='column'>
-                                <FlexBoxItem flexBasis='auto'>
-                                    <Typography>
-                                        پوشاک
-                                    </Typography>
-                                </FlexBoxItem>
-                                <FlexBoxItem flexBasis='auto'>
-                                    <Divider orientation="vertical" style={{width: 1, height: 50, marginLeft: 5}}/>
-                                </FlexBoxItem>
-                                <FlexBoxItem flexBasis='auto'>
-                                    <TextField id="standard-search"
-                                               label="Search field" type="search"
-                                               onChange={onTextChanged}
-                                               style={{marginLeft: 20}}
-                                               InputProps={{
-                                                   startAdornment: (
-                                                       <InputAdornment position="start">
-                                                           <SearchIcon/>
-                                                       </InputAdornment>
-                                                   ),
-                                               }}
-                                    >
-                                    </TextField>
-                                </FlexBoxItem>
-                                <FlexBoxItem>
-                                    <Typography align={"right"} style={{marginLeft: '85%'}}>
-                                        show {searchResult > 9 ? 9 : searchResult} from {searchResult}
-                                    </Typography>
-                                </FlexBoxItem>
-                            </FlexBoxContainer>
-                        </FlexBoxItem>
-                    </FlexBoxContainer>
-                </FlexBoxItem>
 
-                <FlexBoxContainer>
-                    <FlexBoxItem>
-                        <Divider orientation="horizontal" style={{height: 1, marginTop: 10}}/>
-                    </FlexBoxItem>
-                </FlexBoxContainer>
-                <FlexBoxItem flexBasis='auto'>
-                    <Typography>
-                        نتایج
-                    </Typography>
-                </FlexBoxItem>
-
-                <FlexBoxItem className={classes.root}>
-                    <GridList cellHeight={160} className={classes.gridList}>
-                        {tileData.map(tile => (
-                            <GridListTile key={tile.img} cols={tile.cols || 1} style={{flexBasis: '33.33%'}}>
-                                <img src={tile.img} alt={tile.title}/>
-                            </GridListTile>
-                        ))}
-                    </GridList>
-                </FlexBoxItem>
-                <FlexBoxContainer justifyContent={"center"}>
-                    <MuiThemeProvider theme={theme}>
-                        <CssBaseline/>
-                        <Pagination
-                            limit={10}
-                            offset={10}
-                            total={100}
-                        />
-                    </MuiThemeProvider>
-                </FlexBoxContainer>
-            </FlexBoxContainer>
-        </Container>*/
-    }
     return (
         <Container>
             <FlexBoxContainer flexDirection='column' alignItems='stretch' justifyContent='space-between'
@@ -158,7 +84,7 @@ export default function Products() {
                         <FlexBoxItem>
                             <FlexBoxContainer justifyContent='space-between' alignItems='center'>
                                 <FlexBoxItem>
-                                    <FlexBoxContainer justifyContent='flex-start'>
+                                    <FlexBoxContainer justifyContent='flex-start' alignItems='center'>
                                         <FlexBoxItem flexBasis={null}>
                                             <Typography>
                                                 پوشاک
@@ -187,7 +113,7 @@ export default function Products() {
                                 </FlexBoxItem>
                                 <FlexBoxItem>
                                     <Typography align={"right"}>
-                                        show {searchResult > 9 ? 9 : searchResult} from {searchResult}
+                                        {strings.show} {searchResult > 9 ? 9 : searchResult} {strings.from} {searchResult}
                                     </Typography>
                                 </FlexBoxItem>
                             </FlexBoxContainer>
@@ -225,3 +151,8 @@ export default function Products() {
         </Container>
     );
 }
+
+Products.propTypes = {
+    setShowHeaderButtons: PropTypes.func.isRequired,
+    setShowFooter: PropTypes.func.isRequired
+};

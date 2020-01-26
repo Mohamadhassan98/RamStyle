@@ -1,7 +1,4 @@
 import React from 'react';
-import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
-import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
-import ItemsCarousel from 'react-items-carousel';
 import {Container, makeStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -11,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import {strings} from "../values/strings";
 import {assets} from "../values/assets";
+import Slider from "react-slick";
 
 // noinspection JSCheckFunctionSignatures
 const useStyles = makeStyles(theme => ({
@@ -27,13 +25,23 @@ const useStyles = makeStyles(theme => ({
 
 //fixme RightToLeft Chelides
 //fixme disable elevation
-export default function Brands() {
+export default function Brands(props) {
 
     const classes = useStyles();
 
     const [activeItemIndex, setActiveItemIndex] = React.useState(0);
 
     const chevronWidth = 40;
+
+    const settings = {
+        dots: true,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        rtl: true,
+        arrows: true
+    };
 
     return (
         <div className={classes.container}>
@@ -47,21 +55,7 @@ export default function Brands() {
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <ItemsCarousel
-                            requestToChangeActive={setActiveItemIndex}
-                            activeItemIndex={activeItemIndex}
-                            leftChevron={
-                                <ArrowBackIosRoundedIcon/>
-                            }
-                            rightChevron={
-                                <ArrowForwardIosRoundedIcon/>
-                            }
-                            outsideChevron
-                            chevronWidth={chevronWidth}
-                            numberOfCards={5}
-                            gutter={10}
-                            firstAndLastGutter={true}
-                        >
+                        <Slider {...settings}>
                             <Card classes={classes}>
                                 <CardActionArea>
                                     <CardMedia
@@ -146,7 +140,7 @@ export default function Brands() {
                                     </CardContent>
                                 </CardActionArea>
                             </Card>
-                        </ItemsCarousel>
+                        </Slider>
                     </Grid>
                 </Grid>
             </Container>

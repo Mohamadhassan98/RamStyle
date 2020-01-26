@@ -1,11 +1,12 @@
 import React from "react";
 import {Container, makeStyles, TextField} from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
-import FlexBoxItem from "../tools/FlexBoxItem";
+import FlexBoxItem from "../../tools/FlexBoxItem";
 import Button from "@material-ui/core/Button";
-import PropTypes from 'prop-types';
-import {assets} from "../values/assets";
-import {strings} from "../values/strings";
+import {assets} from "../../values/assets";
+import {strings} from "../../values/strings";
+import axios from 'axios';
+import {serverUrls} from "../../values/serverurls";
 
 const useStyle = makeStyles(theme => ({
     avatar: {
@@ -19,11 +20,23 @@ const useStyle = makeStyles(theme => ({
 
 export default function Profile(props) {
 
-    props.setShowHeaderButtons(true);
     const [name, setName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
     const [username, setUsername] = React.useState('');
     const [email, setEmail] = React.useState('');
+
+    React.useEffect(() => {
+        axios.get(serverUrls.user).then(response => {
+            const {first_name: firstName, last_name: lastName, username, email} = response.data;
+            setEmail(email);
+            setUsername(username);
+            setLastName(lastName);
+            setName(firstName);
+        }).catch(error => {
+            //TODO Show appropriate error
+            console.log(error);
+        });
+    }, []);
 
     const classes = useStyle();
 
@@ -80,6 +93,9 @@ export default function Profile(props) {
                         variant='filled'
                         onChange={event => setEmail(event.target.value)}
                         fullWidth
+                        inputProps={{
+                            inputMode: "email"
+                        }}
                     />
                 </FlexBoxItem>
                 <FlexBoxItem display='flex' justifyContent='center'>
@@ -91,7 +107,3 @@ export default function Profile(props) {
         </React.Fragment>
     );
 }
-
-Profile.propTypes = {
-    setShowHeaderButtons: PropTypes.func.isRequired
-};

@@ -3,14 +3,14 @@ import {Box} from "@material-ui/core";
 import PropTypes from 'prop-types';
 
 export default function FlexBoxContainer(props) {
-
-    const {alignItemsSafety, alignContentSafety, justifyContentSafety, alignContent, alignItems, justifyContent, justifyItems, justifyItemsSafety} = props;
+    const {alignItemsSafety, alignContentSafety, justifyContentSafety, justifyItemsSafety, ...other} = props;
+    const {alignContent, alignItems, justifyContent, justifyItems} = other;
     const alignItemsSafetyOff = alignItemsSafety === 'off' || !['start', 'flex-start', 'self-start', 'end', 'flex-end', 'self-end', 'center'].includes(alignItems);
     const alignContentSafetyOff = alignContentSafety === 'off' || !['start', 'flex-start', 'end', 'flex-end', 'center'].includes(alignContent);
     const justifyContentSafetyOff = justifyContentSafety === 'off' || !['start', 'flex-start', 'end', 'flex-end', 'center', 'left', 'right'].includes(justifyContent);
     const justifyItemsSafetyOff = justifyItemsSafety === 'off' || !['start', 'flex-start', 'self-start', 'end', 'flex-end', 'self-end', 'center', 'left', 'right'].includes(justifyItems);
     const computedProps = {
-        ...props,
+        ...other,
         alignItems: alignItemsSafetyOff ? alignItems : `${alignItemsSafety} ${alignItems}`,
         alignContent: alignContentSafetyOff ? alignContent : `${alignContentSafety} ${alignContent}`,
         justifyContent: justifyContentSafetyOff ? justifyContent : `${justifyContentSafety} ${justifyContent}`,

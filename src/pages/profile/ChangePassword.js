@@ -1,11 +1,14 @@
 import React from "react";
 import {Container, makeStyles, TextField} from "@material-ui/core";
-import FlexBoxItem from "../tools/FlexBoxItem";
+import FlexBoxItem from "../../tools/FlexBoxItem";
 import Button from "@material-ui/core/Button";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import {Visibility, VisibilityOff} from "@material-ui/icons";
-import {strings} from "../values/strings";
+import {strings} from "../../values/strings";
+import axios from 'axios';
+import {serverUrls} from "../../values/serverurls";
+import {baseUrls} from "../../values/urls";
 
 const useStyle = makeStyles(theme => ({
     textField: {
@@ -21,6 +24,19 @@ export default function ChangePassword(props) {
     const [showOldPassword, setShowOldPassword] = React.useState(false);
     const [showNewPassword, setShowNewPassword] = React.useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+
+    const onSaveButtonPressed = () => {
+        axios.post(serverUrls.passwordChange, {
+            old_password: oldPassword,
+            new_password1: newPassword,
+            new_password2: newPassword
+        }).then(response => {
+            props.history.push(baseUrls.profile);
+        }).catch(error => {
+            //TODO Show appropriate error
+            window.alert('TODO: Show appropriate error');
+        });
+    };
 
     const classes = useStyle();
 
@@ -104,7 +120,7 @@ export default function ChangePassword(props) {
                     />
                 </FlexBoxItem>
                 <FlexBoxItem display='flex' justifyContent='center'>
-                    <Button variant='contained' color='primary'>
+                    <Button variant='contained' color='primary' onClick={onSaveButtonPressed}>
                         {strings.saveChanges}
                     </Button>
                 </FlexBoxItem>

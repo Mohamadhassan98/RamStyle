@@ -1,4 +1,7 @@
-import item1 from '../assets/carousel-item-1.jpg';
+// import item1 from '../assets/carousel1.jpg';
+import item2 from '../assets/carousel2.png';
+// import item3 from '../assets/carousel3.png';
+import item4 from '../assets/carousel4.png';
 import brand1 from '../assets/samsung-logo.svg';
 import original from '../assets/quality.svg';
 import fast from '../assets/fast-deliver.svg';
@@ -17,7 +20,10 @@ import DefaultPic from '../assets/default.png';
 import image1 from '../assets/clothes.jpg'
 
 export const assets = {
-    carouselItem1: item1,
+    // carouselItem1: item1,
+    carouselItem2: item2,
+    // carouselItem3: item3,
+    carouselItem4: item4,
     brandItem1: brand1,
     quality: original,
     fast: fast,

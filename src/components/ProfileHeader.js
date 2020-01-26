@@ -2,14 +2,12 @@ import React from "react";
 import FlexBoxContainer from "../tools/FlexBoxContainer";
 import FlexBoxItem from "../tools/FlexBoxItem";
 import {strings} from "../values/strings";
-import {urls} from "../values/urls";
+import {baseUrls, profileUrls} from "../values/urls";
 import Typography from "@material-ui/core/Typography";
 import {Container, Link, makeStyles, Paper} from "@material-ui/core";
-import {Route} from "react-router-dom";
-import Profile from "./Profile";
-import ChangePassword from "./ChangePassword";
-import MySales from "./MySales";
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import {serverUrls} from "../values/serverurls";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -27,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function ProfilePage(props) {
+export default function ProfileHeader(props) {
 
     props.setShowHeaderButtons(true);
     props.setShowFooter(true);
@@ -37,11 +35,11 @@ export default function ProfilePage(props) {
 
     const currentItems = () => {
         switch (props.history.location.pathname) {
-            case urls.changePassword:
+            case `${baseUrls.profile}${profileUrls.changePassword}`:
                 return [items[0], items[2]];
-            case urls.profile:
+            case baseUrls.profile:
                 return [items[1], items[2]];
-            case urls.mySales:
+            case `${baseUrls.profile}${profileUrls.mySales}`:
                 return [items[0], items[1]];
         }
     };
@@ -49,15 +47,25 @@ export default function ProfilePage(props) {
     const onItemClicked = (itemIndex) => {
         switch (currentItems()[itemIndex]) {
             case items[0]:
-                props.history.push(urls.profile);
+                props.history.push(baseUrls.profile);
                 break;
             case items[1]:
-                props.history.push(urls.changePassword);
+                props.history.push(`${baseUrls.profile}${profileUrls.changePassword}`);
                 break;
             case items[2]:
-                props.history.push(urls.mySales);
+                props.history.push(`${baseUrls.profile}${profileUrls.mySales}`);
                 break;
         }
+    };
+
+    const onLogOutClicked = () => {
+        axios.get(serverUrls.logOut).then(response => {
+            props.setLoggedIn(false);
+            props.history.push(baseUrls.home);
+        }).catch(error => {
+            //TODO Show appropriate error
+            window.alert('TODO: Show appropriate error');
+        });
     };
 
     return (
@@ -86,20 +94,18 @@ export default function ProfilePage(props) {
                         </FlexBoxContainer>
                     </FlexBoxItem>
                     <FlexBoxItem flexBasis={null} justifySelf='flex-end' className={classes.flexItem}>
-                        <Typography className={classes.typography}>
+                        <Typography className={classes.typography} onClick={onLogOutClicked}>
                             {strings.logout}
                         </Typography>
                     </FlexBoxItem>
                 </FlexBoxContainer>
             </Paper>
-            <Route exact path={urls.profile} render={() => <Profile {...props}/>}/>
-            <Route path={urls.changePassword} render={() => <ChangePassword {...props}/>}/>
-            <Route path={urls.mySales} render={() => <MySales {...props}/>}/>
         </Container>
     );
 }
 
-ProfilePage.propTypes = {
+ProfileHeader.propTypes = {
     setShowHeaderButtons: PropTypes.func.isRequired,
-    setShowFooter: PropTypes.func.isRequired
+    setShowFooter: PropTypes.func.isRequired,
+    setLoggedIn: PropTypes.func.isRequired
 };

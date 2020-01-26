@@ -10,13 +10,23 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import {strings} from "../values/strings";
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import axios from 'axios';
+import {serverUrls} from "../values/serverurls";
+import PropTypes from 'prop-types';
+import {baseUrls} from "../values/urls";
+import {useCookies} from 'react-cookie';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
-        flexWrap: 'nowrap',
+        flexWrap: 'wrap',
     },
     margin: {
         margin: theme.spacing(1),
@@ -27,46 +37,69 @@ const useStyles = makeStyles(theme => ({
     textField: {
         width: 300,
     },
+    checkboxIcon: {
+        color: theme.palette.secondary.dark
+    }
 }));
 
 //fixme remove placeholders
-export default function Signup(props) {
+export default function Signin(props) {
 
     const classes = useStyles();
     const [username, setUsername] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-    const [confirmPassword, setConfirmPassword] = React.useState("");
     const [showPassword, setShowPassword] = React.useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+    const [checkedLogin, setCheckedLogin] = React.useState(true);
+    const [cookies, setCookies, removeCookies] = useCookies(['csrftoken']);
 
     const handleChange = prop => event => {
-        if (prop === "username") {
+        if (prop === "checkedLogin") {
+            setCheckedLogin(event.target.checked);
+        } else if (prop === "username") {
             setUsername(event.target.value);
         } else if (prop === "email") {
             setEmail(event.target.value);
         } else if (prop === "password") {
             setPassword(event.target.value);
-        } else if (prop === "confirmPassword") {
-            setConfirmPassword(event.target.value);
         }
     };
 
-    const handleClickShowPassword = prop => event => {
-        if (prop === "password") {
-            setShowPassword(!showPassword);
-        } else if (prop === "confirmPassword") {
-            setShowConfirmPassword(!showConfirmPassword);
-        }
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
     };
 
     const handleMouseDownPassword = event => {
         event.preventDefault();
     };
 
+    const onSignInButtonClicked = () => {
+        const data = {
+            username: username,
+            password: password,
+            email: email,
+        };
+        if (checkedLogin) {
+            data.keep = true;
+        }
+        axios.post(serverUrls.signIn, data).then(response => {
+            // response is 201!
+            props.setLoggedIn(true);
+            const csrf = cookies['csrftoken'];
+            if (csrf) {
+                axios.defaults.headers['X-CSRFToken'] = csrf;
+            }
+            props.history.push(baseUrls.home);
+        }).catch(error => {
+            // TODO Show appropriate Error
+            window.alert('TODO: Show appropriate Error');
+            console.log(error);
+        });
+    };
+
     return (
         <div className={classes.root}>
-            <Grid container direction="column" spacing={2}>
+            <Grid item xs container direction="column" spacing={2}>
                 <Grid item>
                     <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-username">
@@ -110,7 +143,7 @@ export default function Signup(props) {
                                 <InputAdornment position="end">
                                     <IconButton
                                         aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword('password')}
+                                        onClick={handleClickShowPassword}
                                         onMouseDown={handleMouseDownPassword}
                                         edge="end"
                                     >
@@ -126,41 +159,29 @@ export default function Signup(props) {
                     </FormControl>
                 </Grid>
                 <Grid item>
-                    <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-confirmPassword">
-                            {strings.confirmPassword}
-                        </InputLabel>
-                        <OutlinedInput
-                            id="outlined-adornment-confirmPassword"
-                            type={showConfirmPassword ? 'text' : 'password'}
-                            value={confirmPassword}
-                            onChange={handleChange('confirmPassword')}
-                            placeholder={strings.confirmPassword}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword('confirmPassword')}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                    >
-                                        {showConfirmPassword ? <Visibility/> : <VisibilityOff/>}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                            labelWidth={100}
-                        />
-                        <FormHelperText id="standard-confirm-password-helper-text">
-                            {strings.passwordHelper}
-                        </FormHelperText>
-                    </FormControl>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={checkedLogin}
+                                onChange={handleChange('checkedLogin')}
+                                value="checkedLogin"
+                                icon={<CheckBoxOutlineBlankIcon className={classes.checkboxIcon}/>}
+                                checkedIcon={<CheckBoxIcon className={classes.checkboxIcon}/>}
+                            />
+                        }
+                        label={strings.rememberMe}
+                    />
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" color="primary">
-                        {strings.signUp}
+                    <Button variant="contained" color="primary" onClick={onSignInButtonClicked}>
+                        {strings.signIn}
                     </Button>
                 </Grid>
             </Grid>
         </div>
     );
+}
+
+Signin.propTypes = {
+    setLoggedIn: PropTypes.func.isRequired
 };
