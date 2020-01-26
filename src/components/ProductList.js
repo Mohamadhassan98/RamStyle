@@ -126,78 +126,10 @@ class productList extends React.Component {
                 <div style={style_item} onMouseEnter={()=>this.hover(1)} onMouseLeave={()=>this.hidden(1)} >
                     <img  src={image1} style={ this.state.hidden1==true ? img : img_blur}/>
                     <div style={this.state.hidden1==true ? hidden :caption}>
-                        <Typography variant="h2" gutterBottom style={{textAlign:"center"}}>clothes</Typography>
-                        <Typography variant="h4" gutterBottom style={{textAlign:"center"}}>لباس</Typography>
+                        <Typography variant="h2" gutterBottom style={{textAlign:"center", fontSize:"30px"}}>clothes</Typography>
+                        <Typography variant="h4" gutterBottom style={{textAlign:"center" ,fontSize:"20px"}}>لباس</Typography>
                     </div>
                 </div>
-
-                <div style={style_item} onMouseEnter={()=>this.hover(2)} onMouseLeave={()=>this.hidden(2)} >
-                    <img  src={image1} style={ this.state.hidden2==true ? img : img_blur}/>
-                    <div style={this.state.hidden2==true ? hidden :caption}>
-                        <Typography variant="h2" gutterBottom style={{textAlign:"center"}}>clothes</Typography>
-                        <Typography variant="h4" gutterBottom style={{textAlign:"center"}}>لباس</Typography>
-                    </div>
-                </div>
-
-                <div style={style_item} onMouseEnter={()=>this.hover(3)} onMouseLeave={()=>this.hidden(3)} >
-                    <img  src={image1} style={ this.state.hidden3==true ? img : img_blur}/>
-                    <div style={this.state.hidden3==true ? hidden :caption}>
-                        <Typography variant="h2" gutterBottom style={{textAlign:"center"}}>clothes</Typography>
-                        <Typography variant="h4" gutterBottom style={{textAlign:"center"}}>لباس</Typography>
-                    </div>
-                </div>
-
-                <div style={style_item} onMouseEnter={()=>this.hover(4)} onMouseLeave={()=>this.hidden(4)} >
-                    <img  src={image1} style={ this.state.hidden4==true ? img : img_blur}/>
-                    <div style={this.state.hidden4==true ? hidden :caption}>
-                        <Typography variant="h2" gutterBottom style={{textAlign:"center"}}>clothes</Typography>
-                        <Typography variant="h4" gutterBottom style={{textAlign:"center"}}>لباس</Typography>
-                    </div>
-                </div>
-
-                <div style={style_item} onMouseEnter={()=>this.hover(5)} onMouseLeave={()=>this.hidden(5)} >
-                    <img  src={image1} style={ this.state.hidden5==true ? img : img_blur}/>
-                    <div style={this.state.hidden5==true ? hidden :caption}>
-                        <Typography variant="h2" gutterBottom style={{textAlign:"center"}}>clothes</Typography>
-                        <Typography variant="h4" gutterBottom style={{textAlign:"center"}}>لباس</Typography>
-                    </div>
-                </div>
-
-
-                <div style={style_item} onMouseEnter={()=>this.hover(6)} onMouseLeave={()=>this.hidden(6)} >
-                    <img  src={image1} style={ this.state.hidden6==true ? img : img_blur}/>
-                    <div style={this.state.hidden6==true ? hidden :caption}>
-                        <Typography variant="h2" gutterBottom style={{textAlign:"center"}}>clothes</Typography>
-                        <Typography variant="h4" gutterBottom style={{textAlign:"center"}}>لباس</Typography>
-                    </div>
-                </div>
-
-                <div style={style_item} onMouseEnter={()=>this.hover(7)} onMouseLeave={()=>this.hidden(7)} >
-                    <img  src={image1} style={ this.state.hidden7==true ? img : img_blur}/>
-                    <div style={this.state.hidden7==true ? hidden :caption}>
-                        <Typography variant="h2" gutterBottom style={{textAlign:"center"}}>clothes</Typography>
-                        <Typography variant="h4" gutterBottom style={{textAlign:"center"}}>لباس</Typography>
-                    </div>
-                </div>
-
-
-                <div style={style_item} onMouseEnter={()=>this.hover(8)} onMouseLeave={()=>this.hidden(8)} >
-                    <img  src={image1} style={ this.state.hidden8==true ? img : img_blur}/>
-                    <div style={this.state.hidden8==true ? hidden :caption}>
-                        <Typography variant="h2" gutterBottom style={{textAlign:"center"}}>clothes</Typography>
-                        <Typography variant="h4" gutterBottom style={{textAlign:"center"}}>لباس</Typography>
-                    </div>
-                </div>
-
-
-                <div style={style_item} onMouseEnter={()=>this.hover(9)} onMouseLeave={()=>this.hidden(9)} >
-                    <img  src={image1} style={ this.state.hidden9==true ? img : img_blur}/>
-                    <div style={this.state.hidden9==true ? hidden :caption}>
-                        <Typography variant="h2" gutterBottom style={{textAlign:"center"}}>clothes</Typography>
-                        <Typography variant="h4" gutterBottom style={{textAlign:"center"}}>لباس</Typography>
-                    </div>
-                </div>
-
 
 
             </div>
