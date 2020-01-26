@@ -159,11 +159,12 @@ export default function Header(props) {
     };
 
     const onLoginPressed = () => {
-        if (props.isLoggedIn) {
+        //TODO: uncomment it
+        // if (props.isLoggedIn) {
             props.history.push(baseUrls.profile);
-        } else {
-            props.history.push(baseUrls.auth);
-        }
+        // } else {
+        //     props.history.push(baseUrls.auth);
+        // }
     };
 
     const onLogoPressed = () => {

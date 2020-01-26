@@ -7,6 +7,10 @@ import {assets} from "../../values/assets";
 import {strings} from "../../values/strings";
 import axios from 'axios';
 import {serverUrls} from "../../values/serverurls";
+import Default from '../../assets/default.png';
+import AvatarEditor from 'react-avatar-editor'
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyle = makeStyles(theme => ({
     avatar: {
@@ -15,15 +19,68 @@ const useStyle = makeStyles(theme => ({
     },
     textField: {
         margin: 10
-    }
+    },
+    image:{
+        borderRadius:"50%",
+        width:'250px',
+            height:'250px'
+    },
+//     profile: {
+//         padding: '6px',
+//         textAlign: 'center',
+//         animationName: 'fadeIn',
+//         animationDuration: '.9s',
+//         boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.44)',
+//         background:' #B71C1C',
+//         position: 'relative',
+//         margin: '5% auto 10px'
+// }
+
+
 }));
 
 export default function Profile(props) {
-
+    let longPressed = false;
+    let file;
+    let longPress;
     const [name, setName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
     const [username, setUsername] = React.useState('');
     const [email, setEmail] = React.useState('');
+    const [photo, setPhoto] = React.useState(Default);
+    const [profilePic, setProfilePic] = React.useState('');
+    const [photoCleared, setPhotoCleared] = React.useState(false);
+
+    const clearProfile = () => {
+        setPhoto(Default);
+        setProfilePic(null);
+        setPhotoCleared(true);
+        longPressed = true;
+        // file.value = null;
+    };
+
+    const profilePress = () =>{
+        longPress = setTimeout(clearProfile, 1000);
+    };
+
+    const choosePicture = () => {
+        file.click();
+    };
+
+    const profileRelease = () => {
+        clearTimeout(longPress);
+        if (!longPressed) {
+            choosePicture();
+        }
+        longPressed = false;
+    };
+
+    const selectImages = (event) => {
+        if (event.target.files[0] !=null) {
+            setPhoto(URL.createObjectURL(event.target.files[0]));
+            setProfilePic(event.target.files[0]);
+        }
+    };
 
     React.useEffect(() => {
         axios.get(serverUrls.user).then(response => {
@@ -44,7 +101,28 @@ export default function Profile(props) {
         <React.Fragment>
             <Container maxWidth='xs'>
                 <FlexBoxItem display='flex' justifyContent='center'>
-                    <Avatar src={assets.defaultProfile} className={classes.avatar}/>
+                    <div className={classes.profile} onMouseDown={profilePress}
+                         onMouseUp={profileRelease}>
+                        <Tooltip title={strings.changeProfile} placement="right">
+                            {/*<Button>right-start</Button>*/}
+                            <img src={photo} className={classes.image} alt={photo}/>
+                        </Tooltip>
+                        {/*<div className="middle">*/}
+                        {/*    <div className="text">change profile picture*/}
+                        {/*        (hold to delete)*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+                        <div className="MasterProfile">
+                            <div className="col-sm-4">
+                                <input style={{display: 'none'}} className="FormField__Button mr-20"
+                                       type="file"
+                                       accept='image/*'
+                                       onChange={selectImages}
+                                       ref={fileInput => file = fileInput}/>
+                            </div>
+                        </div>
+                    </div>
+                    {/*<Avatar src={assets.defaultProfile} className={classes.avatar}/>*/}
                 </FlexBoxItem>
                 <FlexBoxItem display='flex'>
                     <TextField

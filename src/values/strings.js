@@ -45,5 +45,6 @@ export const strings = {
     contactUs: `تماس با ${appName}`,
     aboutUs: 'درباره ما',
     jobOpportunities: `فرصت${zwnj}های شغلی`,
-    followUs: `${appName} را در شبکه${zwnj}های اجتماعی دنبال کنید.`
+    followUs: `${appName} را در شبکه${zwnj}های اجتماعی دنبال کنید.`,
+    changeProfile: 'برای افزودن/تغییر کلیک کنید , برای حذف نگه دارید'
 };
