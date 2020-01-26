@@ -27,6 +27,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from 'axios';
 import {serverUrls} from "../values/serverurls";
+import Badge from "@material-ui/core/Badge";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -140,6 +141,7 @@ export default function Header(props) {
                     search: searchQuery
                 }
             }).then(response => {
+                console.log(response.data);
                 setSearchOptions(response.data);
                 setSearchLoading(false);
             }).catch(error => {
@@ -159,12 +161,12 @@ export default function Header(props) {
     };
 
     const onLoginPressed = () => {
-        //TODO: uncomment it
-        // if (props.isLoggedIn) {
+
+        if (props.isLoggedIn && !props.history.location.pathname.includes(baseUrls.profile)) {
             props.history.push(baseUrls.profile);
-        // } else {
-        //     props.history.push(baseUrls.auth);
-        // }
+        } else if (!props.isLoggedIn && !props.history.location.pathname.includes(baseUrls.auth)) {
+            props.history.push(baseUrls.auth);
+        }
     };
 
     const onLogoPressed = () => {
@@ -312,9 +314,11 @@ export default function Header(props) {
                                                           justifyItems='flex-end'>
                                             <FlexBoxItem flexBasis={null}>
                                                 {showButtons &&
-                                                <IconButton>
-                                                    <ShoppingCart className={classes.icons}/>
-                                                </IconButton>
+                                                <Badge badgeContent={0} color='primary'>
+                                                    <IconButton>
+                                                        <ShoppingCart className={classes.icons}/>
+                                                    </IconButton>
+                                                </Badge>
                                                 }
                                             </FlexBoxItem>
                                             <FlexBoxItem flexBasis={null}>

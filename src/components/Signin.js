@@ -21,6 +21,7 @@ import {serverUrls} from "../values/serverurls";
 import PropTypes from 'prop-types';
 import {baseUrls} from "../values/urls";
 import {useCookies} from 'react-cookie';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 
 const useStyles = makeStyles(theme => ({
@@ -52,6 +53,7 @@ export default function Signin(props) {
     const [showPassword, setShowPassword] = React.useState(false);
     const [checkedLogin, setCheckedLogin] = React.useState(true);
     const [cookies, setCookies, removeCookies] = useCookies(['csrftoken']);
+    const [isLoading, setLoading] = React.useState(false);
 
     const handleChange = prop => event => {
         if (prop === "checkedLogin") {
@@ -82,6 +84,7 @@ export default function Signin(props) {
         if (checkedLogin) {
             data.keep = true;
         }
+        setLoading(true);
         axios.post(serverUrls.signIn, data).then(response => {
             // response is 201!
             props.setLoggedIn(true);
@@ -94,6 +97,8 @@ export default function Signin(props) {
             // TODO Show appropriate Error
             window.alert('TODO: Show appropriate Error');
             console.log(error);
+        }).finally(() => {
+            setLoading(false);
         });
     };
 
@@ -175,6 +180,8 @@ export default function Signin(props) {
                 <Grid item>
                     <Button variant="contained" color="primary" onClick={onSignInButtonClicked}>
                         {strings.signIn}
+                        {isLoading && <CircularProgress color="inherit"
+                                                        size={20}/>}
                     </Button>
                 </Grid>
             </Grid>
