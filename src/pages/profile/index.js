@@ -18,8 +18,7 @@ export default function Index(props) {
 
     return (
         <Container>
-            {/*TODO: uncomment it*/}
-            {/*{!isLoggedIn && <Redirect to={baseUrls.auth}/>}*/}
+            {!isLoggedIn && <Redirect to={baseUrls.auth}/>}
             <ProfileHeader {...props}/>
             <Switch>
                 <Route exact path={`${matchUrl}`} render={(props) => <Profile {...props}/>}/>

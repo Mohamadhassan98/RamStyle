@@ -59,7 +59,7 @@ export default function ProfileHeader(props) {
     };
 
     const onLogOutClicked = () => {
-        axios.get(serverUrls.logOut).then(response => {
+        axios.post(serverUrls.logOut).then(response => {
             props.setLoggedIn(false);
             props.history.push(baseUrls.home);
         }).catch(error => {
