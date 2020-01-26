@@ -1,15 +1,11 @@
 import React from "react";
 import {Container, makeStyles, TextField} from "@material-ui/core";
-import Avatar from "@material-ui/core/Avatar";
 import FlexBoxItem from "../../tools/FlexBoxItem";
 import Button from "@material-ui/core/Button";
-import {assets} from "../../values/assets";
 import {strings} from "../../values/strings";
 import axios from 'axios';
 import {serverUrls} from "../../values/serverurls";
 import Default from '../../assets/default.png';
-import AvatarEditor from 'react-avatar-editor'
-import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyle = makeStyles(theme => ({
