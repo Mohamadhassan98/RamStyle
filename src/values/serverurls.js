@@ -9,7 +9,8 @@ export const serverUrls = {
     signUp: '/rest-auth/registration/',
     user: '/rest-auth/user/',
     logOut: '/rest-auth/logout/',
-    passwordChange: '/rest-auth/password/change/'
+    passwordChange: '/rest-auth/password/change/',
+
 };
 
 // let _urlsByServer = _urls;
