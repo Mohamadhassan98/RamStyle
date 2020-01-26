@@ -1,6 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import {assets} from "../values/assets";
+import {baseUrls} from "../values/urls";
 
 export default class productList extends React.Component {
     constructor(props) {
@@ -20,6 +21,8 @@ export default class productList extends React.Component {
         this.hover = this.hover.bind(this);
         this.hidden = this.hidden.bind(this);
     }
+
+
 
     hover(n) {
         if (n === 1)
@@ -121,7 +124,7 @@ export default class productList extends React.Component {
 
         return (
             <div style={style_container}>
-                <div style={style_item} onMouseEnter={() => this.hover(1)} onMouseLeave={() => this.hidden(1)}>
+                <div style={style_item} onMouseEnter={() => this.hover(1)} onMouseLeave={() => this.hidden(1)} onClick={()=>this.props.history.push(baseUrls.categories(1))}>
                     <img src={assets.image1} style={this.state.hidden1 ? img : img_blur}/>
                     <div style={this.state.hidden1 ? hidden : caption}>
                         <Typography variant="h2" gutterBottom
