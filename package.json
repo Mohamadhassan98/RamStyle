@@ -52,5 +52,6 @@
     "@material-ui/system": "latest",
     "jss-rtl": "latest",
     "prop-types": "latest"
-  }
+  },
+  "proxy": "http://198.143.182.157"
 }

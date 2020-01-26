@@ -23,6 +23,14 @@ export default function App(props) {
         });
     }, []);
 
+    React.useEffect(() => {
+        axios.get(serverUrls.isLoggedIn).then(response => {
+            setLoggedIn(true);
+        }).catch(error => {
+            setLoggedIn(false);
+        });
+    }, []);
+
     return (
         <div className="App">
             <Footer show={showFooter}>
