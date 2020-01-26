@@ -6,6 +6,7 @@ export const serverUrls = {
     allProducts: '/store/products/',
     signIn: '/store/login/',
     isLoggedIn: '/store/logged-in/',
+    signUp: '/rest-auth/registration/',
     user: '/rest-auth/user/',
     logOut: '/rest-auth/logout/',
     passwordChange: '/rest-auth/password/change/'

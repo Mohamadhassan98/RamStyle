@@ -7,6 +7,7 @@ import OurApplication from "../components/OurApplication";
 import {assets} from "../values/assets";
 import {makeStyles} from "@material-ui/core";
 import {strings} from "../values/strings";
+import ProductList from "../components/ProductList";
 
 const useStyle = makeStyles(theme => ({
     img: {
@@ -39,6 +40,7 @@ export default function HomePage(props) {
             </div>
             <Brands/>
             <WeAreGood/>
+            <ProductList/>
             <OurApplication/>
         </React.Fragment>
     );

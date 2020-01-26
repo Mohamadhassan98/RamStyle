@@ -2,6 +2,8 @@ const zwnj = '‌';
 
 const appName = 'رم استایل';
 
+const persianNumbers = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+
 export const strings = {
     appName: appName,
     toolbarSearchLabel: 'جستجو...',
@@ -28,7 +30,7 @@ export const strings = {
     rememberMe: 'مرا به خاطرت نگه دار',
     signIn: 'ورود',
     signUp: 'ثبت نام',
-    passwordHelper: 'حداقل 8 کاراکتر',
+    passwordHelper: `حداقل ${persianNumbers[8]} کاراکتر شامل یک حرف`,
     saleHelp: `راهنمای خرید از ${appName}`,
     orderRegisterHelp: 'نحوه ثبت سفارش',
     sendOrderProcedure: 'رویه ارسال سفارش',
@@ -45,5 +47,14 @@ export const strings = {
     contactUs: `تماس با ${appName}`,
     aboutUs: 'درباره ما',
     jobOpportunities: `فرصت${zwnj}های شغلی`,
-    followUs: `${appName} را در شبکه${zwnj}های اجتماعی دنبال کنید.`
+    followUs: `${appName} را در شبکه${zwnj}های اجتماعی دنبال کنید.`,
+    emptyUsernameError: `نام کاربری نمی${zwnj}تواند خالی باشد.`,
+    confirmPasswordNotMatch: 'کلمه عبور تطابق ندارد.',
+    invalidEmail: 'ایمیل وارد شده صحیح نیست.',
+    usernameAlreadyExists: 'نام کاربری از قبل وجود دارد.',
+    emailAlreadyExists: 'ایمیل از قبل وجود دارد.',
+    commonPasswordError: 'کلمه عبور بیش از حد ساده است.'
 };
+
+export const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+export const passwordRegex = /(?=[\w\s]*[A-Za-z][\w\s]*)[\w\s]{8,}/;
