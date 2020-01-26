@@ -1,158 +1,158 @@
 import React from 'react';
-import {Container, TextField} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
+import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import GridListTile from "@material-ui/core/GridListTile";
-import GridList from "@material-ui/core/GridList";
-import {assets} from '../values/assets';
-import Divider from "@material-ui/core/Divider";
-import {createMuiTheme, makeStyles, MuiThemeProvider} from '@material-ui/core/styles';
-import FlexBoxContainer from "../tools/FlexBoxContainer";
-import FlexBoxItem from "../tools/FlexBoxItem";
-import Pagination from "material-ui-flat-pagination";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import PropTypes from 'prop-types';
-import {strings} from "../values/strings";
+import assets from '../values/assets';
+class Products extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            number:10,
+            totNumber:20,
 
-const useStyles = makeStyles(theme => ({
-
-    root: {
-        display: 'flex',
-        justifyContent: 'flex-start',
-        overflow: 'hidden',
-        flexWrap: "wrap",
-    },
-    gridList: {
-        height: 'auto',
-        marginTop: 100,
-        flexBasis: '100%',
-    },
-}));
+        }
 
 
-//fixme GridList to FlexBox @Zahrakml
-export default function Products(props) {
+    }
 
-    props.setShowFooter(true);
-    props.setShowHeaderButtons(true);
 
-    const onTextChanged = (event) => {
-        setSearchInput({
-            [event.target.name]: event.target.value
-        });
-    };
-    const tileData = [
-        {
-            img: assets.brandItem1,
-            title: 'Image',
-            author: 'author',
-        },
-        {
-            img: assets.brandItem1,
-            title: 'Image',
-            author: 'author',
-        },
-        {
-            img: assets.brandItem1,
-            title: 'Image',
-            author: 'author',
-        },
-        {
-            img: assets.brandItem1,
-            title: 'Image',
-            author: 'author',
-        },
-        {
-            img: assets.brandItem1,
-            title: 'Image',
-            author: 'author',
-        },
-    ];
+    render() {
+        const container={
+            width:"100%",
+            height:"100px",
+            display:"flex",
+            flexDirection:"column",
 
-    const [searchResult, setSearchResult] = React.useState(0);
-    const [input, setSearchInput] = React.useState("");
-    const classes = useStyles();
-    const theme = createMuiTheme();
 
-    return (
-        <Container>
-            <FlexBoxContainer flexDirection='column' alignItems='stretch' justifyContent='space-between'
-                              style={{minHeight: '100vh'}}>
-                <FlexBoxItem>
-                    <FlexBoxContainer flexDirection='column' alignItems='stretch'>
-                        <FlexBoxItem>
-                            <FlexBoxContainer justifyContent='space-between' alignItems='center'>
-                                <FlexBoxItem>
-                                    <FlexBoxContainer justifyContent='flex-start' alignItems='center'>
-                                        <FlexBoxItem flexBasis={null}>
-                                            <Typography>
-                                                پوشاک
-                                            </Typography>
-                                        </FlexBoxItem>
-                                        <FlexBoxItem flexBasis={null}>
-                                            <Divider orientation="vertical"
-                                                     style={{width: 1, height: 50, marginLeft: 5}}/>
-                                        </FlexBoxItem>
-                                        <FlexBoxItem flexBasis={null}>
-                                            <TextField id="standard-search"
-                                                       label="Search field" type="search"
-                                                       onChange={onTextChanged}
-                                                       style={{marginLeft: 20}}
-                                                       InputProps={{
-                                                           startAdornment: (
-                                                               <InputAdornment position="start">
-                                                                   <SearchIcon/>
-                                                               </InputAdornment>
-                                                           ),
-                                                       }}
-                                            >
-                                            </TextField>
-                                        </FlexBoxItem>
-                                    </FlexBoxContainer>
-                                </FlexBoxItem>
-                                <FlexBoxItem>
-                                    <Typography align={"right"}>
-                                        {strings.show} {searchResult > 9 ? 9 : searchResult} {strings.from} {searchResult}
-                                    </Typography>
-                                </FlexBoxItem>
-                            </FlexBoxContainer>
-                        </FlexBoxItem>
-                        <FlexBoxItem>
-                            <Divider orientation="horizontal" style={{height: 1, marginTop: 10}}/>
-                        </FlexBoxItem>
-                        <FlexBoxItem>
-                            <Typography>
-                                نتایج
-                            </Typography>
-                        </FlexBoxItem>
-                        <FlexBoxItem>
-                            <GridList cellHeight={160} className={classes.gridList}>
-                                {tileData.map(tile => (
-                                    <GridListTile key={tile.img} cols={tile.cols || 1} style={{flexBasis: '33.33%'}}>
-                                        <img src={tile.img} alt={tile.title}/>
-                                    </GridListTile>
-                                ))}
-                            </GridList>
-                        </FlexBoxItem>
-                    </FlexBoxContainer>
-                </FlexBoxItem>
-                <FlexBoxItem flexBasis={null} alignSelf='center'>
-                    <MuiThemeProvider theme={theme}>
-                        <CssBaseline/>
-                        <Pagination
-                            limit={10}
-                            offset={10}
-                            total={100}
+
+        }
+        const SearchBar={
+            width:"100%",
+            display:"flex",
+            flexDirection:"row",
+            direction:"rtl",
+
+
+
+        }
+        const name={
+            // width:"11%",
+            height:"20px",
+            display:"flex",
+            padding: "2px",
+            fontSize:"20px",
+            overflow:"hidden"
+        }
+        const search={
+            width:"70%",
+            height:"20px",
+            display:"flex",
+            flexDirection:"row",
+
+            marginLeft:"2px",
+            padding: "2px",
+        }
+        const numberOfProducts={
+            width:"20%",
+            height:"20px",
+            display:"flex",
+            padding: "2px",
+            fontSize:"20px",
+            overflow:"hidden",
+            direction: "ltr"
+            //backgroundColor: "red"
+        }
+        const line={
+            width:"0px",
+            height:"20px",
+            backgroundColor:"black",
+            marginRight:"2px",
+            marginLeft:"2px",
+            // padding: "2px",
+            border:"1px solid black"
+        }
+        const list={
+            width:"100%",
+            display:"flex",
+            flexDirection:"row",
+            direction:"rtl",
+            marginTop:"1%",
+            borderTop:"1px solid gray",
+            flexWrap:"wrap",
+            marginLeft:"1%",
+            marginRight: "1%",
+            paddingTop:"1.5%",
+        }
+        const pageNumber={
+            width:"100%",
+            display:"flex",
+            flexDirection:"row",
+            alignItems:"center",
+            justifyContent:"center",
+            marginTop:"5px",
+        }
+        const product={
+            width:"18%",
+            alignItems:"center",
+            justifyContent:"center",
+            margin:"1%",
+            display:"flex",
+            flexDirection:"column",
+            border: "1px solid black"
+
+        }
+        const namePrice={
+            display:"flex",
+            flexDirection:"row",
+            flexWrap: "nowrap",
+            width:"98%",
+            direction:"rtl",
+            margin: "2px",
+            alignItems:"center",
+            fontSize:"20px",
+        }
+
+        return (
+            <div style={container}>
+                <div style={SearchBar}>
+                    <div style={name}>
+                        نتایج جست و جو
+                    </div>
+                    <div style={line}></div>
+                    <div style={search}>
+                        <SearchIcon style={{width:"5%"}}/>
+                        <InputBase
+                            style={{width:"90%",direction:"rtl"}}
+                            placeholder={"جست و جو در محصولات زیر ..."}
                         />
-                    </MuiThemeProvider>
-                </FlexBoxItem>
-            </FlexBoxContainer>
-        </Container>
-    );
+                    </div>
+                    <div style={numberOfProducts}>
+                        نمایش {this.state.number} محصول از {this.state.totNumber} محصول
+                    </div>
+                </div>
+                <div style={list}>
+                    <div style={product}>
+                        <img style={{width:"100%",height:"300px"}} src={assets.image1}/>
+                        <div style={namePrice}> مانتو </div>
+                        <div style={namePrice}>
+                            <div style={{fontSize:"30px",whiteSpace:"pre"}}>2000 </div>
+                            تومان
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+
+                <div style={pageNumber}>
+                    {/* بهناز اینجا بنویس */}
+                </div>
+            </div>
+        );
+    }
+
+
 }
 
-Products.propTypes = {
-    setShowHeaderButtons: PropTypes.func.isRequired,
-    setShowFooter: PropTypes.func.isRequired
-};
+export default Products;
