@@ -53,7 +53,8 @@ export const strings = {
     invalidEmail: 'ایمیل وارد شده صحیح نیست.',
     usernameAlreadyExists: 'نام کاربری از قبل وجود دارد.',
     emailAlreadyExists: 'ایمیل از قبل وجود دارد.',
-    commonPasswordError: 'کلمه عبور بیش از حد ساده است.'
+    commonPasswordError: 'کلمه عبور بیش از حد ساده است.',
+    changeProfile:'برای افزودن و تغییر عکس کلیک کنید , برای حذف نگه دارید'
 };
 
 export const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;

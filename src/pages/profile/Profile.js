@@ -104,14 +104,8 @@ export default function Profile(props) {
                     <div className={classes.profile} onMouseDown={profilePress}
                          onMouseUp={profileRelease}>
                         <Tooltip title={strings.changeProfile} placement="right">
-                            {/*<Button>right-start</Button>*/}
                             <img src={photo} className={classes.image} alt={photo}/>
                         </Tooltip>
-                        {/*<div className="middle">*/}
-                        {/*    <div className="text">change profile picture*/}
-                        {/*        (hold to delete)*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
                         <div className="MasterProfile">
                             <div className="col-sm-4">
                                 <input style={{display: 'none'}} className="FormField__Button mr-20"
@@ -122,7 +116,6 @@ export default function Profile(props) {
                             </div>
                         </div>
                     </div>
-                    {/*<Avatar src={assets.defaultProfile} className={classes.avatar}/>*/}
                 </FlexBoxItem>
                 <FlexBoxItem display='flex'>
                     <TextField
