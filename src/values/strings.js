@@ -57,9 +57,23 @@ export const strings = {
     commonPasswordError: 'کلمه عبور بیش از حد ساده است.',
     changeProfile: 'برای افزودن و تغییر عکس کلیک کنید.\nبرای حذف نگه دارید.',
     error404Body: 'صفحه مورد نظر یافت نشد.',
-    error404Title: `${persianNumbers[4]}${persianNumbers[0]}${persianNumbers[4]}`,
-    returnToPreviousPage: 'بازگشت به صفحه قبل...'
+    error404Title: toPersianNumbers(404),
+    returnToPreviousPage: 'بازگشت به صفحه قبل...',
+    rial: 'ریال',
+    productCount: 'تعداد کالا',
+    totalPrice: 'قیمت کل کالاها',
+    priceToPay: 'مبلغ قابل پرداخت',
+    continuePurchaseProcedure: 'ادامه فرایند خرید'
 };
+
+export function toPersianNumbers(value) {
+    let result = value.toString();
+    persianNumbers.forEach((value1, index) => {
+        const regex = new RegExp(`${index}`, 'g');
+        result = result.replace(regex, value1);
+    });
+    return result;
+}
 
 export const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 export const passwordRegex = /(?=[\w\s]*[A-Za-z][\w\s]*)[\w\s]{8,}/;

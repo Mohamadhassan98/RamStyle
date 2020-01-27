@@ -20,6 +20,9 @@ const useStyles = makeStyles(theme => ({
     container: {
         flip: false,
         marginTop: 50
+    },
+    dotsClass: {
+        marginBottom: '10px'
     }
 }));
 
@@ -29,18 +32,15 @@ export default function Brands(props) {
 
     const classes = useStyles();
 
-    const [activeItemIndex, setActiveItemIndex] = React.useState(0);
-
-    const chevronWidth = 40;
-
     const settings = {
-        dots: true,
+        dots: false,
         infinite: false,
         speed: 500,
         slidesToShow: 3,
         slidesToScroll: 1,
-        rtl: true,
-        arrows: true
+        // rtl: true,
+        arrows: true,
+        // dotsClass: clsx(classes.dotsClass)
     };
 
     return (
@@ -56,7 +56,7 @@ export default function Brands(props) {
                     </Grid>
                     <Grid item>
                         <Slider {...settings}>
-                            <Card classes={classes}>
+                            <Card classes={classes} elevation={0}>
                                 <CardActionArea>
                                     <CardMedia
                                         component="img"
