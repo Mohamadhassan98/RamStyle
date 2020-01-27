@@ -117,7 +117,7 @@ const useStyles = makeStyles(theme => ({
     button: {
         color: theme.palette.text.secondary,
         cursor: 'pointer'
-    },
+    }
 }));
 
 export default function Header(props) {
@@ -161,17 +161,24 @@ export default function Header(props) {
     };
 
     const onLoginPressed = () => {
-
         if (props.isLoggedIn && !props.history.location.pathname.includes(baseUrls.profile)) {
             props.history.push(baseUrls.profile);
-        } else if (!props.isLoggedIn && !props.history.location.pathname.includes(baseUrls.auth)) {
+        } else if (!props.isLoggedIn) {
+            props.history.push(baseUrls.auth);
+        }
+    };
+
+    const onCartClicked = () => {
+        if (props.isLoggedIn && props.history.location.pathname !== baseUrls.cart) {
+            props.history.push(baseUrls.cart);
+        } else if (!props.isLoggedIn) {
             props.history.push(baseUrls.auth);
         }
     };
 
     const onLogoPressed = () => {
         if (props.history.location.pathname !== baseUrls.home) {
-            props.history.push({pathname: baseUrls.home});
+            props.history.push(baseUrls.home);
         }
     };
 
@@ -314,11 +321,20 @@ export default function Header(props) {
                                                           justifyItems='flex-end'>
                                             <FlexBoxItem flexBasis={null}>
                                                 {showButtons &&
-                                                <Badge badgeContent={0} color='primary'>
-                                                    <IconButton>
-                                                        <ShoppingCart className={classes.icons}/>
-                                                    </IconButton>
-                                                </Badge>
+                                                <IconButton>
+                                                    <Badge
+                                                        anchorOrigin={{
+                                                            vertical: 'top',
+                                                            horizontal: 'left',
+                                                        }}
+                                                        overlap='rectangle'
+                                                        badgeContent={props.cartSize}
+                                                        showZero
+                                                        color='secondary'>
+                                                        <ShoppingCart className={classes.icons}
+                                                                      onClick={onCartClicked}/>
+                                                    </Badge>
+                                                </IconButton>
                                                 }
                                             </FlexBoxItem>
                                             <FlexBoxItem flexBasis={null}>
@@ -346,9 +362,11 @@ export default function Header(props) {
 Header.propTypes = {
     showButtons: PropTypes.bool,
     productCategories: PropTypes.array.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired
+    isLoggedIn: PropTypes.bool.isRequired,
+    cartSize: PropTypes.number
 };
 
 Header.defaultProps = {
-    showButtons: true
+    showButtons: true,
+    cartSize: 0
 };

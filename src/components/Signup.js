@@ -103,7 +103,7 @@ export default function Signup(props) {
         });
     };
 
-    const errorOff = () => {
+    const errorsOff = () => {
         setUsernameError(' ');
         setPasswordErrorEnabled(false);
         setPasswordError(strings.passwordHelper);
@@ -147,6 +147,7 @@ export default function Signup(props) {
                             placeholder={strings.username}
                             labelWidth={70}
                             error={usernameError !== ' '}
+                            required
                         />
                         <FormHelperText error={usernameError !== ' '} id="username-helper">
                             {usernameError}
@@ -165,6 +166,7 @@ export default function Signup(props) {
                             placeholder={strings.email}
                             labelWidth={40}
                             error={emailError !== ' '}
+                            required
                         />
                         <FormHelperText error={emailError !== ' '} id="password-helper">
                             {emailError}
@@ -196,6 +198,7 @@ export default function Signup(props) {
                                 </InputAdornment>
                             }
                             labelWidth={65}
+                            required
                         />
                         <FormHelperText error={passwordErrorEnabled} id="password-helper">
                             {passwordError}
@@ -227,6 +230,7 @@ export default function Signup(props) {
                                 </InputAdornment>
                             }
                             labelWidth={100}
+                            required
                         />
                         <FormHelperText error={confirmPasswordError !== ' '} id="confirmPassword-helper">
                             {confirmPasswordError}
@@ -234,7 +238,7 @@ export default function Signup(props) {
                     </FormControl>
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" color="primary" onClick={onSubmitPressed} onBlur={errorOff}>
+                    <Button variant="contained" color="primary" onClick={onSubmitPressed} onBlur={errorsOff}>
                         {strings.signUp}
                         {isLoading && <CircularProgress color="inherit" style={{marginRight: '10px'}} size={20}/>}
                     </Button>

@@ -1,5 +1,5 @@
 import React from 'react';
-import MATN from './matn'
+import MATN from './matn';
 import Button from '@material-ui/core/Button';
 import {Switch} from 'react-router';
 
@@ -42,18 +42,11 @@ class Information extends React.Component {
          ......................................................................................................
          .....................................................................................................
          .......................................................................`
-
-        }
-
-
+        };
     }
 
-
     render() {
-
         return (
-
-
             <Router>
                 <Switch>
                     <Route exact path="/about" component={
@@ -62,12 +55,8 @@ class Information extends React.Component {
                     <Route path="/" component={Button}/>
                 </Switch>
             </Router>
-
-
         );
     }
-
-
 }
 
 export default Information;

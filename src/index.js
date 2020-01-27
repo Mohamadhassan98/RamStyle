@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 import RTL from "./tools/RTL";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Route} from "react-router-dom";
 import {CssBaseline} from "@material-ui/core";
 import {useCookies} from 'react-cookie';
 import axios from 'axios';
@@ -46,6 +46,11 @@ function Index() {
                     color: '#000000',
                 },
             },
+            MuiFormHelperText: {
+                root: {
+                    color: '#000000'
+                }
+            },
             MuiTabs: {
                 indicator: {
                     background: "#34a8a2"
@@ -65,9 +70,7 @@ function Index() {
                 <RTL>
                     <div className="App">
                         <BrowserRouter>
-                            <Switch>
-                                <Route path='/' component={App}/>
-                            </Switch>
+                            <Route path='/' component={App}/>
                         </BrowserRouter>
                     </div>
                 </RTL>

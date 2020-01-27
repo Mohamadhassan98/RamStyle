@@ -7,6 +7,9 @@ import ChangePassword from "./ChangePassword";
 import PropTypes from 'prop-types';
 import {Container} from "@material-ui/core";
 import MySales from "./MySales";
+import ErrorPage from "../../components/ErrorPage";
+import {strings} from "../../values/strings";
+import {assets} from "../../values/assets";
 
 export default function Index(props) {
 
@@ -14,7 +17,7 @@ export default function Index(props) {
     props.setShowFooter(true);
 
     const matchUrl = props.match.url;
-    const {isLoggedIn, setLoggedIn} = props;
+    const {isLoggedIn} = props;
 
     return (
         <Container>
@@ -25,6 +28,9 @@ export default function Index(props) {
                 <Route path={`${matchUrl}${profileUrls.changePassword}`}
                        render={(props) => <ChangePassword {...props}/>}/>
                 <Route path={`${matchUrl}${profileUrls.mySales}`} render={(props) => <MySales {...props}/>}/>
+                <Route
+                    render={(props) => <ErrorPage {...props} title={strings.error404Title} body={strings.error404Body}
+                                                  image={assets.image1}/>}/>
             </Switch>
         </Container>
     );

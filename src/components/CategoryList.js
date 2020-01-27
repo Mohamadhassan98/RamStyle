@@ -6,6 +6,7 @@ import FlexBoxContainer from "../tools/FlexBoxContainer";
 import FlexBoxItem from "../tools/FlexBoxItem";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {Container} from "@material-ui/core";
+import PropTypes from 'prop-types';
 
 const useStyle = makeStyles(theme => ({
     container: {
@@ -89,4 +90,6 @@ export default function CategoryList(props) {
     );
 }
 
-CategoryList.propTypes = {};
+CategoryList.propTypes = {
+    productCategories: PropTypes.array.isRequired
+};

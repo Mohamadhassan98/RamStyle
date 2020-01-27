@@ -48,5 +48,6 @@ export default function HomePage(props) {
 
 HomePage.propTypes = {
     setShowHeaderButtons: PropTypes.func.isRequired,
-    setShowFooter: PropTypes.func.isRequired
+    setShowFooter: PropTypes.func.isRequired,
+    productCategories: PropTypes.array.isRequired
 };

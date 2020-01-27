@@ -5,6 +5,7 @@ export const baseUrls = {
     auth: '/auth',
     profile: '/profile',
     categories: (id) => `/categories/${id}`,
+    cart: '/cart'
 };
 
 export const profileUrls = {

@@ -39,7 +39,8 @@ export default function App(props) {
                 <Route path={routeUrls.home} render={(props) => <Index {...props} setShowFooter={setShowFooter}
                                                                        setShowHeaderButtons={setHeaderButtonShow}
                                                                        isLoggedIn={isLoggedIn}
-                                                                       setLoggedIn={setLoggedIn}/>}/>
+                                                                       setLoggedIn={setLoggedIn}
+                                                                       categoryList={productCategories}/>}/>
             </Footer>
         </div>
     );

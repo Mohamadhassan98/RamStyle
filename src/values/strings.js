@@ -49,12 +49,16 @@ export const strings = {
     jobOpportunities: `فرصت${zwnj}های شغلی`,
     followUs: `${appName} را در شبکه${zwnj}های اجتماعی دنبال کنید.`,
     emptyUsernameError: `نام کاربری نمی${zwnj}تواند خالی باشد.`,
+    emptyPasswordError: `کلمه عبور نمی${zwnj}تواند خالی باشد.`,
     confirmPasswordNotMatch: 'کلمه عبور تطابق ندارد.',
     invalidEmail: 'ایمیل وارد شده صحیح نیست.',
     usernameAlreadyExists: 'نام کاربری از قبل وجود دارد.',
     emailAlreadyExists: 'ایمیل از قبل وجود دارد.',
     commonPasswordError: 'کلمه عبور بیش از حد ساده است.',
-    changeProfile:'برای افزودن و تغییر عکس کلیک کنید , برای حذف نگه دارید'
+    changeProfile: 'برای افزودن و تغییر عکس کلیک کنید.\nبرای حذف نگه دارید.',
+    error404Body: 'صفحه مورد نظر یافت نشد.',
+    error404Title: `${persianNumbers[4]}${persianNumbers[0]}${persianNumbers[4]}`,
+    returnToPreviousPage: 'بازگشت به صفحه قبل...'
 };
 
 export const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;

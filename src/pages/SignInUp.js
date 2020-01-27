@@ -14,6 +14,7 @@ import Signin from "../components/Signin";
 import {Container} from "@material-ui/core";
 import {Redirect} from 'react-router-dom';
 import {baseUrls} from "../values/urls";
+import {strings} from "../values/strings";
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -90,8 +91,8 @@ export default function SignInUp(props) {
                                     variant="fullWidth"
                                     aria-label="full width tabs example"
                                 >
-                                    <Tab label="ورود" {...a11yProps(0)}/>
-                                    <Tab label="ثبت نام" {...a11yProps(1)}/>
+                                    <Tab label={strings.signIn} {...a11yProps(0)}/>
+                                    <Tab label={strings.signUp} {...a11yProps(1)}/>
                                 </Tabs>
                             </AppBar>
                             <SwipeableViews

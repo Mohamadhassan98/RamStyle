@@ -13,7 +13,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-import {strings} from "../values/strings";
+import {emailRegex, strings} from "../values/strings";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import axios from 'axios';
@@ -48,8 +48,11 @@ export default function Signin(props) {
 
     const classes = useStyles();
     const [username, setUsername] = React.useState("");
+    const [usernameError, setUsernameError] = React.useState(' ');
     const [email, setEmail] = React.useState("");
+    const [emailError, setEmailError] = React.useState(' ');
     const [password, setPassword] = React.useState("");
+    const [passwordError, setPasswordError] = React.useState(' ');
     const [showPassword, setShowPassword] = React.useState(false);
     const [checkedLogin, setCheckedLogin] = React.useState(true);
     const [cookies, setCookies, removeCookies] = useCookies(['csrftoken']);
@@ -75,11 +78,31 @@ export default function Signin(props) {
         event.preventDefault();
     };
 
+    const validateForm = () => {
+        let valid = true;
+        if (!username || username.length === 0) {
+            setUsernameError(strings.emptyUsernameError);
+            valid = false;
+        }
+        if (!password || password.length === 0) {
+            setPasswordError(strings.emptyPasswordError);
+            valid = false;
+        }
+        if (!email || !emailRegex.test(email)) {
+            setEmailError(strings.invalidEmail);
+            valid = false;
+        }
+        return valid;
+    };
+
     const onSignInButtonClicked = () => {
+        if (!validateForm()) {
+            return;
+        }
         const data = {
             username: username,
             password: password,
-            email: email,
+            email: email
         };
         if (checkedLogin) {
             data.keep = true;
@@ -102,44 +125,60 @@ export default function Signin(props) {
         });
     };
 
+    const errorsOff = () => {
+        setUsernameError(' ');
+        setPasswordError(' ');
+        setEmailError(' ');
+    };
+
     return (
         <div className={classes.root}>
             <Grid item xs container direction="column" spacing={2}>
                 <Grid item>
                     <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-username">
+                        <InputLabel htmlFor="username">
                             {strings.username}
                         </InputLabel>
                         <OutlinedInput
-                            id="outlined-adornment-username"
+                            id="username"
                             value={username}
                             onChange={handleChange('username')}
                             placeholder={strings.username}
                             labelWidth={70}
+                            required
+                            error={usernameError !== ' '}
                         />
+                        <FormHelperText error={usernameError !== ' '} id="username-helper">
+                            {usernameError}
+                        </FormHelperText>
                     </FormControl>
                 </Grid>
                 <Grid item>
                     <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-username">
+                        <InputLabel htmlFor="email">
                             {strings.email}
                         </InputLabel>
                         <OutlinedInput
-                            id="outlined-adornment-username"
+                            id="email"
                             value={email}
                             onChange={handleChange('email')}
                             placeholder={strings.email}
                             labelWidth={40}
+                            error={emailError !== ' '}
+                            required
                         />
+                        <FormHelperText error={emailError !== ' '} id="email-helper">
+                            {emailError}
+                        </FormHelperText>
                     </FormControl>
                 </Grid>
                 <Grid item>
                     <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-password">
+                        <InputLabel htmlFor="password">
                             {strings.password}
                         </InputLabel>
                         <OutlinedInput
-                            id="outlined-adornment-password"
+                            id="password"
                             type={showPassword ? 'text' : 'password'}
                             value={password}
                             onChange={handleChange('password')}
@@ -157,9 +196,11 @@ export default function Signin(props) {
                                 </InputAdornment>
                             }
                             labelWidth={65}
+                            error={passwordError !== ' '}
+                            required
                         />
-                        <FormHelperText id="standard-password-helper-text">
-                            {strings.passwordHelper}
+                        <FormHelperText error={passwordError !== ' '} id="password-helper">
+                            {passwordError}
                         </FormHelperText>
                     </FormControl>
                 </Grid>
@@ -178,7 +219,7 @@ export default function Signin(props) {
                     />
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" color="primary" onClick={onSignInButtonClicked}>
+                    <Button variant="contained" color="primary" onClick={onSignInButtonClicked} onBlur={errorsOff}>
                         {strings.signIn}
                         {isLoading && <CircularProgress color="inherit"
                                                         size={20}/>}
