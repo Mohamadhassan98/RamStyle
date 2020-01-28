@@ -38,9 +38,7 @@ export default function Brands(props) {
         speed: 500,
         slidesToShow: 3,
         slidesToScroll: 1,
-        // rtl: true,
         arrows: true,
-        // dotsClass: clsx(classes.dotsClass)
     };
 
     return (

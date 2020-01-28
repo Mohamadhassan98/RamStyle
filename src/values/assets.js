@@ -17,7 +17,9 @@ import Aparat from '../assets/aparat.svg';
 import LinkedIn from '../assets/linkedin-icon.png';
 import eTrust from '../assets/logo.png';
 import DefaultPic from '../assets/default.png';
-import image1 from '../assets/clothes.jpg'
+import image1 from '../assets/clothes.jpg';
+import pic1 from '../assets/1.png';
+import pic2 from '../assets/2.png';
 
 export const assets = {
     // carouselItem1: item1,
@@ -39,5 +41,7 @@ export const assets = {
     linkedin: LinkedIn,
     eTrust: eTrust,
     defaultProfile: DefaultPic,
-    image1:image1
+    image1: image1,
+    pic1: pic1,
+    pic2: pic2
 };
