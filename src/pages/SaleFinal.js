@@ -68,28 +68,11 @@ const style = makeStyles(theme => ({
     },
 }));
 
-const botn = makeStyles(theme => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-    },
-}));
-
-const text = makeStyles(theme => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-            width: 200,
-        },
-    },
-}));
 
 export default function Complex() {
     const classes = useStyles();
     style();
-    botn();
-    text();
+
 
 
     return (
@@ -98,25 +81,25 @@ export default function Complex() {
                 <Table className={classes.table} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell>
+                            {/*<StyledTableCell>*/}
 
-                            </StyledTableCell>
-                            <StyledTableCell align="right">کد پیگیری</StyledTableCell>
-                            <StyledTableCell align="right">زمان تحویل</StyledTableCell>
-                            <StyledTableCell align="right">نحوه ارسال سفارش</StyledTableCell>
-                            <StyledTableCell align="right">هزینه ارسال</StyledTableCell>
+                            {/*</StyledTableCell>*/}
+                            <StyledTableCell align="center">کد پیگیری</StyledTableCell>
+                            <StyledTableCell align="center">زمان تحویل</StyledTableCell>
+                            <StyledTableCell align="center">نحوه ارسال سفارش</StyledTableCell>
+                            <StyledTableCell align="center">هزینه ارسال</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {rows.map(row => (
                             <StyledTableRow key={row.name}>
-                                <StyledTableCell component="th" scope="row">
-                                    {row.name}
-                                </StyledTableCell>
-                                <StyledTableCell align="right">{row.کد}</StyledTableCell>
-                                <StyledTableCell align="right">{row.زمان}</StyledTableCell>
-                                <StyledTableCell align="right">{row.نحوه}</StyledTableCell>
-                                <StyledTableCell align="right">{row.هزینه}</StyledTableCell>
+                                {/*<StyledTableCell component="th" scope="row">*/}
+                                {/*    {row.name}*/}
+                                {/*</StyledTableCell>*/}
+                                <StyledTableCell align="center">{row.کد}</StyledTableCell>
+                                <StyledTableCell align="center">{row.زمان}</StyledTableCell>
+                                <StyledTableCell align="center">{row.نحوه}</StyledTableCell>
+                                <StyledTableCell align="center">{row.هزینه}</StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>

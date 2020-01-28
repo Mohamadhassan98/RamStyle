@@ -28,6 +28,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from 'axios';
 import {serverUrls} from "../values/serverurls";
 import Badge from "@material-ui/core/Badge";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Fab from "@material-ui/core/Fab";
+import classNames from "classnames";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -343,6 +346,12 @@ export default function Header(props) {
                                                     <AccountCircle onClick={onLoginPressed} className={classes.icons}/>
                                                 </IconButton>
                                                 }
+                                            </FlexBoxItem>
+                                            <FlexBoxItem flexBasis={null}>
+                                                <IconButton>
+                                                    <ArrowBackIcon className={classes.icons}
+                                                                   onClick={() => props.history.goBack()}/>
+                                                </IconButton>
                                             </FlexBoxItem>
                                         </FlexBoxContainer>
                                     </FlexBoxItem>

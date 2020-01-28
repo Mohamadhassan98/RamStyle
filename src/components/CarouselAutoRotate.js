@@ -8,6 +8,8 @@ import {duration} from '@material-ui/core/styles/transitions';
 import Fab from '@material-ui/core/Fab';
 import ArrowForwardIcon from '@material-ui/icons/ArrowBack';
 import ArrowBackIcon from '@material-ui/icons/ArrowForward';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Fade from '@material-ui/core/Fade';
 import Dots from 'material-ui-dots';
 import classNames from 'classnames';
@@ -236,13 +238,13 @@ class AutoRotatingCarousel extends Component {
                                 className={classNames(classes.arrow, classes.arrowLeft)}
                                 onClick={() => this.decreaseIndex()}
                             >
-                                <ArrowBackIcon className={classes.arrowIcon}/>
+                                < ChevronRightIcon className={classes.arrowIcon}/>
                             </Fab>
                             <Fab
                                 className={classNames(classes.arrow, classes.arrowRight)}
                                 onClick={() => this.increaseIndex()}
                             >
-                                <ArrowForwardIcon className={classes.arrowIcon}/>
+                                <ChevronLeftIcon className={classes.arrowIcon}/>
                             </Fab>
                         </div>
                     )}
