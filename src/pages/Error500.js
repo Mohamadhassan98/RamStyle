@@ -88,6 +88,7 @@ class Err500 extends React.Component {
                         {strings.Error500}
                     </p>
                 </Error>
+
                 <Message>
                     <p>{strings.Message500}</p>
                 </Message>
