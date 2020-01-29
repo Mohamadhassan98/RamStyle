@@ -70,7 +70,11 @@ export const strings = {
     continuePurchaseProcedure: 'ادامه فرایند خرید',
     basket: 'سبد خرید',
     auth: 'ورود/ثبت نام',
-    wrongCredentials: 'نام کاربری و/یا کلمه عبور اشتباه است.'
+    wrongCredentials: 'نام کاربری و/یا کلمه عبور اشتباه است.',
+    Error404:'Error 404',
+    Error500:'Error 500',
+    Message404:'Page not found',
+    Message500:'Internal server error',
 };
 
 export function toPersianNumbers(value) {
