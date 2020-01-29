@@ -63,7 +63,11 @@ export const strings = {
     productCount: 'تعداد کالا',
     totalPrice: 'قیمت کل کالاها',
     priceToPay: 'مبلغ قابل پرداخت',
-    continuePurchaseProcedure: 'ادامه فرایند خرید'
+    continuePurchaseProcedure: 'ادامه فرایند خرید',
+    searchAmongBelow:'جستجو در محصولات زیر...',
+    isStock:'دست دوم',
+    isNew:'نو'
+
 };
 
 export function toPersianNumbers(value) {

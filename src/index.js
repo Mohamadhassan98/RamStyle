@@ -9,6 +9,8 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {CssBaseline} from "@material-ui/core";
 import {useCookies} from 'react-cookie';
 import axios from 'axios';
+import ShoppingPage from "./pages/shopping_page";
+import Products from "./pages/Products";
 
 function Index() {
 

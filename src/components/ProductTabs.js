@@ -9,7 +9,7 @@ import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Comment from "./CommentNew";
 import InteractiveList from "./ProductProperty";
-import {a11yProps, TabPanel} from "../pages/LoginInUp";
+import {a11yProps, TabPanel} from "../pages/SignInUp";
 
 const useStyles = makeStyles(theme => ({
     root: {

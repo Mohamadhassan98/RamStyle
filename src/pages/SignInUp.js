@@ -16,7 +16,7 @@ import {Redirect} from 'react-router-dom';
 import {baseUrls} from "../values/urls";
 import {strings} from "../values/strings";
 
-function TabPanel(props) {
+ export function TabPanel(props) {
     const {children, value, index, ...other} = props;
 
     return (
@@ -39,7 +39,7 @@ TabPanel.propTypes = {
     value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
+export function a11yProps(index) {
     return {
         id: `full-width-tab-${index}`,
         'aria-controls': `full-width-tabpanel-${index}`,
