@@ -10,7 +10,13 @@ export const serverUrls = {
     user: '/rest-auth/user/',
     logOut: '/rest-auth/logout/',
     passwordChange: '/rest-auth/password/change/',
-
+    lastBasket: '/store/last_basket/',
+    searchProduct: (search) => `/store/products/?search=${search}/`,
+    categoryProducts: (categoryId) => `/store/products/?category=${categoryId}`,
+    productDetails: (productId) => `/store/products/${productId}/`,
+    productImages: (productId) => `/store/products/${productId}/images/`,
+    productImage: (imageName) => `/media/product/${imageName}`,
+    sellers: '/store/salesmans/'
 };
 
 // let _urlsByServer = _urls;

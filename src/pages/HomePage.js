@@ -1,15 +1,15 @@
 import React from "react";
 import AutoRotatingCarousel from "../components/CarouselAutoRotate";
-import Brands from "../components/Brands";
+import BestSellers from "../components/BestSellers";
 import PropTypes from 'prop-types';
 import WeAreGood from "../components/WeAreGood";
 import OurApplication from "../components/OurApplication";
 import {assets} from "../values/assets";
 import {makeStyles} from "@material-ui/core";
-import {strings} from "../values/strings";
 import CategoryList from "../components/CategoryList";
+import {pageTitles} from "../values/urls";
 
-const useStyle = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({
     img: {
         width: '100%',
         height: 500
@@ -21,10 +21,10 @@ const useStyle = makeStyles(theme => ({
 
 export default function HomePage(props) {
 
-    const classes = useStyle();
+    const classes = useStyles();
 
     React.useEffect(() => {
-        document.title = strings.appName;
+        document.title = pageTitles.home;
     }, []);
 
     props.setShowHeaderButtons(true);
@@ -38,7 +38,7 @@ export default function HomePage(props) {
                     <img src={assets.carouselItem4} className={classes.img}/>
                 </AutoRotatingCarousel>
             </div>
-            <Brands/>
+            <BestSellers/>
             <WeAreGood/>
             <CategoryList {...props}/>
             <OurApplication/>
@@ -49,5 +49,6 @@ export default function HomePage(props) {
 HomePage.propTypes = {
     setShowHeaderButtons: PropTypes.func.isRequired,
     setShowFooter: PropTypes.func.isRequired,
-    productCategories: PropTypes.array.isRequired
+    productCategories: PropTypes.array.isRequired,
+    setError500: PropTypes.func.isRequired
 };

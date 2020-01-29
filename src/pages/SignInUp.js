@@ -13,7 +13,7 @@ import Signup from "../components/Signup";
 import Signin from "../components/Signin";
 import {Container} from "@material-ui/core";
 import {Redirect} from 'react-router-dom';
-import {baseUrls} from "../values/urls";
+import {baseUrls, pageTitles} from "../values/urls";
 import {strings} from "../values/strings";
 
 function TabPanel(props) {
@@ -76,6 +76,10 @@ export default function SignInUp(props) {
         setValue(index);
     };
 
+    React.useEffect(() => {
+        document.title = pageTitles.auth;
+    }, []);
+
     return (
         <Container className={classes.root}>
             {props.isLoggedIn && <Redirect to={baseUrls.profile}/>}
@@ -119,5 +123,6 @@ SignInUp.propTypes = {
     setShowHeaderButtons: PropTypes.func.isRequired,
     setShowFooter: PropTypes.func.isRequired,
     setLoggedIn: PropTypes.func.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired
+    isLoggedIn: PropTypes.bool.isRequired,
+    setError500: PropTypes.func.isRequired
 };

@@ -7,8 +7,10 @@ const persianNumbers = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "�
 export const strings = {
     appName: appName,
     toolbarSearchLabel: 'جستجو...',
-    brandsTitle: 'برندها',
+    bestSellers: 'فروشندگان برتر',
+    emptySellers: 'لیست فروشندگان خالی است.',
     productCategories: `دسته${zwnj}بندی محصولات`,
+    categoriesEmpty: `دسته${zwnj}بندی وجود ندارد.`,
     mySales: 'خریدهای من',
     profile: 'پروفایل',
     changePassword: 'تغییر کلمه عبور',
@@ -58,12 +60,17 @@ export const strings = {
     changeProfile: 'برای افزودن و تغییر عکس کلیک کنید.\nبرای حذف نگه دارید.',
     error404Body: 'صفحه مورد نظر یافت نشد.',
     error404Title: toPersianNumbers(404),
+    error500Body: 'خطای داخلی سرور',
+    error500Title: toPersianNumbers(500),
     returnToPreviousPage: 'بازگشت به صفحه قبل...',
     rial: 'ریال',
     productCount: 'تعداد کالا',
     totalPrice: 'قیمت کل کالاها',
     priceToPay: 'مبلغ قابل پرداخت',
-    continuePurchaseProcedure: 'ادامه فرایند خرید'
+    continuePurchaseProcedure: 'ادامه فرایند خرید',
+    basket: 'سبد خرید',
+    auth: 'ورود/ثبت نام',
+    wrongCredentials: 'نام کاربری و/یا کلمه عبور اشتباه است.'
 };
 
 export function toPersianNumbers(value) {

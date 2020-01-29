@@ -1,12 +1,14 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import {assets} from "../values/assets";
 import {baseUrls} from "../values/urls";
 import FlexBoxContainer from "../tools/FlexBoxContainer";
 import FlexBoxItem from "../tools/FlexBoxItem";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {Container} from "@material-ui/core";
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import {serverUrls} from "../values/serverurls";
+import {strings} from "../values/strings";
 
 const useStyle = makeStyles(theme => ({
     container: {
@@ -56,40 +58,91 @@ export default function CategoryList(props) {
     const classes = useStyle();
     const [hoveredItem, setHoveredItem] = React.useState(-1);
 
-    const onItemClicked = (id) => {
-        props.history.push(baseUrls.categories(id));
+    React.useEffect(() => {
+        props.productCategories.forEach(value => {
+            axios.get(serverUrls.categoryProducts(value.id)).then(response => {
+                if (!response.data || response.data.length === 0) {
+                    // TODO Picture for empty categories
+                } else {
+                    const product = response.data[0];
+                    const productId = product.id;
+                    axios.get(serverUrls.productImages(productId)).then(response => {
+                        //TODO Ask Ghazal if empty
+                        value.image = response.data[0]['imageContent'];
+                    }).catch(error => {
+                        if (error.response.status === 500) {
+                            props.setError500(true);
+                        } else {
+                            window.alert(`Error while retrieving images ${error.response.status}`);
+                        }
+                    });
+                }
+            }).catch(error => {
+                if (error.response.status === 500) {
+                    props.setError500(true);
+                } else {
+                    window.alert(`Error while category products ${error.response.status}`);
+                }
+            });
+        });
+    }, []);
+
+    const onItemClicked = (category) => {
+        props.history.push(baseUrls.categories(category.id));
     };
 
     return (
         <Container maxWidth='lg'>
-            <FlexBoxContainer
-                alignItems="center"
-                justifyContent="space-between"
-                flexWrap='wrap'
-                className={classes.container}
-            >
-                {[1, 2, 3, 4, 5, 6, 7].map(category => (
-                    <FlexBoxItem flexBasis='30%' justifySelf='center' className={classes.item}>
+            <FlexBoxContainer flexDirection='column' alignItems='center'>
+                <FlexBoxItem>
+                    <Typography align='center' gutterBottom variant='h5' style={{
+                        fontWeight: 'bold'
+                    }}>
+                        {strings.productCategories}
+                    </Typography>
+                </FlexBoxItem>
+                <FlexBoxItem>
+                    {props.productCategories.length === 0 ?
+                        <FlexBoxItem>
+                            <Typography align='center' gutterBottom variant='h6' style={{
+                                fontWeight: 'bold'
+                            }}>
+                                {strings.categoriesEmpty}
+                            </Typography>
+                        </FlexBoxItem> :
                         <FlexBoxContainer
-                            flexDirection='column'
-                            alignItems='center'
-                            onClick={() => onItemClicked(category)}
-                            onMouseEnter={() => setHoveredItem(category)}
-                            onMouseLeave={() => setHoveredItem(-1)}>
-                            <img src={assets.image1}
-                                 className={hoveredItem === category ? classes.imgBlur : classes.img}/>
-                            <div className={hoveredItem === category ? classes.caption : classes.hidden}>
-                                <Typography variant="h2" gutterBottom className={classes.title}>clothes</Typography>
-                                <Typography variant="h4" gutterBottom className={classes.body}>لباس</Typography>
-                            </div>
+                            alignItems="center"
+                            justifyContent="space-between"
+                            flexWrap='wrap'
+                            className={classes.container}
+                        >
+                            {props.productCategories.map(category => (
+                                <FlexBoxItem flexBasis='30%' justifySelf='center' className={classes.item}>
+                                    <FlexBoxContainer
+                                        flexDirection='column'
+                                        alignItems='center'
+                                        onClick={() => onItemClicked(category)}
+                                        onMouseEnter={() => setHoveredItem(category.id)}
+                                        onMouseLeave={() => setHoveredItem(-1)}>
+                                        <img src={category.image} alt='category'
+                                             className={hoveredItem === category.id ? classes.imgBlur : classes.img}/>
+                                        <div className={hoveredItem === category.id ? classes.caption : classes.hidden}>
+                                            <Typography variant="h4" gutterBottom className={classes.body}>
+                                                {category.name}
+                                            </Typography>
+                                        </div>
+                                    </FlexBoxContainer>
+                                </FlexBoxItem>
+                            ))}
                         </FlexBoxContainer>
-                    </FlexBoxItem>
-                ))}
+                    }
+                </FlexBoxItem>
             </FlexBoxContainer>
         </Container>
     );
 }
 
 CategoryList.propTypes = {
-    productCategories: PropTypes.array.isRequired
+    productCategories: PropTypes.array.isRequired,
+    setError500: PropTypes.func.isRequired
 };

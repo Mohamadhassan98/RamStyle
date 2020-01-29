@@ -7,8 +7,12 @@ import {Add, Delete, Remove, Store} from "@material-ui/icons";
 import {strings, toPersianNumbers} from "../values/strings";
 import FlexBoxContainer from "../tools/FlexBoxContainer";
 import FlexBoxItem from "../tools/FlexBoxItem";
+import {baseUrls, pageTitles} from "../values/urls";
+import PropTypes from "prop-types";
+import {Redirect} from "react-router-dom";
 
 // noinspection JSUnusedLocalSymbols,JSCheckFunctionSignatures
+
 const useStyles = makeStyles(theme => ({
     style_container2: {
         display: "flex",
@@ -145,6 +149,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Basket(props) {
+    props.setShowHeaderButtons(true);
+    props.setShowFooter(true);
 
     const classes = useStyles();
 
@@ -207,9 +213,15 @@ export default function Basket(props) {
         setNum(num);
     }, []);
 
+    React.useEffect(() => {
+        document.title = pageTitles.basket;
+    }, []);
+
     /**************************************************************************************************/
     return (
         <FlexBoxContainer className={classes.style_container} alignItems='flex-start'>
+            {!props.isLoggedIn && <Redirect to={baseUrls.auth}/>}
+
             <div className={classes.style_item1}>
                 {
                     data.map((item, index) =>
@@ -326,3 +338,9 @@ export default function Basket(props) {
         </FlexBoxContainer>
     );
 }
+
+Basket.propTypes = {
+    setShowHeaderButtons: PropTypes.func.isRequired,
+    setShowFooter: PropTypes.func.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired
+};

@@ -29,8 +29,6 @@ import axios from 'axios';
 import {serverUrls} from "../values/serverurls";
 import Badge from "@material-ui/core/Badge";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import Fab from "@material-ui/core/Fab";
-import classNames from "classnames";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -126,29 +124,28 @@ const useStyles = makeStyles(theme => ({
 export default function Header(props) {
 
     const [productCategoryOpen, setProductCategoryOpen] = React.useState(false);
-    const [productCategories, setProductCategories] = React.useState([]);
+    // const [productCategories, setProductCategories] = React.useState([]);
     const [searchOptionsOpen, setSearchOptionsOpen] = React.useState(false);
     const [searchOptions, setSearchOptions] = React.useState([]);
     const [searchQuery, setSearchQuery] = React.useState('');
 
-    React.useEffect(() => {
-        setProductCategories(props.productCategories);
-    }, [props.productCategories]);
+    // React.useEffect(() => {
+    //     setProductCategories(props.productCategories);
+    // }, [props.productCategories]);
 
     React.useEffect(() => {
         if (searchQuery.toString().length >= 3) {
             console.log('requesting...');
             setSearchLoading(true);
-            axios.get(serverUrls.allProducts, {
-                params: {
-                    search: searchQuery
-                }
-            }).then(response => {
-                console.log(response.data);
+            axios.get(serverUrls.searchProduct(searchQuery)).then(response => {
                 setSearchOptions(response.data);
-                setSearchLoading(false);
             }).catch(error => {
-                //TODO show appropriate error page
+                if (error.response.status === 500) {
+                    props.setError500(true);
+                } else {
+                    window.alert(`Search error ${error.response.status}`);
+                }
+            }).finally(() => {
                 setSearchLoading(false);
             });
         }
@@ -164,7 +161,7 @@ export default function Header(props) {
     };
 
     const onLoginPressed = () => {
-        if (props.isLoggedIn && !props.history.location.pathname.includes(baseUrls.profile)) {
+        if (props.isLoggedIn && !props.history.location.pathname.startsWith(baseUrls.profile)) {
             props.history.push(baseUrls.profile);
         } else if (!props.isLoggedIn) {
             props.history.push(baseUrls.auth);
@@ -200,6 +197,10 @@ export default function Header(props) {
             setProductCategoryOpen(false);
         }
     }
+
+    const submitSearch = (option) => {
+        // TODO go to product detail page
+    };
 
     return (
         <React.Fragment>
@@ -248,7 +249,7 @@ export default function Header(props) {
                                                                   id="menu-list-grow"
                                                                   disableListWrap
                                                                   onKeyDown={handleListKeyDown}>
-                                                            {productCategories.map(category => (
+                                                            {props.productCategories.map(category => (
                                                                 <MenuItem
                                                                     onClick={() => onItemClicked(category)}>{category.name}</MenuItem>
                                                             ))}
@@ -275,10 +276,12 @@ export default function Header(props) {
                                                 onOpen={() => setSearchOptionsOpen(true)}
                                                 onClose={() => setSearchOptionsOpen(false)}
                                                 freeSolo
-                                                id="free-solo-2-demo"
+                                                id="productSearch"
                                                 inputValue={searchQuery}
                                                 onInputChange={(event, value) => setSearchQuery(value)}
-                                                options={searchOptions.map(option => option.title)}
+                                                options={searchOptions}
+                                                getOptionLabel={option => option.name}
+                                                onChange={(event, value) => submitSearch(value)}
                                                 renderInput={params => (
                                                     <TextField
                                                         {...params}
@@ -372,7 +375,8 @@ Header.propTypes = {
     showButtons: PropTypes.bool,
     productCategories: PropTypes.array.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
-    cartSize: PropTypes.number
+    cartSize: PropTypes.number,
+    setError500: PropTypes.func.isRequired
 };
 
 Header.defaultProps = {

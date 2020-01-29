@@ -2,11 +2,14 @@ import React from "react";
 import {Container, makeStyles, TextField} from "@material-ui/core";
 import FlexBoxItem from "../../tools/FlexBoxItem";
 import Button from "@material-ui/core/Button";
-import {strings} from "../../values/strings";
+import {emailRegex, strings} from "../../values/strings";
 import axios from 'axios';
 import {serverUrls} from "../../values/serverurls";
 import Default from '../../assets/default.png';
 import Tooltip from "@material-ui/core/Tooltip";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import {baseUrls} from "../../values/urls";
+import {Redirect} from "react-router";
 
 const useStyle = makeStyles(theme => ({
     avatar: {
@@ -16,23 +19,11 @@ const useStyle = makeStyles(theme => ({
     textField: {
         margin: 10
     },
-    image:{
-        borderRadius:"50%",
-        width:'250px',
-            height:'250px'
+    image: {
+        borderRadius: "50%",
+        width: '250px',
+        height: '250px'
     },
-//     profile: {
-//         padding: '6px',
-//         textAlign: 'center',
-//         animationName: 'fadeIn',
-//         animationDuration: '.9s',
-//         boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.44)',
-//         background:' #B71C1C',
-//         position: 'relative',
-//         margin: '5% auto 10px'
-// }
-
-
 }));
 
 export default function Profile(props) {
@@ -43,19 +34,22 @@ export default function Profile(props) {
     const [lastName, setLastName] = React.useState('');
     const [username, setUsername] = React.useState('');
     const [email, setEmail] = React.useState('');
+    const [emailError, setEmailError] = React.useState(' ');
     const [photo, setPhoto] = React.useState(Default);
+    const [isLoading, setLoading] = React.useState(false);
     const [profilePic, setProfilePic] = React.useState('');
     const [photoCleared, setPhotoCleared] = React.useState(false);
+    const [error500, setError500] = React.useState(false);
+
 
     const clearProfile = () => {
         setPhoto(Default);
         setProfilePic(null);
         setPhotoCleared(true);
         longPressed = true;
-        // file.value = null;
     };
 
-    const profilePress = () =>{
+    const profilePress = () => {
         longPress = setTimeout(clearProfile, 1000);
     };
 
@@ -72,7 +66,7 @@ export default function Profile(props) {
     };
 
     const selectImages = (event) => {
-        if (event.target.files[0] !=null) {
+        if (event.target.files[0] != null) {
             setPhoto(URL.createObjectURL(event.target.files[0]));
             setProfilePic(event.target.files[0]);
         }
@@ -91,10 +85,49 @@ export default function Profile(props) {
         });
     }, []);
 
+    const validateForm = () => {
+        let valid = true;
+        if (!email || !emailRegex.test(email)) {
+            setEmailError(strings.invalidEmail);
+            valid = false;
+        }
+        return valid;
+    };
+
+    const onSaveChangesClicked = () => {
+        if (!validateForm()) {
+            return;
+        }
+        const data = {
+            email: email,
+            first_name: name,
+            last_name: lastName
+        };
+        setLoading(true);
+        axios.put(serverUrls.user, data).then(response => {
+            props.history.push(baseUrls.home);
+        }).catch(error => {
+            if (error.response.status === 500) {
+                setError500(true);
+            } else {
+                window.alert(error.response.status);
+            }
+        }).finally(() => {
+            setLoading(false);
+        });
+    };
+
+    const errorsOff = () => {
+        setEmailError(' ');
+    };
+
     const classes = useStyle();
 
     return (
         <React.Fragment>
+            {error500 &&
+            <Redirect to={baseUrls.error500}/>
+            }
             <Container maxWidth='xs'>
                 <FlexBoxItem display='flex' justifyContent='center'>
                     <div className={classes.profile} onMouseDown={profilePress}
@@ -163,11 +196,15 @@ export default function Profile(props) {
                         inputProps={{
                             inputMode: "email"
                         }}
+                        error={emailError !== ' '}
+                        helperText={emailError}
                     />
                 </FlexBoxItem>
                 <FlexBoxItem display='flex' justifyContent='center'>
-                    <Button variant='contained' color='primary'>
+                    <Button variant='contained' color='primary' onBlur={errorsOff} onClick={onSaveChangesClicked}>
                         {strings.saveChanges}
+                        {isLoading && <CircularProgress color="inherit"
+                                                        size={20}/>}
                     </Button>
                 </FlexBoxItem>
             </Container>

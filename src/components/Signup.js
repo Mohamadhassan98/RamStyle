@@ -17,6 +17,7 @@ import {serverUrls} from "../values/serverurls";
 import PropTypes from 'prop-types';
 import {baseUrls} from "../values/urls";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import {useCookies} from "react-cookie";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -43,6 +44,7 @@ export default function Signup(props) {
     const [email, setEmail] = React.useState("");
     const [emailError, setEmailError] = React.useState(' ');
     const [password, setPassword] = React.useState("");
+    const [cookies, setCookies, removeCookies] = useCookies(['csrftoken']);
     const [passwordError, setPasswordError] = React.useState(strings.passwordHelper);
     const [passwordErrorEnabled, setPasswordErrorEnabled] = React.useState(false);
     const [confirmPassword, setConfirmPassword] = React.useState("");
@@ -87,16 +89,24 @@ export default function Signup(props) {
             password2: password
         }).then(response => {
             props.setLoggedIn(true);
+            const csrf = cookies['csrftoken'];
+            if (csrf) {
+                axios.defaults.headers['X-CSRFToken'] = csrf;
+            }
             props.history.push(baseUrls.home);
         }).catch(error => {
-            if (error.response.data.username) {
-                setUsernameError(strings.usernameAlreadyExists);
-            }
-            if (error.response.data.email) {
-                setEmailError(strings.emailAlreadyExists);
-            }
-            if (error.response.data.password1) {
-                setPasswordError(strings.commonPasswordError);
+            if (error.response.status === 500) {
+                props.setError500(true);
+            } else {
+                if (error.response.data.username) {
+                    setUsernameError(strings.usernameAlreadyExists);
+                }
+                if (error.response.data.email) {
+                    setEmailError(strings.emailAlreadyExists);
+                }
+                if (error.response.data.password1) {
+                    setPasswordError(strings.commonPasswordError);
+                }
             }
         }).finally(() => {
             setLoading(false);
@@ -144,7 +154,6 @@ export default function Signup(props) {
                             id="username"
                             value={username}
                             onChange={handleChange('username')}
-                            placeholder={strings.username}
                             labelWidth={70}
                             error={usernameError !== ' '}
                             required
@@ -163,7 +172,6 @@ export default function Signup(props) {
                             id="username"
                             value={email}
                             onChange={handleChange('email')}
-                            placeholder={strings.email}
                             labelWidth={40}
                             error={emailError !== ' '}
                             required
@@ -183,7 +191,6 @@ export default function Signup(props) {
                             type={showPassword ? 'text' : 'password'}
                             value={password}
                             onChange={handleChange('password')}
-                            placeholder={strings.password}
                             error={passwordErrorEnabled}
                             endAdornment={
                                 <InputAdornment position="end">
@@ -215,7 +222,6 @@ export default function Signup(props) {
                             type={showConfirmPassword ? 'text' : 'password'}
                             value={confirmPassword}
                             onChange={handleChange('confirmPassword')}
-                            placeholder={strings.confirmPassword}
                             error={confirmPasswordError !== ' '}
                             endAdornment={
                                 <InputAdornment position="end">
@@ -249,5 +255,6 @@ export default function Signup(props) {
 };
 
 Signup.propTypes = {
-    setLoggedIn: PropTypes.func.isRequired
+    setLoggedIn: PropTypes.func.isRequired,
+    setError500: PropTypes.func.isRequired
 };

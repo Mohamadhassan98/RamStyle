@@ -13,7 +13,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-import {emailRegex, strings} from "../values/strings";
+import {strings} from "../values/strings";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import axios from 'axios';
@@ -22,7 +22,9 @@ import PropTypes from 'prop-types';
 import {baseUrls} from "../values/urls";
 import {useCookies} from 'react-cookie';
 import CircularProgress from "@material-ui/core/CircularProgress";
-
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogContent from "@material-ui/core/DialogContent";
+import Dialog from "@material-ui/core/Dialog";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -43,28 +45,28 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-//fixme remove placeholders
 export default function Signin(props) {
 
     const classes = useStyles();
     const [username, setUsername] = React.useState("");
     const [usernameError, setUsernameError] = React.useState(' ');
-    const [email, setEmail] = React.useState("");
-    const [emailError, setEmailError] = React.useState(' ');
     const [password, setPassword] = React.useState("");
     const [passwordError, setPasswordError] = React.useState(' ');
     const [showPassword, setShowPassword] = React.useState(false);
-    const [checkedLogin, setCheckedLogin] = React.useState(true);
+    const [keepChecked, setKeepChecked] = React.useState(true);
     const [cookies, setCookies, removeCookies] = useCookies(['csrftoken']);
     const [isLoading, setLoading] = React.useState(false);
+    const [wrongPassword, setWrongPassword] = React.useState(false);
+
+    // React.useEffect(() => {
+    //     props.setError500(false);
+    // }, []);
 
     const handleChange = prop => event => {
-        if (prop === "checkedLogin") {
-            setCheckedLogin(event.target.checked);
+        if (prop === "keepChecked") {
+            setKeepChecked(event.target.checked);
         } else if (prop === "username") {
             setUsername(event.target.value);
-        } else if (prop === "email") {
-            setEmail(event.target.value);
         } else if (prop === "password") {
             setPassword(event.target.value);
         }
@@ -88,10 +90,6 @@ export default function Signin(props) {
             setPasswordError(strings.emptyPasswordError);
             valid = false;
         }
-        if (!email || !emailRegex.test(email)) {
-            setEmailError(strings.invalidEmail);
-            valid = false;
-        }
         return valid;
     };
 
@@ -102,11 +100,8 @@ export default function Signin(props) {
         const data = {
             username: username,
             password: password,
-            email: email
+            keep: keepChecked
         };
-        if (checkedLogin) {
-            data.keep = true;
-        }
         setLoading(true);
         axios.post(serverUrls.signIn, data).then(response => {
             // response is 201!
@@ -117,9 +112,13 @@ export default function Signin(props) {
             }
             props.history.push(baseUrls.home);
         }).catch(error => {
-            // TODO Show appropriate Error
-            window.alert('TODO: Show appropriate Error');
-            console.log(error);
+            if (error.response.status === 400) {
+                setWrongPassword(true);
+            } else if (error.response.status === 500) {
+                props.setError500(true);
+            } else {
+                window.alert(`Error while signing in ${error.response.status}`);
+            }
         }).finally(() => {
             setLoading(false);
         });
@@ -128,11 +127,23 @@ export default function Signin(props) {
     const errorsOff = () => {
         setUsernameError(' ');
         setPasswordError(' ');
-        setEmailError(' ');
     };
 
     return (
         <div className={classes.root}>
+            <Dialog
+                open={wrongPassword}
+                onClose={() => setWrongPassword(false)}
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description" style={{
+                        color: 'red'
+                    }}>
+                        {strings.wrongCredentials}
+                    </DialogContentText>
+                </DialogContent>
+            </Dialog>
             <Grid item xs container direction="column" spacing={2}>
                 <Grid item>
                     <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
@@ -143,32 +154,12 @@ export default function Signin(props) {
                             id="username"
                             value={username}
                             onChange={handleChange('username')}
-                            placeholder={strings.username}
                             labelWidth={70}
                             required
                             error={usernameError !== ' '}
                         />
                         <FormHelperText error={usernameError !== ' '} id="username-helper">
                             {usernameError}
-                        </FormHelperText>
-                    </FormControl>
-                </Grid>
-                <Grid item>
-                    <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-                        <InputLabel htmlFor="email">
-                            {strings.email}
-                        </InputLabel>
-                        <OutlinedInput
-                            id="email"
-                            value={email}
-                            onChange={handleChange('email')}
-                            placeholder={strings.email}
-                            labelWidth={40}
-                            error={emailError !== ' '}
-                            required
-                        />
-                        <FormHelperText error={emailError !== ' '} id="email-helper">
-                            {emailError}
                         </FormHelperText>
                     </FormControl>
                 </Grid>
@@ -182,7 +173,6 @@ export default function Signin(props) {
                             type={showPassword ? 'text' : 'password'}
                             value={password}
                             onChange={handleChange('password')}
-                            placeholder={strings.password}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
@@ -208,8 +198,8 @@ export default function Signin(props) {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                checked={checkedLogin}
-                                onChange={handleChange('checkedLogin')}
+                                checked={keepChecked}
+                                onChange={handleChange('keepChecked')}
                                 value="checkedLogin"
                                 icon={<CheckBoxOutlineBlankIcon className={classes.checkboxIcon}/>}
                                 checkedIcon={<CheckBoxIcon className={classes.checkboxIcon}/>}
@@ -231,5 +221,6 @@ export default function Signin(props) {
 }
 
 Signin.propTypes = {
-    setLoggedIn: PropTypes.func.isRequired
+    setLoggedIn: PropTypes.func.isRequired,
+    setError500: PropTypes.func.isRequired
 };

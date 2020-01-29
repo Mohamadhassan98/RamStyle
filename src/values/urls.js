@@ -5,7 +5,8 @@ export const baseUrls = {
     auth: '/auth',
     profile: '/profile',
     categories: (id) => `/categories/${id}`,
-    cart: '/cart'
+    cart: '/cart',
+    error500: '/500'
 };
 
 export const profileUrls = {
@@ -20,9 +21,13 @@ export const routeUrls = {
     auth: baseUrls.auth,
     profile: baseUrls.profile,
     mySales: `${baseUrls.profile}${profileUrls.mySales}`,
-    changePassword: `${baseUrls.profile}${profileUrls.changePassword}`
+    changePassword: `${baseUrls.profile}${profileUrls.changePassword}`,
+    cart: baseUrls.cart,
+    error500: `${baseUrls.error500}`
 };
 
 export const pageTitles = {
-    home: `${strings.appName}`
+    home: `${strings.appName}`,
+    basket: `${strings.basket}`,
+    auth: `${strings.auth}`,
 };
