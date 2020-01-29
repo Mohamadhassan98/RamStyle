@@ -6,6 +6,7 @@ import {routeUrls} from "./values/urls";
 import Footer from "./components/Footer";
 import axios from 'axios';
 import {serverUrls} from "./values/serverurls";
+import {useCookies} from "react-cookie";
 
 export default function App(props) {
 
@@ -15,6 +16,8 @@ export default function App(props) {
     const [isLoggedIn, setLoggedIn] = React.useState(false);
     const [basketProducts, setBasketProducts] = React.useState([]);
     const [error500, setError500] = React.useState(false);
+    const [cookies, setCookies, removeCookies] = useCookies(['csrftoken']);
+
 
     React.useEffect(() => {
         axios.get(serverUrls.allCategories).then(response => {
@@ -44,6 +47,9 @@ export default function App(props) {
 
     React.useEffect(() => {
         if (isLoggedIn) {
+            const csrf = cookies['csrftoken'];
+            while (!csrf) ;
+            axios.defaults.headers['X-CSRFToken'] = csrf;
             axios.get(serverUrls.lastBasket).then(response => {
                 if (response.data.length !== 0) {
                     const basket = response.data[0];

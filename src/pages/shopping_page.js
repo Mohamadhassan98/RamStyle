@@ -4,11 +4,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import im from '../assets/shoes.jpeg';
-import im1 from '../assets/shoes1.jpeg'
+import im1 from '../assets/shoes1.jpeg';
 import ProductTabs from "../components/ProductTabs";
 import TransitionsModal from "../components/modal";
-import axios from 'axios'
-import {serverUrls} from '../values/serverurls'
+import axios from 'axios';
+import {serverUrls} from '../values/serverurls';
 import {Container} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ProductDetail(props) {
-    const [values, setValues] = React.useState(null)
+    const [values, setValues] = React.useState(null);
     const [imModal, setImModal] = React.useState('');
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();

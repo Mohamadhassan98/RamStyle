@@ -70,7 +70,8 @@ export const strings = {
     continuePurchaseProcedure: 'ادامه فرایند خرید',
     basket: 'سبد خرید',
     auth: 'ورود/ثبت نام',
-    wrongCredentials: 'نام کاربری و/یا کلمه عبور اشتباه است.'
+    wrongCredentials: 'نام کاربری و/یا کلمه عبور اشتباه است.',
+    wrongPassword: 'کلمه عبور اشتباه است.'
 };
 
 export function toPersianNumbers(value) {

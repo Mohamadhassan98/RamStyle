@@ -32,9 +32,9 @@ function createData(shop_status, cost, date_order, order_id, row_num) {
 }
 
 const rows = [
-    createData('لغو شده', 159, 'دیروز', 'rsc-24', 1),
-    createData('لغو شده', 237, 'امروز', 'rsc-29', 2),
-    createData('لغو شده', 262, 'دیروز', 'rsc-99', 3)
+    // createData('لغو شده', 159, 'دیروز', 'rsc-24', 1),
+    // createData('لغو شده', 237, 'امروز', 'rsc-29', 2),
+    // createData('لغو شده', 262, 'دیروز', 'rsc-99', 3)
 ];
 
 const useStyles = makeStyles({
@@ -46,6 +46,10 @@ const useStyles = makeStyles({
 //fixme extract strings
 export default function MySales() {
     const classes = useStyles();
+
+    // React.useEffect(() => {
+    //
+    // });
 
     return (
         <Container maxWidth='md'>

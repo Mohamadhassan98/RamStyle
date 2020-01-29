@@ -38,7 +38,7 @@ export default function HomePage(props) {
                     <img src={assets.carouselItem4} className={classes.img}/>
                 </AutoRotatingCarousel>
             </div>
-            <BestSellers/>
+            <BestSellers setError500={props.setError500}/>
             <WeAreGood/>
             <CategoryList {...props}/>
             <OurApplication/>

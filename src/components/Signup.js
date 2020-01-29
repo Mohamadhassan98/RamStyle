@@ -17,7 +17,6 @@ import {serverUrls} from "../values/serverurls";
 import PropTypes from 'prop-types';
 import {baseUrls} from "../values/urls";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {useCookies} from "react-cookie";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -35,7 +34,6 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-//fixme remove placeholders
 export default function Signup(props) {
 
     const classes = useStyles();
@@ -44,7 +42,6 @@ export default function Signup(props) {
     const [email, setEmail] = React.useState("");
     const [emailError, setEmailError] = React.useState(' ');
     const [password, setPassword] = React.useState("");
-    const [cookies, setCookies, removeCookies] = useCookies(['csrftoken']);
     const [passwordError, setPasswordError] = React.useState(strings.passwordHelper);
     const [passwordErrorEnabled, setPasswordErrorEnabled] = React.useState(false);
     const [confirmPassword, setConfirmPassword] = React.useState("");
@@ -89,10 +86,6 @@ export default function Signup(props) {
             password2: password
         }).then(response => {
             props.setLoggedIn(true);
-            const csrf = cookies['csrftoken'];
-            if (csrf) {
-                axios.defaults.headers['X-CSRFToken'] = csrf;
-            }
             props.history.push(baseUrls.home);
         }).catch(error => {
             if (error.response.status === 500) {

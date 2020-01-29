@@ -38,14 +38,12 @@ export default function Profile(props) {
     const [photo, setPhoto] = React.useState(Default);
     const [isLoading, setLoading] = React.useState(false);
     const [profilePic, setProfilePic] = React.useState('');
-    const [photoCleared, setPhotoCleared] = React.useState(false);
     const [error500, setError500] = React.useState(false);
 
 
     const clearProfile = () => {
         setPhoto(Default);
         setProfilePic(null);
-        setPhotoCleared(true);
         longPressed = true;
     };
 

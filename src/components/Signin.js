@@ -20,7 +20,6 @@ import axios from 'axios';
 import {serverUrls} from "../values/serverurls";
 import PropTypes from 'prop-types';
 import {baseUrls} from "../values/urls";
-import {useCookies} from 'react-cookie';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -54,13 +53,8 @@ export default function Signin(props) {
     const [passwordError, setPasswordError] = React.useState(' ');
     const [showPassword, setShowPassword] = React.useState(false);
     const [keepChecked, setKeepChecked] = React.useState(true);
-    const [cookies, setCookies, removeCookies] = useCookies(['csrftoken']);
     const [isLoading, setLoading] = React.useState(false);
     const [wrongPassword, setWrongPassword] = React.useState(false);
-
-    // React.useEffect(() => {
-    //     props.setError500(false);
-    // }, []);
 
     const handleChange = prop => event => {
         if (prop === "keepChecked") {
@@ -106,10 +100,6 @@ export default function Signin(props) {
         axios.post(serverUrls.signIn, data).then(response => {
             // response is 201!
             props.setLoggedIn(true);
-            const csrf = cookies['csrftoken'];
-            if (csrf) {
-                axios.defaults.headers['X-CSRFToken'] = csrf;
-            }
             props.history.push(baseUrls.home);
         }).catch(error => {
             if (error.response.status === 400) {
