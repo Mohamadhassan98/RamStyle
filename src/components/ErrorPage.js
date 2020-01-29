@@ -1,66 +1,97 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import styled, {keyframes} from 'styled-components';
+import {makeStyles} from "@material-ui/core";
 import PropTypes from 'prop-types';
+import {assets} from "../values/assets";
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1,
-    },
-    paper: {
-        padding: theme.spacing(2),
-        margin: 'auto',
-        maxWidth: 500,
+    container: {
+        width: "100%",
+        height: "500px",
+        display: "flex",
+        flexDirection: "row",
+        padding: ".4%",
+        alignSelf: "center",
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center",
+        position: "relative",
     },
     img: {
-        margin: 'auto',
-        display: 'block',
-        maxWidth: '100%',
-        maxHeight: '100%',
-        width: 128,
-        height: 128,
-    },
+        width: "300px",
+        height: "300px",
+        position: "relative",
+        alignSelf: "flex-end",
+    }
 }));
 
 export default function ErrorPage(props) {
+
     const classes = useStyles();
 
+    const anim1 = keyframes`
+    0% {
+        top: 300px;
+        font-size: 15px
+    }
+    100% {
+        top: 110px; 
+        font-size: 40px
+    }`;
+
+    const anim2 = keyframes`
+    0% {
+        opacity: 0.01;
+    }
+    100% {
+        opacity: 1;
+    }`;
+
+    const Error = styled.div`
+    p {
+        text-align: center;
+        font-weight: bold;
+    }
+    position: absolute;
+    align-self: center;
+    font-size: 40px;
+    animation: ${anim1};
+    animation-duration: 1s;
+    top: 110px;`;
+
+    const Message = styled.div`
+    p {
+        text-align: center;
+        font-weight: bold;
+    }
+    position: absolute;
+    align-self: center;
+    font-size: 40px;
+    animation: ${anim2};
+    animation-duration: 2s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+    top: 470px;
+    opacity: 0;`;
+
     return (
-        <div className={classes.root}>
-            <Paper className={classes.paper}>
-                <Grid container spacing={2}>
-                    <Grid item>
-                        <img className={classes.img} alt="complex" src={props.image}/>
-                    </Grid>
-                    <Grid item xs={12} sm container>
-                        <Grid item xs container direction="column" spacing={2}>
-                            <Grid item>
-                                <Typography gutterBottom variant="h5">
-                                    {props.title}
-                                </Typography>
-                                <Typography variant="body2" gutterBottom>
-                                    {props.body}
-                                </Typography>
-                            </Grid>
-                            <Grid item style={{display: "flex", alignItems: "center"}}>
-                                <ArrowRightAltIcon fontSize="small"/>
-                                <Typography variant="subtitle2" style={{cursor: 'pointer'}}>
-                                    بازگشت به صفحه اصلی
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Paper>
+        <div className={classes.container}>
+            <img className={classes.img} src={assets.errorBox}/>
+            <Error>
+                <p>
+                    {props.errorTitle}
+                </p>
+            </Error>
+            <Message>
+                <p>
+                    {props.errorBody}
+                </p>
+            </Message>
         </div>
     );
 }
 
 ErrorPage.propTypes = {
-    title: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired
+    errorTitle: PropTypes.string.isRequired,
+    errorBody: PropTypes.string.isRequired
 };

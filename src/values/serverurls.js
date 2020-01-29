@@ -16,7 +16,8 @@ export const serverUrls = {
     productDetails: (productId) => `/store/products/${productId}/`,
     productImages: (productId) => `/store/products/${productId}/images/`,
     productImage: (imageName) => `/media/product/${imageName}`,
-    sellers: '/store/salesmans/'
+    sellers: '/store/salesmans/',
+    completedBaskets: '/store/baskets/'
 };
 
 // let _urlsByServer = _urls;

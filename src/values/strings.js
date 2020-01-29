@@ -72,10 +72,12 @@ export const strings = {
     auth: 'ورود/ثبت نام',
     wrongPassword: 'کلمه عبور اشتباه است.',
     wrongCredentials: 'نام کاربری و/یا کلمه عبور اشتباه است.',
-    Error404: 'Error 404',
-    Error500: 'Error 500',
-    Message404: 'Page not found',
-    Message500: 'Internal server error',
+    number: '#',
+    basketStatus: 'وضعیت سفارش',
+    basketPrice: 'قیمت کل سبد',
+    basketRecordTime: 'تاریخ ثبت سفارش',
+    trackingCode: 'کد پیگیری',
+    noSalesFound: 'سابقه خرید یافت نشد.'
 };
 
 export function toPersianNumbers(value) {

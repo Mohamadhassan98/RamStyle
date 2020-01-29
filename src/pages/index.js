@@ -7,7 +7,6 @@ import ProfilePage from './profile/index';
 import SignInUp from "./SignInUp";
 import ErrorPage from "../components/ErrorPage";
 import {strings} from "../values/strings";
-import {assets} from "../values/assets";
 import Basket from "../components/Basket";
 
 export function Index(props) {
@@ -38,10 +37,10 @@ export function Index(props) {
                    render={(props) => <ErrorPage {...props}
                                                  title={strings.error500Title}
                                                  body={strings.error500Body}
-                                                 image={assets.image1}
                    />}/>
-            <Route render={(props) => <ErrorPage {...props} title={strings.error404Title} body={strings.error404Body}
-                                                 image={assets.image1}/>}/>
+            <Route render={(props) => <ErrorPage {...props}
+                                                 title={strings.error404Title}
+                                                 body={strings.error404Body}/>}/>
         </Switch>
     );
 }
