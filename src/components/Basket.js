@@ -9,7 +9,7 @@ import FlexBoxContainer from "../tools/FlexBoxContainer";
 import FlexBoxItem from "../tools/FlexBoxItem";
 import {baseUrls, pageTitles} from "../values/urls";
 import PropTypes from "prop-types";
-import {Redirect} from "react-router-dom";
+import {Redirect} from "react-router";
 
 // noinspection JSUnusedLocalSymbols,JSCheckFunctionSignatures
 
@@ -26,7 +26,8 @@ const useStyles = makeStyles(theme => ({
     },
     img_container: {
         width: "20%",
-        cursor: "pointer"
+        cursor: "pointer",
+        margin: "2%"
     },
     img: {
         width: "100%"
@@ -79,6 +80,17 @@ const useStyles = makeStyles(theme => ({
     icons: {
         cursor: "pointer",
     },
+    empty: {
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center",
+        // backgroundColor:"red",
+
+    },
+
     /***************************************************************************************/
     style_item1: {
         display: "flex",
@@ -219,113 +231,119 @@ export default function Basket(props) {
 
     /**************************************************************************************************/
     return (
-        <FlexBoxContainer alignItems='flex-start'>
-            {!props.isLoggedIn && <Redirect to={baseUrls.auth}/>}
-            <div className={classes.style_item1}>
-                {
-                    data.map((item, index) =>
-                        <div className={item.num >= 1 ? classes.style_container2 : classes.Delete}>
-                            <div className={classes.img_container}>
-                                <img src={item.img} className={classes.img}/>
-                            </div>
-                            <div className={classes.container2}>
-                                <div className={classes.part}>
-                                    <Typography variant="h5" gutterBottom>
-                                        {item.name}
-                                    </Typography>
+        data.length !== 0 ?
+            <div className={classes.empty}>
+                <img src={assets.empty} style={{width: "20%", marginTop: "10%"}}/>
+                <h1>سبد خالی است </h1>
+            </div>
+            :
+            <FlexBoxContainer alignItems='flex-start'>
+                {!props.isLoggedIn && <Redirect to={baseUrls.auth}/>}
+                <div className={classes.style_item1}>
+                    {
+                        data.map((item, index) =>
+                            <div className={item.num >= 1 ? classes.style_container2 : classes.Delete}>
+                                <div className={classes.img_container}>
+                                    <img src={item.img} className={classes.img}/>
                                 </div>
-                                <div className={classes.part}>
-                                    <FlexBoxContainer alignItems='center'>
-                                        <FlexBoxItem flexBasis={null}>
-                                            <Store/>
-                                        </FlexBoxItem>
-                                        <FlexBoxItem flexBasis={null}>
-                                            <Typography variant="subtitle2" gutterBottom>
-                                                {item.Seller}
-                                            </Typography>
-                                        </FlexBoxItem>
-                                    </FlexBoxContainer>
-                                </div>
-                                <div className={classes.part}>
-                                    <FlexBoxContainer alignItems='center'>
-                                        <FlexBoxItem flexBasis={null}>
-                                            {/* TODO Icon changed, find replace material one */}
-                                            <Add/>
-                                        </FlexBoxItem>
-                                        <FlexBoxItem flexBasis={null}>
-                                            <Typography variant="subtitle2" gutterBottom>
-                                                {item.Warranty}
-                                            </Typography>
-                                        </FlexBoxItem>
-                                    </FlexBoxContainer>
-                                </div>
-                                <div className={classes.container3}>
-                                    <div className={classes.part2}>
-                                        <div className={classes.part3}>
-                                            <div className={classes.number}>
-                                                {item.num !== 1 ?
-                                                    <Remove className={classes.icons} onClick={() => minus(index)}/>
-                                                    :
+                                <div className={classes.container2}>
+                                    <div className={classes.part}>
+                                        <Typography variant="h5" gutterBottom>
+                                            {item.name}
+                                        </Typography>
+                                    </div>
+                                    <div className={classes.part}>
+                                        <FlexBoxContainer alignItems='center'>
+                                            <FlexBoxItem flexBasis={null}>
+                                                <Store/>
+                                            </FlexBoxItem>
+                                            <FlexBoxItem flexBasis={null}>
+                                                <Typography variant="subtitle2" gutterBottom>
+                                                    {item.Seller}
+                                                </Typography>
+                                            </FlexBoxItem>
+                                        </FlexBoxContainer>
+                                    </div>
+                                    <div className={classes.part}>
+                                        <FlexBoxContainer alignItems='center'>
+                                            <FlexBoxItem flexBasis={null}>
+                                                {/* TODO Icon changed, find replace material one */}
+                                                <Add/>
+                                            </FlexBoxItem>
+                                            <FlexBoxItem flexBasis={null}>
+                                                <Typography variant="subtitle2" gutterBottom>
+                                                    {item.Warranty}
+                                                </Typography>
+                                            </FlexBoxItem>
+                                        </FlexBoxContainer>
+                                    </div>
+                                    <div className={classes.container3}>
+                                        <div className={classes.part2}>
+                                            <div className={classes.part3}>
+                                                <div className={classes.number}>
+                                                    {item.num !== 1 ?
+                                                        <Remove className={classes.icons} onClick={() => minus(index)}/>
+                                                        :
                                                     <Delete className={classes.icons} onClick={() => minus(index)}/>
                                                 }
-                                                {toPersianNumbers(item.num)}
-                                                <Add className={classes.icons} onClick={() => plus(index)}/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <FlexBoxContainer justifyContent='flex-end'>
-                                        <FlexBoxItem flexBasis={null} flexGrow={1}>
-                                            <div className={classes.price_style}>
-                                                {toPersianNumbers(item.price)}
-                                                <div className={classes.tooman_style}>
-                                                    {strings.rial}
+                                                    {toPersianNumbers(item.num)}
+                                                    <Add className={classes.icons} onClick={() => plus(index)}/>
                                                 </div>
                                             </div>
-                                        </FlexBoxItem>
-                                    </FlexBoxContainer>
+                                        </div>
+                                        <FlexBoxContainer justifyContent='flex-end'>
+                                            <FlexBoxItem flexBasis={null} flexGrow={1}>
+                                                <div className={classes.price_style}>
+                                                    {toPersianNumbers(item.price)}
+                                                    <div className={classes.tooman_style}>
+                                                        {strings.rial}
+                                                    </div>
+                                                </div>
+                                            </FlexBoxItem>
+                                        </FlexBoxContainer>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    )}
-            </div>
-            <div className={classes.style_item2}>
-                <div className={classes.style_sum}>
-                    <div className={classes.s_style}>
-                        {strings.productCount}
-                    </div>
-                    <div className={classes.sum_price_style}>
-                        {toPersianNumbers(num)}
-                    </div>
+                        )}
                 </div>
-                <div className={classes.style_sum}>
-                    <div className={classes.s_style}>
-                        {strings.totalPrice}
-                    </div>
-                    <div className={classes.sum_price_style}>
-                        {toPersianNumbers(sum)}
-                        <div className={classes.tooman_style}>
-                            {strings.rial}
+                <div className={classes.style_item2}>
+                    <div className={classes.style_sum}>
+                        <div className={classes.s_style}>
+                            {strings.productCount}
+                        </div>
+                        <div className={classes.sum_price_style}>
+                            {toPersianNumbers(num)}
                         </div>
                     </div>
-                </div>
-                <div className={classes.style_sum}>
-                    <div className={classes.s_style}>
-                        {strings.priceToPay}
-                    </div>
-                    <div className={classes.sum_price_style}>
-                        {toPersianNumbers(sum)}
-                        <div className={classes.tooman_style}>
-                            {strings.rial}
+                    <div className={classes.style_sum}>
+                        <div className={classes.s_style}>
+                            {strings.totalPrice}
+                        </div>
+                        <div className={classes.sum_price_style}>
+                            {toPersianNumbers(sum)}
+                            <div className={classes.tooman_style}>
+                                {strings.rial}
+                            </div>
                         </div>
                     </div>
+                    <div className={classes.style_sum}>
+                        <div className={classes.s_style}>
+                            {strings.priceToPay}
+                        </div>
+                        <div className={classes.sum_price_style}>
+                            {toPersianNumbers(sum)}
+                            <div className={classes.tooman_style}>
+                                {strings.rial}
+                            </div>
+                        </div>
+                    </div>
+                    <div className={classes.style_button}>
+                        <Button variant="contained" color="secondary">
+                            {strings.continuePurchaseProcedure}
+                        </Button>
+                    </div>
                 </div>
-                <div className={classes.style_button}>
-                    <Button variant="contained" color="secondary">
-                        {strings.continuePurchaseProcedure}
-                    </Button>
-                </div>
-            </div>
-        </FlexBoxContainer>
+            </FlexBoxContainer>
     );
 }
 

@@ -12,10 +12,10 @@ import {strings} from "../../values/strings";
 
 export default function Index(props) {
 
-    const {setError500} = props;
+    const {setError500, setShowFooter} = props;
 
     props.setShowHeaderButtons(true);
-    props.setShowFooter(true);
+    setShowFooter(true);
 
     const matchUrl = props.match.url;
     const {isLoggedIn} = props;
@@ -31,8 +31,8 @@ export default function Index(props) {
                 <Route path={`${matchUrl}${profileUrls.mySales}`}
                        render={(props) => <MySales {...props} setError500={setError500}/>}/>
                 <Route
-                    render={(props) => <ErrorPage {...props} title={strings.error404Title}
-                                                  body={strings.error404Body}/>}/>
+                    render={(props) => <ErrorPage {...props} errorTitle={strings.error404Title}
+                                                  errorBody={strings.error404Body} setShowFooter={setShowFooter}/>}/>
             </Switch>
         </Container>
     );

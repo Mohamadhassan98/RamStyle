@@ -1,7 +1,10 @@
 import React from 'react';
+import {pageTitles} from "../values/urls";
 
 export default function BankPort(props) {
-
+    React.useEffect(() => {
+        document.title =pageTitles.bankPort;
+    }, []);
     return (
         <div className="App">
             <div className="w3-container w3-padding-48" style={{backgroundImage: "url(background/013.png)"}}>

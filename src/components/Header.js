@@ -183,11 +183,11 @@ export default function Header(props) {
     };
 
     const onCartClicked = () => {
-        if (props.isLoggedIn && props.history.location.pathname !== baseUrls.cart) {
+        // if (props.isLoggedIn && props.history.location.pathname !== baseUrls.cart) {
             props.history.push(baseUrls.cart);
-        } else if (!props.isLoggedIn) {
-            props.history.push(baseUrls.auth);
-        }
+        // } else if (!props.isLoggedIn) {
+        //     props.history.push(baseUrls.auth);
+        // }
     };
 
     const onLogoPressed = () => {

@@ -30,4 +30,13 @@ export const pageTitles = {
     home: `${strings.appName}`,
     basket: `${strings.basket}`,
     auth: `${strings.auth}`,
+    productDetail: `${strings.productDetail}`,
+    PurchaseReport: `${strings.PurchaseReport}`,
+    products: `${strings.products}`,
+    bankPort: `${strings.bankPort}`,
+    aboutUs: `${strings.aboutUs}`,
+    aboutProject: `${strings.aboutProject}`,
+    changePassword: `${strings.changePassword}`,
+    mySale: `${strings.mySale}`,
+    profile: `${strings.profile}`,
 };

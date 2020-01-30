@@ -17,7 +17,6 @@ export function Index(props) {
     return (
         <Switch>
             <Route exact path={`${matchUrl}`} render={(props) => <HomePage {...props} setShowHeaderButtons={showHeader}
-                                                                           setError500={setError500}
                                                                            setShowFooter={showFooter}
                                                                            productCategories={productCategories}/>}/>
             <Route path={routeUrls.auth} render={(props) => <SignInUp {...props} setShowFooter={showFooter}

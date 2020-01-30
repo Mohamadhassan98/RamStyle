@@ -12,6 +12,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Container from "@material-ui/core/Container";
 import {assets} from "../values/assets";
+import {pageTitles} from "../values/urls";
 
 const StyledTableCell = withStyles(theme => ({
     head: {
@@ -73,7 +74,10 @@ export default function Complex() {
     const classes = useStyles();
     style();
 
-
+    React.useEffect(() => {
+        document.title =pageTitles.PurchaseReport
+        ;
+    }, []);
 
     return (
         <Container maxWidth='md'>

@@ -77,7 +77,13 @@ export const strings = {
     basketPrice: 'قیمت کل سبد',
     basketRecordTime: 'تاریخ ثبت سفارش',
     trackingCode: 'کد پیگیری',
-    noSalesFound: 'سابقه خرید یافت نشد.'
+    noSalesFound: 'سابقه خرید یافت نشد.',
+    productDetail: 'مشخصات یک محصول',
+    PurchaseReport: 'گزارش خرید',
+    products: 'محصولات',
+    bankPort: 'درگاه بانک',
+    aboutProject: 'درباره پروژه',
+    mySale: 'سابقه خرید'
 };
 
 export function toPersianNumbers(value) {
