@@ -12,6 +12,7 @@ import axios from 'axios';
 import {serverUrls} from "../../values/serverurls";
 import PropTypes from 'prop-types';
 import {strings} from "../../values/strings";
+import {pageTitles} from "../../values/urls";
 
 const TableCellStyle = makeStyles(theme => ({
     head: {
@@ -44,6 +45,11 @@ export default function MySales(props) {
     const tableRowStyle = TableRowStyle();
 
     const [data, setData] = React.useState([]);
+
+    React.useEffect(() => {
+        document.title =pageTitles.mySale;
+    }, []);
+
 
     React.useEffect(() => {
         axios.get(serverUrls.completedBaskets).then(response => {

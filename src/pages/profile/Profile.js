@@ -8,7 +8,7 @@ import {serverUrls} from "../../values/serverurls";
 import Default from '../../assets/default.png';
 import Tooltip from "@material-ui/core/Tooltip";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {baseUrls} from "../../values/urls";
+import {baseUrls, pageTitles} from "../../values/urls";
 import {Redirect} from "react-router";
 
 const useStyle = makeStyles(theme => ({
@@ -118,6 +118,11 @@ export default function Profile(props) {
     const errorsOff = () => {
         setEmailError(' ');
     };
+
+    React.useEffect(() => {
+        document.title =pageTitles.profile;
+    }, []);
+
 
     const classes = useStyle();
 
