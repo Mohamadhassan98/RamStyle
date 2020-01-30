@@ -10,6 +10,7 @@ import TransitionsModal from "../components/modal";
 import axios from 'axios';
 import {serverUrls} from '../values/serverurls';
 import {Container} from "@material-ui/core";
+import {pageTitles} from "../values/urls";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -61,9 +62,13 @@ export default function ProductDetail(props) {
     };
     const handleOpen = (image) => {
         setOpen(true);
-        setImModal(image)
+        setImModal(image);
         console.log(image)
     };
+
+    React.useEffect(() => {
+        document.title =pageTitles.productDetail;
+    }, []);
 
     return (
         <Container>

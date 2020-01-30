@@ -2,6 +2,7 @@ import React from 'react';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import assets from '../values/assets';
+import {pageTitles} from "../values/urls";
 class Products extends React.Component {
     constructor() {
         super();
@@ -111,6 +112,10 @@ class Products extends React.Component {
             fontSize:"20px",
         }
 
+        React.useEffect(() => {
+            document.title =pageTitles.products
+            ;
+        }, []);
         return (
             <div style={container}>
                 <div style={SearchBar}>

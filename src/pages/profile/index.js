@@ -28,9 +28,9 @@ export default function Index(props) {
                 <Route path={`${matchUrl}${profileUrls.changePassword}`}
                        render={(props) => <ChangePassword {...props}/>}/>
                 <Route path={`${matchUrl}${profileUrls.mySales}`} render={(props) => <MySales {...props}/>}/>
-                <Route
-                    render={(props) => <ErrorPage {...props} title={strings.error404Title} body={strings.error404Body}
-                                                  image={assets.image1}/>}/>
+                {/*<Route*/}
+                {/*    render={(props) => <ErrorPage {...props} title={strings.error404Title} body={strings.error404Body}*/}
+                {/*                                  image={assets.image1}/>}/>*/}
             </Switch>
         </Container>
     );

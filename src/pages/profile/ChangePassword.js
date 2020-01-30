@@ -8,7 +8,7 @@ import {Visibility, VisibilityOff} from "@material-ui/icons";
 import {passwordRegex, strings} from "../../values/strings";
 import axios from 'axios';
 import {serverUrls} from "../../values/serverurls";
-import {baseUrls} from "../../values/urls";
+import {baseUrls, pageTitles} from "../../values/urls";
 import PropTypes from 'prop-types';
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -31,6 +31,10 @@ export default function ChangePassword(props) {
     const [showOldPassword, setShowOldPassword] = React.useState(false);
     const [showNewPassword, setShowNewPassword] = React.useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+
+    React.useEffect(() => {
+        document.title =pageTitles.changePassword;
+    }, []);
 
     const onSubmitPressed = () => {
         if (!validateForm()) {
