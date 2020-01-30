@@ -21,7 +21,7 @@ import image1 from '../assets/clothes.jpg';
 import pic1 from '../assets/1.png';
 import pic2 from '../assets/2.png';
 import errorBox from '../assets/box1.svg';
-
+import empty from '../assets/empty.png'
 export const assets = {
     // carouselItem1: item1,
     carouselItem2: item2,
@@ -45,5 +45,6 @@ export const assets = {
     image1: image1,
     pic1: pic1,
     pic2: pic2,
-    errorBox: errorBox
+    errorBox: errorBox,
+    empty:empty,
 };
