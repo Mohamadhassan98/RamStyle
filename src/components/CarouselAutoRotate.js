@@ -6,8 +6,6 @@ import {grey} from '@material-ui/core/colors';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {duration} from '@material-ui/core/styles/transitions';
 import Fab from '@material-ui/core/Fab';
-import ArrowForwardIcon from '@material-ui/icons/ArrowBack';
-import ArrowBackIcon from '@material-ui/icons/ArrowForward';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Fade from '@material-ui/core/Fade';
@@ -23,8 +21,8 @@ const styles = theme => ({
         }
     },
     content: {
-        width: theme.breakpoints.values.lg,
-        maxWidth: theme.breakpoints.values.xl,
+        // width: theme.breakpoints.values.lg,
+        maxWidth: theme.breakpoints.values.lg,
         height: 'calc(100% - 96px)',
         maxHeight: 600,
         margin: 'auto auto 0',
@@ -60,7 +58,7 @@ const styles = theme => ({
         color: grey[700]
     },
     carouselWrapper: {
-        overflow: 'hidden',
+        // overflow: 'hidden',
         borderRadius: 14,
         transform: 'scale(1.0)',
         background: 'transparent',
@@ -195,7 +193,7 @@ class AutoRotatingCarousel extends Component {
                     onClick={this.handleContentClick}
                 >
                     <Paper
-                        elevation={mobile ? 0 : 1}
+                        elevation={mobile ? 0 : 0}
                         className={classes.carouselWrapper}>
                         {carousel}
                     </Paper>

@@ -27,17 +27,16 @@ export function Index(props) {
                                                                       setLoggedIn={setLoggedIn}/>}/>
             <Route path={routeUrls.profile} render={(props) => <ProfilePage {...props} setShowFooter={showFooter}
                                                                             setShowHeaderButtons={showHeader}
+                                                                            setError500={setError500}
                                                                             isLoggedIn={isLoggedIn}
                                                                             setLoggedIn={setLoggedIn}/>}/>
             <Route path={routeUrls.cart} render={(props) => <Basket {...props} setShowHeaderButtons={showHeader}
                                                                     setShowFooter={showFooter}
-                                                                    isLoggedIn={isLoggedIn}
-            />}/>
-            <Route path={routeUrls.error500}
-                   render={(props) => <ErrorPage {...props}
-                                                 title={strings.error500Title}
-                                                 body={strings.error500Body}
-                   />}/>
+                                                                    isLoggedIn={isLoggedIn}/>}/>
+            <Route path={routeUrls.error500} render={(props) => <ErrorPage {...props}
+                                                                           errorTitle={strings.error500Title}
+                                                                           setShowFooter={showFooter}
+                                                                           errorBody={strings.error500Body}/>}/>
             <Route render={(props) => <ErrorPage {...props}
                                                  title={strings.error404Title}
                                                  body={strings.error404Body}/>}/>

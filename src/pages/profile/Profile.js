@@ -9,7 +9,7 @@ import Default from '../../assets/default.png';
 import Tooltip from "@material-ui/core/Tooltip";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {baseUrls} from "../../values/urls";
-import {Redirect} from "react-router";
+import PropTypes from 'prop-types';
 
 const useStyle = makeStyles(theme => ({
     avatar: {
@@ -38,8 +38,6 @@ export default function Profile(props) {
     const [photo, setPhoto] = React.useState(Default);
     const [isLoading, setLoading] = React.useState(false);
     const [profilePic, setProfilePic] = React.useState('');
-    const [error500, setError500] = React.useState(false);
-
 
     const clearProfile = () => {
         setPhoto(Default);
@@ -78,8 +76,11 @@ export default function Profile(props) {
             setLastName(lastName);
             setName(firstName);
         }).catch(error => {
-            //TODO Show appropriate error
-            console.log(error);
+            if (error.response.status === 500) {
+                props.setError500(true);
+            } else {
+                window.alert(`Error while getting profile info ${error.response.status}`);
+            }
         });
     }, []);
 
@@ -106,9 +107,9 @@ export default function Profile(props) {
             props.history.push(baseUrls.home);
         }).catch(error => {
             if (error.response.status === 500) {
-                setError500(true);
+                props.setError500(true);
             } else {
-                window.alert(error.response.status);
+                window.alert(`Error while submitting data ${error.response.status}`);
             }
         }).finally(() => {
             setLoading(false);
@@ -123,9 +124,6 @@ export default function Profile(props) {
 
     return (
         <React.Fragment>
-            {error500 &&
-            <Redirect to={baseUrls.error500}/>
-            }
             <Container maxWidth='xs'>
                 <FlexBoxItem display='flex' justifyContent='center'>
                     <div className={classes.profile} onMouseDown={profilePress}
@@ -209,3 +207,7 @@ export default function Profile(props) {
         </React.Fragment>
     );
 }
+
+Profile.propTypes = {
+    setError500: PropTypes.func.isRequired
+};

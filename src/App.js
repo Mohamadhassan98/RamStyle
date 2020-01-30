@@ -18,7 +18,6 @@ export default function App(props) {
     const [error500, setError500] = React.useState(false);
     const [cookies, setCookies, removeCookies] = useCookies(['csrftoken']);
 
-
     React.useEffect(() => {
         axios.get(serverUrls.allCategories).then(response => {
             setProductCategories(response.data);

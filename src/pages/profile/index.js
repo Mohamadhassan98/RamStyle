@@ -9,9 +9,10 @@ import {Container} from "@material-ui/core";
 import MySales from "./MySales";
 import ErrorPage from "../../components/ErrorPage";
 import {strings} from "../../values/strings";
-import {assets} from "../../values/assets";
 
 export default function Index(props) {
+
+    const {setError500} = props;
 
     props.setShowHeaderButtons(true);
     props.setShowFooter(true);
@@ -24,13 +25,14 @@ export default function Index(props) {
             {!isLoggedIn && <Redirect to={baseUrls.auth}/>}
             <ProfileHeader {...props}/>
             <Switch>
-                <Route exact path={`${matchUrl}`} render={(props) => <Profile {...props}/>}/>
+                <Route exact path={`${matchUrl}`} render={(props) => <Profile setError500={setError500} {...props}/>}/>
                 <Route path={`${matchUrl}${profileUrls.changePassword}`}
-                       render={(props) => <ChangePassword {...props}/>}/>
-                <Route path={`${matchUrl}${profileUrls.mySales}`} render={(props) => <MySales {...props}/>}/>
+                       render={(props) => <ChangePassword setError500={setError500} {...props}/>}/>
+                <Route path={`${matchUrl}${profileUrls.mySales}`}
+                       render={(props) => <MySales {...props} setError500={setError500}/>}/>
                 <Route
-                    render={(props) => <ErrorPage {...props} title={strings.error404Title} body={strings.error404Body}
-                                                  image={assets.image1}/>}/>
+                    render={(props) => <ErrorPage {...props} title={strings.error404Title}
+                                                  body={strings.error404Body}/>}/>
             </Switch>
         </Container>
     );
@@ -40,5 +42,6 @@ Index.propTypes = {
     setShowHeaderButtons: PropTypes.func.isRequired,
     setShowFooter: PropTypes.func.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
-    setLoggedIn: PropTypes.func.isRequired
+    setLoggedIn: PropTypes.func.isRequired,
+    setError500: PropTypes.func.isRequired
 };

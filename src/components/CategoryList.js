@@ -9,10 +9,14 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import {serverUrls} from "../values/serverurls";
 import {strings} from "../values/strings";
+import {assets} from "../values/assets";
 
 const useStyle = makeStyles(theme => ({
     container: {
         position: "relative",
+    },
+    container2: {
+        backgroundColor: theme.palette.text.secondary
     },
     item: {
         maxWidth: (theme.breakpoints.values.sm + theme.breakpoints.values.xs) / 2,
@@ -39,7 +43,7 @@ const useStyle = makeStyles(theme => ({
         border: "5px inset #103F5E",
         borderRadius: "0px 8px 0px 10px",
         justifyContent: "center",
-        bottom: "30%"
+        bottom: "40%"
     },
     hidden: {
         display: "none"
@@ -101,7 +105,7 @@ export default function CategoryList(props) {
                         {strings.productCategories}
                     </Typography>
                 </FlexBoxItem>
-                <FlexBoxItem>
+                <FlexBoxItem className={classes.container2}>
                     {props.productCategories.length === 0 ?
                         <FlexBoxItem>
                             <Typography align='center' gutterBottom variant='h6' style={{
@@ -124,7 +128,10 @@ export default function CategoryList(props) {
                                         onClick={() => onItemClicked(category)}
                                         onMouseEnter={() => setHoveredItem(category.id)}
                                         onMouseLeave={() => setHoveredItem(-1)}>
-                                        <img src={category.image} alt='category'
+                                        <img src={
+                                            // category.image
+                                            assets.image1
+                                        } alt='category'
                                              className={hoveredItem === category.id ? classes.imgBlur : classes.img}/>
                                         <div className={hoveredItem === category.id ? classes.caption : classes.hidden}>
                                             <Typography variant="h4" gutterBottom className={classes.body}>

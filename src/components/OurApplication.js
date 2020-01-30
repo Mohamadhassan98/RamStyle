@@ -9,7 +9,7 @@ import {strings} from "../values/strings";
 
 const useStyle = makeStyles(theme => ({
     container: {
-        background: theme.palette.secondary.light
+        background: theme.palette.secondary.light,
     },
     img: {
         height: '50px',
@@ -29,7 +29,7 @@ export default function OurApplication() {
 
     return (
         <Container className={classes.container} maxWidth='lg'>
-            <FlexBoxContainer justifyContent='center'>
+            <FlexBoxContainer justifyContent='center' flexBasis='100%'>
                 <FlexBoxItem flexBasis='200%'>
                     <FlexBoxContainer flexDirection='column' justifyContent='space-around'
                                       className={classes.flexContainer}>

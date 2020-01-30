@@ -184,7 +184,7 @@ export default function Basket(props) {
         },
     ];
 
-    const [data, setData] = React.useState(array);
+    const [data, setData] = React.useState(props.lastBasket.products);
     const [sum, setSum] = React.useState(0);
     const [num, setNum] = React.useState(0);
 
@@ -219,9 +219,8 @@ export default function Basket(props) {
 
     /**************************************************************************************************/
     return (
-        <FlexBoxContainer className={classes.style_container} alignItems='flex-start'>
+        <FlexBoxContainer alignItems='flex-start'>
             {!props.isLoggedIn && <Redirect to={baseUrls.auth}/>}
-
             <div className={classes.style_item1}>
                 {
                     data.map((item, index) =>
@@ -264,23 +263,16 @@ export default function Basket(props) {
                                     <div className={classes.part2}>
                                         <div className={classes.part3}>
                                             <div className={classes.number}>
-                                                {/*<div className={classes.style3}>*/}
                                                 {item.num !== 1 ?
                                                     <Remove className={classes.icons} onClick={() => minus(index)}/>
                                                     :
-                                                    <Delete className={classes.icons} onClick={() => minus(index)}/>}
-                                                {/*</div>*/}
-                                                {/*<div className={classes.style2}>*/}
+                                                    <Delete className={classes.icons} onClick={() => minus(index)}/>
+                                                }
                                                 {toPersianNumbers(item.num)}
-                                                {/*</div>*/}
-                                                {/*<div className={classes.style1}>*/}
                                                 <Add className={classes.icons} onClick={() => plus(index)}/>
-                                                {/*</div>*/}
                                             </div>
                                         </div>
                                     </div>
-                                    {/*<div className={classes.part2}>*/}
-                                    {/*<div className={classes.part3}>*/}
                                     <FlexBoxContainer justifyContent='flex-end'>
                                         <FlexBoxItem flexBasis={null} flexGrow={1}>
                                             <div className={classes.price_style}>
@@ -291,8 +283,6 @@ export default function Basket(props) {
                                             </div>
                                         </FlexBoxItem>
                                     </FlexBoxContainer>
-                                    {/*</div>*/}
-                                    {/*</div>*/}
                                 </div>
                             </div>
                         </div>
@@ -342,5 +332,6 @@ export default function Basket(props) {
 Basket.propTypes = {
     setShowHeaderButtons: PropTypes.func.isRequired,
     setShowFooter: PropTypes.func.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired
+    isLoggedIn: PropTypes.bool.isRequired,
+    lastBasket: PropTypes.object.isRequired
 };

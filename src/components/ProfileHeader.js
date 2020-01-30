@@ -29,6 +29,7 @@ export default function ProfileHeader(props) {
 
     props.setShowHeaderButtons(true);
     props.setShowFooter(true);
+
     const items = [strings.profile, strings.changePassword, strings.mySales];
 
     const classes = useStyles();
@@ -63,8 +64,11 @@ export default function ProfileHeader(props) {
             props.setLoggedIn(false);
             props.history.push(baseUrls.home);
         }).catch(error => {
-            //TODO Show appropriate error
-            window.alert('TODO: Show appropriate error');
+            if (error.response.status === 500) {
+                props.setError500(true);
+            } else {
+                window.alert(`Error while logging out ${error.response.status}`);
+            }
         });
     };
 
@@ -107,5 +111,6 @@ export default function ProfileHeader(props) {
 ProfileHeader.propTypes = {
     setShowHeaderButtons: PropTypes.func.isRequired,
     setShowFooter: PropTypes.func.isRequired,
-    setLoggedIn: PropTypes.func.isRequired
+    setLoggedIn: PropTypes.func.isRequired,
+    setError500: PropTypes.func.isRequired
 };

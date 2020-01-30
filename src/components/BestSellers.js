@@ -57,7 +57,7 @@ export default function BestSellers(props) {
 
     return (
         <div className={classes.container}>
-            <Container>
+            <Container maxWidth='lg'>
                 <Grid container direction='column' wrap='nowrap' justify='center'>
                     <Grid item>
                         <Typography align='center' gutterBottom variant='h5' style={{

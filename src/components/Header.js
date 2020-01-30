@@ -69,7 +69,7 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center'
     },
     inputRoot: {
-        color: 'inherit',
+        color: theme.palette.text.secondary,
         marginRight: 30,
         marginTop: -10,
         marginBottom: -10,
@@ -87,13 +87,20 @@ const useStyles = makeStyles(theme => ({
     },
     inputInput: {
         padding: theme.spacing(1, 1, 1, 7),
+        color: theme.palette.text.secondary,
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('xs')]: {
             width: 200
         },
         borderRadius: 5,
-        borderColor: 'transparent'
+        borderColor: 'transparent',
+    },
+    input: {
+        '&::placeholder': {
+            color: theme.palette.text.secondary
+        },
+        color: theme.palette.text.secondary
     },
     sectionDesktop: {
         display: 'none',
@@ -118,6 +125,13 @@ const useStyles = makeStyles(theme => ({
     button: {
         color: theme.palette.text.secondary,
         cursor: 'pointer'
+    },
+    customBadge: {
+        backgroundColor: theme.palette.secondary.dark,
+        color: "white"
+    },
+    innerToolbar: {
+        backgroundColor: theme.palette.primary.light
     }
 }));
 
@@ -210,7 +224,7 @@ export default function Header(props) {
                     <Slide direction='down' appear={false} in={!trigger}>
                         <AppBar>
                             <Toolbar/>
-                            <Toolbar>
+                            <Toolbar className={classes.innerToolbar}>
                                 <FlexBoxContainer alignItems='center' justifyItems='flex-start'>
                                     <FlexBoxItem>
                                         <Typography variant='subtitle2' aria-haspopup
@@ -232,7 +246,7 @@ export default function Header(props) {
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 justifyItems: 'flex-start',
-                                                marginTop: 40
+                                                marginTop: 8
                                             }}
                                             transition
                                             disablePortal>
@@ -302,7 +316,15 @@ export default function Header(props) {
                                                                     {searchLoading ? <CircularProgress color="inherit"
                                                                                                        size={20}/> : null}
                                                                     {params.InputProps.endAdornment}
-                                                                </React.Fragment>
+                                                                </React.Fragment>,
+                                                            classes: {
+                                                                input: classes.input
+                                                            }
+                                                        }}
+                                                        InputLabelProps={{
+                                                            style: {
+                                                                color: 'white'
+                                                            }
                                                         }}
                                                         fullWidth
                                                     />
@@ -336,7 +358,13 @@ export default function Header(props) {
                                                         overlap='rectangle'
                                                         badgeContent={props.cartSize}
                                                         showZero
-                                                        color='secondary'>
+                                                        // color='secondary'
+                                                        // style={{
+                                                        //     backgroundColor: 'green'
+                                                        // }}
+                                                        // className={classes.badge}
+                                                        classes={{badge: classes.customBadge}}
+                                                    >
                                                         <ShoppingCart className={classes.icons}
                                                                       onClick={onCartClicked}/>
                                                     </Badge>

@@ -27,6 +27,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ErrorPage(props) {
 
+    props.setShowFooter(false);
     const classes = useStyles();
 
     const anim1 = keyframes`
@@ -57,6 +58,7 @@ export default function ErrorPage(props) {
     font-size: 40px;
     animation: ${anim1};
     animation-duration: 1s;
+    animation-iteration-count: 1;
     top: 110px;`;
 
     const Message = styled.div`
@@ -70,6 +72,7 @@ export default function ErrorPage(props) {
     animation: ${anim2};
     animation-duration: 2s;
     animation-delay: 1s;
+    animation-iteration-count: 1;
     animation-fill-mode: forwards;
     top: 470px;
     opacity: 0;`;
@@ -93,5 +96,6 @@ export default function ErrorPage(props) {
 
 ErrorPage.propTypes = {
     errorTitle: PropTypes.string.isRequired,
-    errorBody: PropTypes.string.isRequired
+    errorBody: PropTypes.string.isRequired,
+    setShowFooter: PropTypes.func.isRequired
 };

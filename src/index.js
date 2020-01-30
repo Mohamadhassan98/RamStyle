@@ -25,7 +25,8 @@ function Index() {
         },
         palette: {
             primary: {
-                main: '#272343'
+                main: '#272343',
+                light: '#47445F'
             },
             secondary: {
                 light: '#E3F6F5',
@@ -60,7 +61,7 @@ function Index() {
                 underlineNone: {
                     cursor: "pointer"
                 }
-            }
+            },
         }
     });
 

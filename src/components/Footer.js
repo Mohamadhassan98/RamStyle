@@ -12,13 +12,15 @@ const useStyle = makeStyles(theme => ({
     },
     container: {
         backgroundColor: theme.palette.secondary.main,
+        paddingTop: 15
     },
     logo: {
         maxWidth: '25px'
     },
     typography: {
         cursor: 'pointer'
-    }
+    },
+    innerContainer: {}
 }));
 
 export default function Footer(props) {
@@ -31,7 +33,9 @@ export default function Footer(props) {
             {show ?
                 <FlexBoxContainer flexDirection='column' className={classes.root} justifyContent='space-between'>
                     <FlexBoxItem flexBasis={null}>
-                        {children}
+                        <Container maxWidth='lg'>
+                            {children}
+                        </Container>
                     </FlexBoxItem>
                     <FlexBoxItem flexBasis={null}>
                         <Container maxWidth='lg'>
@@ -155,7 +159,7 @@ export default function Footer(props) {
                                                     </Typography>
                                                 </FlexBoxItem>
                                                 <FlexBoxItem>
-                                                    <FlexBoxContainer>
+                                                    <FlexBoxContainer justifyContent='center'>
                                                         <FlexBoxItem flexBasis={null}>
                                                             <img src={assets.instagram} alt='instagram logo'
                                                                  className={classes.logo}/>
