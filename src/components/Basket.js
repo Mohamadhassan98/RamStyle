@@ -26,7 +26,8 @@ const useStyles = makeStyles(theme => ({
     },
     img_container: {
         width: "20%",
-        cursor: "pointer"
+        cursor: "pointer",
+        margin:"2%"
     },
     img: {
         width: "100%"
@@ -79,6 +80,17 @@ const useStyles = makeStyles(theme => ({
     icons: {
         cursor: "pointer",
     },
+    empty:{
+        width:"100%",
+        display:"flex",
+        flexDirection: "column",
+        justifyContent:"center",
+        alignItems:"center",
+        alignContent:"center",
+       // backgroundColor:"red",
+
+    },
+
     /***************************************************************************************/
     style_item1: {
         display: "flex",
@@ -149,8 +161,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Basket(props) {
-    props.setShowHeaderButtons(true);
-    props.setShowFooter(true);
+   // props.setShowHeaderButtons(true);
+   // props.setShowFooter(true);
 
     const classes = useStyles();
 
@@ -219,8 +231,14 @@ export default function Basket(props) {
 
     /**************************************************************************************************/
     return (
+        data.length!=0 ?
+            <div className={classes.empty}>
+                <img src={assets.empty} style={{width:"20%", marginTop:"10%"}}/>
+                <h1>سبد خالی است </h1>
+            </div>
+            :
         <FlexBoxContainer className={classes.style_container} alignItems='flex-start'>
-            {!props.isLoggedIn && <Redirect to={baseUrls.auth}/>}
+            {/*{!props.isLoggedIn && <Redirect to={baseUrls.auth}/>}*/}
 
             <div className={classes.style_item1}>
                 {
@@ -336,6 +354,8 @@ export default function Basket(props) {
                 </div>
             </div>
         </FlexBoxContainer>
+
+
     );
 }
 
