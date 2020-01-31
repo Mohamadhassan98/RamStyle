@@ -138,14 +138,9 @@ const useStyles = makeStyles(theme => ({
 export default function Header(props) {
 
     const [productCategoryOpen, setProductCategoryOpen] = React.useState(false);
-    // const [productCategories, setProductCategories] = React.useState([]);
     const [searchOptionsOpen, setSearchOptionsOpen] = React.useState(false);
     const [searchOptions, setSearchOptions] = React.useState([]);
     const [searchQuery, setSearchQuery] = React.useState('');
-
-    // React.useEffect(() => {
-    //     setProductCategories(props.productCategories);
-    // }, [props.productCategories]);
 
     React.useEffect(() => {
         if (searchQuery.toString().length >= 3) {
@@ -154,10 +149,10 @@ export default function Header(props) {
             axios.get(serverUrls.searchProduct(searchQuery)).then(response => {
                 setSearchOptions(response.data);
             }).catch(error => {
-                if (error.response.status === 500) {
+                if (error.response && error.response.status === 500) {
                     props.setError500(true);
                 } else {
-                    window.alert(`Search error ${error.response.status}`);
+                    window.alert(`Search error ${error}`);
                 }
             }).finally(() => {
                 setSearchLoading(false);
@@ -183,11 +178,11 @@ export default function Header(props) {
     };
 
     const onCartClicked = () => {
-        // if (props.isLoggedIn && props.history.location.pathname !== baseUrls.cart) {
+        if (props.isLoggedIn && props.history.location.pathname !== baseUrls.cart) {
             props.history.push(baseUrls.cart);
-        // } else if (!props.isLoggedIn) {
-        //     props.history.push(baseUrls.auth);
-        // }
+        } else if (!props.isLoggedIn) {
+            props.history.push(baseUrls.auth);
+        }
     };
 
     const onLogoPressed = () => {
@@ -264,8 +259,8 @@ export default function Header(props) {
                                                                   disableListWrap
                                                                   onKeyDown={handleListKeyDown}>
                                                             {props.productCategories.map(category => (
-                                                                <MenuItem
-                                                                    onClick={() => onItemClicked(category)}>{category.name}</MenuItem>
+                                                                <MenuItem key={category.id}
+                                                                          onClick={() => onItemClicked(category)}>{category.name}</MenuItem>
                                                             ))}
                                                         </MenuList>
                                                     </Paper>
@@ -349,7 +344,7 @@ export default function Header(props) {
                                                           justifyItems='flex-end'>
                                             <FlexBoxItem flexBasis={null}>
                                                 {showButtons &&
-                                                <IconButton>
+                                                <IconButton onClick={onCartClicked}>
                                                     <Badge
                                                         anchorOrigin={{
                                                             vertical: 'top',
@@ -358,30 +353,23 @@ export default function Header(props) {
                                                         overlap='rectangle'
                                                         badgeContent={props.cartSize}
                                                         showZero
-                                                        // color='secondary'
-                                                        // style={{
-                                                        //     backgroundColor: 'green'
-                                                        // }}
-                                                        // className={classes.badge}
                                                         classes={{badge: classes.customBadge}}
                                                     >
-                                                        <ShoppingCart className={classes.icons}
-                                                                      onClick={onCartClicked}/>
+                                                        <ShoppingCart className={classes.icons}/>
                                                     </Badge>
                                                 </IconButton>
                                                 }
                                             </FlexBoxItem>
                                             <FlexBoxItem flexBasis={null}>
                                                 {showButtons &&
-                                                <IconButton>
-                                                    <AccountCircle onClick={onLoginPressed} className={classes.icons}/>
+                                                <IconButton onClick={onLoginPressed} className={classes.icons}>
+                                                    <AccountCircle/>
                                                 </IconButton>
                                                 }
                                             </FlexBoxItem>
                                             <FlexBoxItem flexBasis={null}>
-                                                <IconButton>
-                                                    <ArrowBackIcon className={classes.icons}
-                                                                   onClick={() => props.history.goBack()}/>
+                                                <IconButton onClick={() => props.history.goBack()}>
+                                                    <ArrowBackIcon className={classes.icons}/>
                                                 </IconButton>
                                             </FlexBoxItem>
                                         </FlexBoxContainer>

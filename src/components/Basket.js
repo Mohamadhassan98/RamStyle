@@ -351,5 +351,6 @@ Basket.propTypes = {
     setShowHeaderButtons: PropTypes.func.isRequired,
     setShowFooter: PropTypes.func.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
-    lastBasket: PropTypes.object.isRequired
+    lastBasket: PropTypes.object.isRequired,
+    setError500: PropTypes.func.isRequired
 };

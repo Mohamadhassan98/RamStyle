@@ -67,7 +67,11 @@ export const strings = {
     productCount: 'تعداد کالا',
     totalPrice: 'قیمت کل کالاها',
     priceToPay: 'مبلغ قابل پرداخت',
+    price: 'قیمت',
     continuePurchaseProcedure: 'ادامه فرایند خرید',
+    searchAmongBelow: 'جستجو در محصولات زیر...',
+    isStock: 'دست دوم',
+    isNew: 'نو',
     basket: 'سبد خرید',
     auth: 'ورود/ثبت نام',
     wrongPassword: 'کلمه عبور اشتباه است.',
@@ -83,7 +87,9 @@ export const strings = {
     products: 'محصولات',
     bankPort: 'درگاه بانک',
     aboutProject: 'درباره پروژه',
-    mySale: 'سابقه خرید'
+    mySale: 'سابقه خرید',
+    undefinedCategory: `دسته${zwnj}بندی نامشخص`,
+    unavailable: 'ناموجود'
 };
 
 export function toPersianNumbers(value) {

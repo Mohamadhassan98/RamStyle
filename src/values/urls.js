@@ -5,6 +5,7 @@ export const baseUrls = {
     auth: '/auth',
     profile: '/profile',
     categories: (id) => `/categories/${id}`,
+    search: (query) => `/search/${query}`,
     cart: '/cart',
     error500: '/500'
 };
@@ -17,7 +18,8 @@ export const profileUrls = {
 
 export const routeUrls = {
     home: baseUrls.home,
-    categoryRoute: `/${baseUrls.categories.name}/:id`,
+    category: `/${baseUrls.categories.name}/:id`,
+    search: `/${baseUrls.search.name}/:query`,
     auth: baseUrls.auth,
     profile: baseUrls.profile,
     mySales: `${baseUrls.profile}${profileUrls.mySales}`,

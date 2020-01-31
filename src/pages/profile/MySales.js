@@ -55,10 +55,10 @@ export default function MySales(props) {
         axios.get(serverUrls.completedBaskets).then(response => {
             setData(response.data);
         }).catch(error => {
-            if (error.response.status === 500) {
+            if (error.response && error.response.status === 500) {
                 props.setError500(true);
             } else {
-                window.alert(`Error while getting completed baskets ${error.response.status}`);
+                window.alert(`Error while getting completed baskets ${error}`);
             }
         });
     }, []);
@@ -83,8 +83,9 @@ export default function MySales(props) {
                                     <TableCell classes={tableCellStyle} align='center'>{row.trackingCode}</TableCell>
                                     <TableCell classes={tableCellStyle} align='center'>{row.recordTime}</TableCell>
                                     <TableCell classes={tableCellStyle} align='center'>{row.price}</TableCell>
-                                    <TableCell classes={tableCellStyle} align='center' component="th"
-                                               scope="row">{row.product_status_summary}</TableCell>
+                                    <TableCell classes={tableCellStyle} align='center' component="th" scope="row">
+                                        {row.product_status_summary}
+                                    </TableCell>
                                 </TableRow>
                             )) :
                             <TableRow classes={tableRowStyle} align='center'>

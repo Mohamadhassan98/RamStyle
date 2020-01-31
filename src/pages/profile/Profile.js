@@ -76,10 +76,10 @@ export default function Profile(props) {
             setLastName(lastName);
             setName(firstName);
         }).catch(error => {
-            if (error.response.status === 500) {
+            if (error.response && error.response.status === 500) {
                 props.setError500(true);
             } else {
-                window.alert(`Error while getting profile info ${error.response.status}`);
+                window.alert(`Error while getting profile info ${error}`);
             }
         });
     }, []);
@@ -106,10 +106,10 @@ export default function Profile(props) {
         axios.put(serverUrls.user, data).then(response => {
             props.history.push(baseUrls.home);
         }).catch(error => {
-            if (error.response.status === 500) {
+            if (error.response && error.response.status === 500) {
                 props.setError500(true);
             } else {
-                window.alert(`Error while submitting data ${error.response.status}`);
+                window.alert(`Error while submitting data ${error}`);
             }
         }).finally(() => {
             setLoading(false);

@@ -27,10 +27,12 @@ const useStyle = makeStyles(theme => ({
     },
     img: {
         width: "100%",
+        height: 450,
         position: "relative",
     },
     imgBlur: {
         width: "100%",
+        height: 450,
         position: "relative",
         filter: "blur(4px)",
     },
@@ -61,35 +63,46 @@ const useStyle = makeStyles(theme => ({
 export default function CategoryList(props) {
     const classes = useStyle();
     const [hoveredItem, setHoveredItem] = React.useState(-1);
+    const [productCategories, setProductCategories] = React.useState([]);
 
     React.useEffect(() => {
-        props.productCategories.forEach(value => {
+        setProductCategories(props.productCategories);
+        for (let j = 0; j < props.productCategories.length; j++) {
+            const value = props.productCategories[j];
             axios.get(serverUrls.categoryProducts(value.id)).then(response => {
-                if (!response.data || response.data.length === 0) {
-                    // TODO Picture for empty categories
-                } else {
-                    const product = response.data[0];
-                    const productId = product.id;
-                    axios.get(serverUrls.productImages(productId)).then(response => {
-                        //TODO Ask Ghazal if empty
-                        value.image = response.data[0]['imageContent'];
-                    }).catch(error => {
-                        if (error.response.status === 500) {
-                            props.setError500(true);
-                        } else {
-                            window.alert(`Error while retrieving images ${error.response.status}`);
-                        }
-                    });
+                if (response.data && response.data.length !== 0) {
+                    let goOn = true;
+                    for (let i = 0; i < response.data.length && goOn; i++) {
+                        const product = response.data[i];
+                        const productId = product.id;
+                        axios.get(serverUrls.productImages(productId)).then(response => {
+                            if (!response.data || response.data.length === 0) {
+                                return;
+                            }
+                            const newArray = [...props.productCategories];
+                            const image = response.data[0].imageContent;
+                            newArray[j] = {...props.productCategories, image: image};
+                            value.image = image;
+                            setProductCategories(newArray);
+                            goOn = false;
+                        }).catch(error => {
+                            if (error.response && error.response.status === 500) {
+                                props.setError500(true);
+                            } else {
+                                window.alert(`Error while retrieving images ${error}`);
+                            }
+                        });
+                    }
                 }
             }).catch(error => {
-                if (error.response.status === 500) {
+                if (error.response && error.response.status === 500) {
                     props.setError500(true);
                 } else {
-                    window.alert(`Error while category products ${error.response.status}`);
+                    window.alert(`Error while category products ${error}`);
                 }
             });
-        });
-    }, []);
+        }
+    }, [props.productCategories]);
 
     const onItemClicked = (category) => {
         props.history.push(baseUrls.categories(category.id));
@@ -106,7 +119,7 @@ export default function CategoryList(props) {
                     </Typography>
                 </FlexBoxItem>
                 <FlexBoxItem className={classes.container2}>
-                    {props.productCategories.length === 0 ?
+                    {productCategories.length === 0 ?
                         <FlexBoxItem>
                             <Typography align='center' gutterBottom variant='h6' style={{
                                 fontWeight: 'bold'
@@ -120,18 +133,16 @@ export default function CategoryList(props) {
                             flexWrap='wrap'
                             className={classes.container}
                         >
-                            {props.productCategories.map(category => (
-                                <FlexBoxItem flexBasis='30%' justifySelf='center' className={classes.item}>
+                            {productCategories.map(category => (
+                                <FlexBoxItem flexBasis='30%' justifySelf='center' className={classes.item}
+                                             key={category.id}>
                                     <FlexBoxContainer
                                         flexDirection='column'
                                         alignItems='center'
                                         onClick={() => onItemClicked(category)}
                                         onMouseEnter={() => setHoveredItem(category.id)}
                                         onMouseLeave={() => setHoveredItem(-1)}>
-                                        <img src={
-                                            // category.image
-                                            assets.image1
-                                        } alt='category'
+                                        <img src={category.image ? category.image : assets.noImage} alt='category'
                                              className={hoveredItem === category.id ? classes.imgBlur : classes.img}/>
                                         <div className={hoveredItem === category.id ? classes.caption : classes.hidden}>
                                             <Typography variant="h4" gutterBottom className={classes.body}>

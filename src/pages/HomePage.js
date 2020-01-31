@@ -35,7 +35,9 @@ export default function HomePage(props) {
         <React.Fragment>
             <Container className={classes.container} maxWidth='lg'>
                 <AutoRotatingCarousel open hideArrows={false}>
+                    <img src={assets.carouselItem1} className={classes.img}/>
                     <img src={assets.carouselItem2} className={classes.img}/>
+                    <img src={assets.carouselItem3} className={classes.img}/>
                     <img src={assets.carouselItem4} className={classes.img}/>
                 </AutoRotatingCarousel>
             </Container>

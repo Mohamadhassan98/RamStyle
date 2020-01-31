@@ -48,7 +48,7 @@ export default function ChangePassword(props) {
         }).then(response => {
             props.history.push(baseUrls.home);
         }).catch(error => {
-            if (error.response.status === 500) {
+            if (error.response && error.response.status === 500) {
                 props.setError500(true);
             } else {
                 if (error.response.data.old_password) {

@@ -8,16 +8,18 @@ import SignInUp from "./SignInUp";
 import ErrorPage from "../components/ErrorPage";
 import {strings} from "../values/strings";
 import Basket from "../components/Basket";
+import Products from "./Products";
 
 export function Index(props) {
 
-    const {setShowHeaderButtons: showHeader, setShowFooter: showFooter, isLoggedIn, setLoggedIn, productCategories, setError500} = props;
+    const {setShowHeaderButtons: showHeader, setShowFooter: showFooter, isLoggedIn, setLoggedIn, productCategories, setError500, lastBasket} = props;
     const matchUrl = props.match.url;
 
     return (
         <Switch>
             <Route exact path={`${matchUrl}`} render={(props) => <HomePage {...props} setShowHeaderButtons={showHeader}
                                                                            setShowFooter={showFooter}
+                                                                           setError500={setError500}
                                                                            productCategories={productCategories}/>}/>
             <Route path={routeUrls.auth} render={(props) => <SignInUp {...props} setShowFooter={showFooter}
                                                                       isLoggedIn={isLoggedIn}
@@ -30,14 +32,21 @@ export function Index(props) {
                                                                             isLoggedIn={isLoggedIn}
                                                                             setLoggedIn={setLoggedIn}/>}/>
             <Route path={routeUrls.cart} render={(props) => <Basket {...props} setShowHeaderButtons={showHeader}
+                                                                    setError500={setError500}
+                                                                    lastBasket={lastBasket}
                                                                     setShowFooter={showFooter}
                                                                     isLoggedIn={isLoggedIn}/>}/>
+            <Route path={routeUrls.category}
+                   render={(props) => <Products {...props} productCategories={productCategories}
+                                                setShowFooter={showFooter}
+                                                setShowHeaderButtons={showHeader} setError500={setError500}/>}/>
             <Route path={routeUrls.error500} render={(props) => <ErrorPage {...props}
                                                                            errorTitle={strings.error500Title}
                                                                            setShowFooter={showFooter}
                                                                            errorBody={strings.error500Body}/>}/>
             <Route render={(props) => <ErrorPage {...props}
                                                  title={strings.error404Title}
+                                                 setShowFooter={showFooter}
                                                  body={strings.error404Body}/>}/>
         </Switch>
     );
@@ -49,5 +58,6 @@ Index.propTypes = {
     isLoggedIn: PropTypes.bool.isRequired,
     setLoggedIn: PropTypes.func.isRequired,
     productCategories: PropTypes.array.isRequired,
-    setError500: PropTypes.func.isRequired
+    setError500: PropTypes.func.isRequired,
+    lastBasket: PropTypes.array.isRequired
 };

@@ -3,7 +3,6 @@ import {Container, makeStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import {strings} from "../values/strings";
@@ -11,14 +10,19 @@ import Slider from "react-slick";
 import axios from 'axios';
 import {serverUrls} from "../values/serverurls";
 import PropTypes from 'prop-types';
+import {assets} from "../values/assets";
 
-// noinspection JSCheckFunctionSignatures
-const useStyles = makeStyles(theme => ({
+
+const CardStyles = makeStyles(theme => ({
     root: {
         maxWidth: 400,
         marginTop: 5,
         marginBottom: 5,
-    },
+    }
+}));
+
+// noinspection JSCheckFunctionSignatures
+const useStyles = makeStyles(theme => ({
     container: {
         flip: false,
         marginTop: 50
@@ -33,6 +37,7 @@ export default function BestSellers(props) {
     const [sellers, setSellers] = React.useState([]);
 
     const classes = useStyles();
+    const cardStyles = CardStyles();
 
     const settings = {
         dots: false,
@@ -45,12 +50,19 @@ export default function BestSellers(props) {
 
     React.useEffect(() => {
         axios.get(serverUrls.sellers).then(response => {
-            setSellers(response.data.filter((value, index) => index <= 6));
+            const sellers = response.data.filter((value, index) => index <= 6);
+            response.data.forEach(value => {
+                if (!value.profileImage) {
+                    value.profileImage = assets.noImage;
+                }
+            });
+            setSellers(sellers);
         }).catch(error => {
-            if (error.response.status === 500) {
+            console.log('catch get all sellers: ', error);
+            if (error.response && error.response.status === 500) {
                 props.setError500(true);
             } else {
-                window.alert(`Error while getting sellers ${error.response.status}`);
+                window.alert(`Error while getting sellers ${error}`);
             }
         });
     });
@@ -77,18 +89,16 @@ export default function BestSellers(props) {
                         <Grid item>
                             <Slider {...settings}>
                                 {sellers.map(seller =>
-                                    <Card classes={classes} elevation={0}>
-                                        <CardActionArea>
-                                            <CardMedia
-                                                component="img"
-                                                image={seller['profileImage']}
-                                            />
-                                            <CardContent>
-                                                <Typography gutterBottom variant="h6" align='center'>
-                                                    {seller.username}
-                                                </Typography>
-                                            </CardContent>
-                                        </CardActionArea>
+                                    <Card classes={cardStyles} elevation={0} key={seller.id}>
+                                        <CardMedia
+                                            component="img"
+                                            image={seller['profileImage']}
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h6" align='center'>
+                                                {seller.username}
+                                            </Typography>
+                                        </CardContent>
                                     </Card>
                                 )}
                             </Slider>

@@ -16,16 +16,17 @@ export default function App(props) {
     const [isLoggedIn, setLoggedIn] = React.useState(false);
     const [basketProducts, setBasketProducts] = React.useState([]);
     const [error500, setError500] = React.useState(false);
-    const [cookies, setCookies, removeCookies] = useCookies(['csrftoken']);
+    const [cookies] = useCookies(['csrftoken']);
 
     React.useEffect(() => {
         axios.get(serverUrls.allCategories).then(response => {
             setProductCategories(response.data);
         }).catch(error => {
-            if (error.response.status === 500) {
+            console.log('catch get all categories: ', error);
+            if (error.response && error.response.status === 500) {
                 setError500(true);
             } else {
-                window.alert(`Something went wrong... ${error.response.status}`);
+                window.alert(`Something went wrong... ${error}`);
             }
         });
     }, []);
@@ -35,11 +36,14 @@ export default function App(props) {
             setLoggedIn(true);
             console.log('logged in');
         }).catch(error => {
-            if (error.response.status === 500) {
+            console.log('catch get is logged in: ', error);
+            if (error.response && error.response.status === 500) {
                 setError500(true);
-            } else {
+            } else if (error.response.status === 401) {
                 setLoggedIn(false);
                 console.log('Not logged in');
+            } else {
+                window.alert(`Error while checking for sign in ${error}`);
             }
         });
     }, []);
@@ -57,16 +61,20 @@ export default function App(props) {
                     axios.post(serverUrls.lastBasket).then(response1 => {
                         setBasketProducts([]);
                     }).catch(error => {
-                        if (error.response.status === 500) {
+                        console.log('catch creating basket: ', error);
+                        if (error.response && error.response.status === 500) {
                             setError500(true);
                         } else {
-                            window.alert(`Error creating basket... ${error.response.status}`);
+                            window.alert(`Error creating basket... ${error}`);
                         }
                     });
                 }
             }).catch(error => {
-                if (error.response.status === 500) {
+                console.log('catch get last basket: ', error);
+                if (error.response && error.response.status === 500) {
                     setError500(true);
+                } else {
+                    window.alert(`Error getting last basket... ${error}`);
                 }
             });
         } else {
@@ -86,6 +94,7 @@ export default function App(props) {
                                                                        isLoggedIn={isLoggedIn}
                                                                        setLoggedIn={setLoggedIn}
                                                                        setError500={setError500}
+                                                                       lastBasket={basketProducts}
                                                                        productCategories={productCategories}/>}/>
             </Footer>
         </div>

@@ -1,163 +1,229 @@
 import React from 'react';
-import InputBase from '@material-ui/core/InputBase';
+import {Container, TextField} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 import SearchIcon from '@material-ui/icons/Search';
-import assets from '../values/assets';
-import {pageTitles} from "../values/urls";
-class Products extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            number:10,
-            totNumber:20,
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Divider from "@material-ui/core/Divider";
+import {makeStyles} from '@material-ui/core/styles';
+import FlexBoxContainer from "../tools/FlexBoxContainer";
+import FlexBoxItem from "../tools/FlexBoxItem";
+import Pagination from "material-ui-flat-pagination";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import {strings, toPersianNumbers} from "../values/strings";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import {assets} from "../values/assets";
+import axios from 'axios';
+import {serverUrls} from "../values/serverurls";
+import PropTypes from 'prop-types';
 
+const useStyles = makeStyles(theme => ({
+    root: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        overflow: 'hidden',
+        flexWrap: "wrap",
+    },
+    gridList: {
+        height: 'auto',
+        marginTop: 100,
+        flexBasis: '100%',
+    },
+    card: {
+        width: '345px',
+        height: '360px',
+        marginTop: '20px',
+    },
+    media: {
+        height: 200,
+    },
+}));
+
+export default function Products(props) {
+
+    props.setShowHeaderButtons(true);
+    props.setShowFooter(true);
+
+    const {match} = props;
+    const [data, setData] = React.useState([]);
+    const [count, setCount] = React.useState(0);
+    const [offset, setOffset] = React.useState(0);
+    const [searchResult, setSearchResult] = React.useState([]);
+    const [searchInput, setSearchInput] = React.useState("");
+    const [title, setTitle] = React.useState('');
+
+    React.useEffect(() => {
+        // noinspection EqualityComparisonWithCoercionJS
+        const title = props.productCategories.find(value => value.id == match.params.id);
+        if (!title) {
+            setTitle(strings.undefinedCategory);
+        } else {
+            setTitle(title.name);
+            axios.get(serverUrls.categoryProducts(match.params.id, 9, 0)).then(response => {
+                const {count, results} = response.data;
+                setCount(count);
+                setData(results);
+                setSearchResult(results);
+                for (let i = 0; i < results.length; i++) {
+                    const product = results[i];
+                    const productId = product.id;
+                    axios.get(serverUrls.productImages(productId)).then(response => {
+                        if (!response.data || response.data.length === 0) {
+                            return;
+                        }
+                        const newArray = [...results];
+                        const image = response.data[0]['imageContent'];
+                        newArray[i] = {...product, image: image};
+                        product.image = response.data[0]['imageContent'];
+                        setData(newArray);
+                        setSearchResult(newArray);
+                    }).catch(error => {
+                        if (error.response && error.response.status === 500) {
+                            props.setError500(true);
+                        } else {
+                            window.alert(`Error while retrieving images ${error}`);
+                        }
+                    });
+                }
+            }).catch(error => {
+                if (error.response && error.response.status === 500) {
+                    props.setError500(true);
+                } else {
+                    window.alert(`Get category products error ${error}`);
+                }
+            });
         }
+    }, [props.productCategories, props.match]);
 
+    React.useEffect(() => {
+        axios.get(serverUrls.categoryProducts(match.params.id, 9, offset)).then(response => {
+            const {results} = response.data;
+            setData(results);
+            setSearchResult(results);
+        }).catch(error => {
+            if (error.response && error.response.status === 500) {
+                props.setError500(true);
+            } else {
+                window.alert(`Get category products error ${error}`);
+            }
+        });
+    }, [offset]);
 
-    }
-
-
-    render() {
-        const container={
-            width:"100%",
-            height:"100px",
-            display:"flex",
-            flexDirection:"column",
-
-
-
+    React.useEffect(() => {
+        if (!searchInput || searchInput === '') {
+            setSearchResult(data);
+        } else {
+            setSearchResult(data.filter(value => value.name.toString().includes(searchInput)));
         }
-        const SearchBar={
-            width:"100%",
-            display:"flex",
-            flexDirection:"row",
-            direction:"rtl",
+    }, [searchInput]);
+    const classes = useStyles();
 
-
-
-        }
-        const name={
-            // width:"11%",
-            height:"20px",
-            display:"flex",
-            padding: "2px",
-            fontSize:"20px",
-            overflow:"hidden"
-        }
-        const search={
-            width:"70%",
-            height:"20px",
-            display:"flex",
-            flexDirection:"row",
-
-            marginLeft:"2px",
-            padding: "2px",
-        }
-        const numberOfProducts={
-            width:"20%",
-            height:"20px",
-            display:"flex",
-            padding: "2px",
-            fontSize:"20px",
-            overflow:"hidden",
-            direction: "ltr"
-            //backgroundColor: "red"
-        }
-        const line={
-            width:"0px",
-            height:"20px",
-            backgroundColor:"black",
-            marginRight:"2px",
-            marginLeft:"2px",
-            // padding: "2px",
-            border:"1px solid black"
-        }
-        const list={
-            width:"100%",
-            display:"flex",
-            flexDirection:"row",
-            direction:"rtl",
-            marginTop:"1%",
-            borderTop:"1px solid gray",
-            flexWrap:"wrap",
-            marginLeft:"1%",
-            marginRight: "1%",
-            paddingTop:"1.5%",
-        }
-        const pageNumber={
-            width:"100%",
-            display:"flex",
-            flexDirection:"row",
-            alignItems:"center",
-            justifyContent:"center",
-            marginTop:"5px",
-        }
-        const product={
-            width:"18%",
-            alignItems:"center",
-            justifyContent:"center",
-            margin:"1%",
-            display:"flex",
-            flexDirection:"column",
-            border: "1px solid black"
-
-        }
-        const namePrice={
-            display:"flex",
-            flexDirection:"row",
-            flexWrap: "nowrap",
-            width:"98%",
-            direction:"rtl",
-            margin: "2px",
-            alignItems:"center",
-            fontSize:"20px",
-        }
-
-        React.useEffect(() => {
-            document.title =pageTitles.products
-            ;
-        }, []);
-        return (
-            <div style={container}>
-                <div style={SearchBar}>
-                    <div style={name}>
-                        نتایج جست و جو
-                    </div>
-                    <div style={line}></div>
-                    <div style={search}>
-                        <SearchIcon style={{width:"5%"}}/>
-                        <InputBase
-                            style={{width:"90%",direction:"rtl"}}
-                            placeholder={"جست و جو در محصولات زیر ..."}
-                        />
-                    </div>
-                    <div style={numberOfProducts}>
-                        نمایش {this.state.number} محصول از {this.state.totNumber} محصول
-                    </div>
-                </div>
-                <div style={list}>
-                    <div style={product}>
-                        <img style={{width:"100%",height:"300px"}} src={assets.image1}/>
-                        <div style={namePrice}> مانتو </div>
-                        <div style={namePrice}>
-                            <div style={{fontSize:"30px",whiteSpace:"pre"}}>2000 </div>
-                            تومان
-                        </div>
-
-
-                    </div>
-
-
-
-                </div>
-
-                <div style={pageNumber}>
-                    {/* بهناز اینجا بنویس */}
-                </div>
-            </div>
-        );
-    }
-
-
+    return (
+        <Container>
+            <FlexBoxContainer flexDirection='column' alignItems='stretch' justifyContent='space-between'
+                              style={{minHeight: '100vh'}}>
+                <FlexBoxItem>
+                    <FlexBoxContainer flexDirection='column' alignItems='stretch'>
+                        <FlexBoxItem>
+                            <FlexBoxContainer justifyContent='space-between' alignItems='center'>
+                                <FlexBoxItem>
+                                    <FlexBoxContainer justifyContent='flex-start' alignItems='center'>
+                                        <FlexBoxItem flexBasis={null}>
+                                            <Typography>
+                                                {title}
+                                            </Typography>
+                                        </FlexBoxItem>
+                                        <FlexBoxItem flexBasis={null}>
+                                            <Divider orientation="vertical"
+                                                     style={{
+                                                         backgroundColor: 'black',
+                                                         width: 1,
+                                                         height: 50,
+                                                         marginLeft: 5,
+                                                         marginRight: 5,
+                                                         marginTop: 3
+                                                     }}/>
+                                        </FlexBoxItem>
+                                        <FlexBoxItem flexBasis={null}>
+                                            <TextField id="standard-search"
+                                                       type="search"
+                                                       value={searchInput}
+                                                       placeholder={strings.searchAmongBelow}
+                                                       onChange={(event) => setSearchInput(event.target.value)}
+                                                       style={{marginLeft: 20}}
+                                                       InputProps={{
+                                                           startAdornment: (
+                                                               <InputAdornment position="start">
+                                                                   <SearchIcon/>
+                                                               </InputAdornment>
+                                                           ),
+                                                       }}
+                                            >
+                                            </TextField>
+                                        </FlexBoxItem>
+                                    </FlexBoxContainer>
+                                </FlexBoxItem>
+                                <FlexBoxItem>
+                                    <Typography align={"right"}>
+                                        {strings.show} {toPersianNumbers(data.length)} {strings.from} {toPersianNumbers(count)} {strings.product}
+                                    </Typography>
+                                </FlexBoxItem>
+                            </FlexBoxContainer>
+                        </FlexBoxItem>
+                        <FlexBoxItem>
+                            <Divider className="divider" orientation="horizontal"
+                                     style={{backgroundColor: 'black', height: 1, marginTop: 3}}/>
+                        </FlexBoxItem>
+                        <FlexBoxItem style={{marginTop: '10px'}}>
+                            <FlexBoxContainer flexWrap='wrap' justifyContent='space-between'>
+                                {searchResult.map(result => (
+                                    <FlexBoxItem flexBasis={null} key={result.id}>
+                                        <Card className={classes.card}>
+                                            <CardActionArea>
+                                                <CardMedia
+                                                    className={classes.media}
+                                                    image={result.image ? result.image : assets.noImage}
+                                                />
+                                                <CardContent>
+                                                    <Typography gutterBottom variant="h5" component="h2">
+                                                        {result.name}
+                                                    </Typography>
+                                                    <Typography>
+                                                        {result.isStock ? strings.isStock : strings.isNew}
+                                                    </Typography>
+                                                    <Typography>
+                                                        {strings.price}: {result.count === 0 ? strings.unavailable : `${toPersianNumbers(result.Price)} ${strings.rial}`}
+                                                    </Typography>
+                                                </CardContent>
+                                            </CardActionArea>
+                                        </Card>
+                                    </FlexBoxItem>
+                                ))}
+                            </FlexBoxContainer>
+                        </FlexBoxItem>
+                    </FlexBoxContainer>
+                </FlexBoxItem>
+                <FlexBoxItem flexBasis={null} alignSelf='center'>
+                    <CssBaseline/>
+                    <Pagination
+                        innerButtonCount={1}
+                        outerButtonCount={3}
+                        limit={9}
+                        offset={offset}
+                        total={count}
+                        onClick={(ev, offset1) => setOffset(offset1)}
+                    />
+                </FlexBoxItem>
+            </FlexBoxContainer>
+        </Container>
+    );
 }
 
-export default Products;
+Products.propTypes = {
+    setError500: PropTypes.func.isRequired,
+    setShowFooter: PropTypes.func.isRequired,
+    setShowHeaderButtons: PropTypes.func.isRequired,
+    productCategories: PropTypes.array.isRequired
+};

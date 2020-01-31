@@ -64,10 +64,10 @@ export default function ProfileHeader(props) {
             props.setLoggedIn(false);
             props.history.push(baseUrls.home);
         }).catch(error => {
-            if (error.response.status === 500) {
+            if (error.response && error.response.status === 500) {
                 props.setError500(true);
             } else {
-                window.alert(`Error while logging out ${error.response.status}`);
+                window.alert(`Error while logging out ${error}`);
             }
         });
     };

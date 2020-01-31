@@ -1,6 +1,3 @@
-// const baseServerUrl = '/';
-//
-// const _urls = {
 export const serverUrls = {
     allCategories: '/store/categories/',
     allProducts: '/store/products/',
@@ -11,16 +8,11 @@ export const serverUrls = {
     logOut: '/rest-auth/logout/',
     passwordChange: '/rest-auth/password/change/',
     lastBasket: '/store/last_basket/',
-    searchProduct: (search) => `/store/products/?search=${search}/`,
-    categoryProducts: (categoryId) => `/store/products/?category=${categoryId}`,
+    searchProduct: (search, limit = null, offset = null) => `/store/products/?search=${search}${limit ? `&limit=${limit}` : ''}${offset ? `&offset=${offset}` : ''}`,
+    categoryProducts: (categoryId, limit = null, offset = null) => `/store/products/?category=${categoryId}${limit ? `&limit=${limit}` : ''}${offset ? `&offset=${offset}` : ''}`,
     productDetails: (productId) => `/store/products/${productId}/`,
     productImages: (productId) => `/store/products/${productId}/images/`,
     productImage: (imageName) => `/media/product/${imageName}`,
     sellers: '/store/salesmans/',
     completedBaskets: '/store/baskets/'
 };
-
-// let _urlsByServer = _urls;
-//
-// _urlsByServer = Object.fromEntries(Array.from(Object.entries(_urls)).map(value => [value[0], `${baseServerUrl}${value[1]}`]));
-// export const serverUrls = _urlsByServer;

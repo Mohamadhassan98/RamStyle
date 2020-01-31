@@ -104,10 +104,10 @@ export default function Signin(props) {
         }).catch(error => {
             if (error.response.status === 400) {
                 setWrongPassword(true);
-            } else if (error.response.status === 500) {
+            } else if (error.response && error.response.status === 500) {
                 props.setError500(true);
             } else {
-                window.alert(`Error while signing in ${error.response.status}`);
+                window.alert(`Error while signing in ${error}`);
             }
         }).finally(() => {
             setLoading(false);
