@@ -9,6 +9,7 @@ import ErrorPage from "../components/ErrorPage";
 import {strings} from "../values/strings";
 import Basket from "../components/Basket";
 import Products from "./Products";
+import AboutProject from "./AboutProject";
 
 export function Index(props) {
 
@@ -27,6 +28,7 @@ export function Index(props) {
                                                                       setError500={setError500}
                                                                       setShowHeaderButtons={showHeader}
                                                                       setLoggedIn={setLoggedIn}/>}/>
+            <Route path={routeUrls.aboutUs} render={(props) => <AboutProject {...props}/>}/>
             <Route path={routeUrls.profile} render={(props) => <ProfilePage {...props} setShowFooter={showFooter}
                                                                             setShowHeaderButtons={showHeader}
                                                                             setError500={setError500}
@@ -47,9 +49,9 @@ export function Index(props) {
                                                                            setShowFooter={showFooter}
                                                                            errorBody={strings.error500Body}/>}/>
             <Route render={(props) => <ErrorPage {...props}
-                                                 title={strings.error404Title}
+                                                 errorTitle={strings.error404Title}
                                                  setShowFooter={showFooter}
-                                                 body={strings.error404Body}/>}/>
+                                                 errorBody={strings.error404Body}/>}/>
         </Switch>
     );
 }

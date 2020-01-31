@@ -1,5 +1,5 @@
 import React from 'react';
-import {Redirect, Route} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import Header from "./components/Header";
 import {Index} from './pages';
 import {routeUrls} from "./values/urls";
@@ -8,6 +8,8 @@ import axios from 'axios';
 import {serverUrls} from "./values/serverurls";
 import {useCookies} from "react-cookie";
 import {assets} from "./values/assets";
+import BankPort from "./BankPort";
+import BankSuccessful from "./BankSuccessful";
 
 export default function App(props) {
 
@@ -110,20 +112,26 @@ export default function App(props) {
 
     return (
         <div className="App">
-            <Footer show={showFooter}>
-                <Header showButtons={headerButtonsShow} {...props} productCategories={productCategories}
-                        isLoggedIn={isLoggedIn} setError500={setError500}
-                        cartSize={basketProducts ? basketProducts.length : 0}/>
-                {error500 && <Redirect to={routeUrls.error500}/>}
-                <Route path={routeUrls.home} render={(props) => <Index {...props} setShowFooter={setShowFooter}
-                                                                       allSellers={sellers}
-                                                                       setShowHeaderButtons={setHeaderButtonShow}
-                                                                       isLoggedIn={isLoggedIn}
-                                                                       setLoggedIn={setLoggedIn}
-                                                                       setError500={setError500}
-                                                                       lastBasket={basketProducts}
-                                                                       productCategories={productCategories}/>}/>
-            </Footer>
+            <Switch>
+                <Route exact path={routeUrls.bankPort}
+                       render={(props) => <BankPort {...props} setError500={setError500}/>}/>
+                <Route exact path={routeUrls.bankSuccessful} render={(props) => <BankSuccessful {...props}/>}/>
+                <Footer show={showFooter} {...props}>
+                    <Header showButtons={headerButtonsShow} {...props} productCategories={productCategories}
+                            isLoggedIn={isLoggedIn} setError500={setError500}
+                            cartSize={basketProducts ? basketProducts.length : 0}/>
+                    {error500 && <Redirect to={routeUrls.error500}/>}
+                    <Route path={routeUrls.home}
+                           render={(props) => <Index {...props} setShowFooter={setShowFooter}
+                                                     allSellers={sellers}
+                                                     setShowHeaderButtons={setHeaderButtonShow}
+                                                     isLoggedIn={isLoggedIn}
+                                                     setLoggedIn={setLoggedIn}
+                                                     setError500={setError500}
+                                                     lastBasket={basketProducts}
+                                                     productCategories={productCategories}/>}/>
+                </Footer>
+            </Switch>
         </div>
     );
 }

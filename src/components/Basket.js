@@ -278,6 +278,10 @@ export default function Basket(props) {
         document.title = pageTitles.basket;
     }, []);
 
+    const onPurchaseClicked = () => {
+        props.history.push(baseUrls.bankPort);
+    };
+
     /**************************************************************************************************/
     return (
         <div>
@@ -396,7 +400,7 @@ export default function Basket(props) {
                             </div>
                         </div>
                         <div className={classes.style_button}>
-                            <Button variant="contained" color="secondary">
+                            <Button variant="contained" color="secondary" onClick={onPurchaseClicked}>
                                 {strings.continuePurchaseProcedure}
                             </Button>
                         </div>

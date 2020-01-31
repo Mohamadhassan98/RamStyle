@@ -5,6 +5,7 @@ import FlexBoxItem from "../tools/FlexBoxItem";
 import {assets} from "../values/assets";
 import PropTypes from 'prop-types';
 import {strings} from "../values/strings";
+import {baseUrls} from "../values/urls";
 
 const useStyle = makeStyles(theme => ({
     root: {
@@ -140,7 +141,8 @@ export default function Footer(props) {
                                         </FlexBoxItem>
                                         <FlexBoxItem>
                                             <Typography variant='subtitle1' component='span' align='center'
-                                                        className={classes.typography}>
+                                                        className={classes.typography}
+                                                        onClick={() => props.history.push(baseUrls.aboutUs)}>
                                                 {strings.aboutUs}
                                             </Typography>
                                         </FlexBoxItem>

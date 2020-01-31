@@ -23,6 +23,13 @@ import pic2 from '../assets/2.png';
 import errorBox from '../assets/box1.svg';
 import empty from '../assets/empty.png';
 import no_image from '../assets/no_image.jpg';
+import bankBackground from '../assets/background-bank.png';
+import bankMelli from '../assets/bank-melli.png';
+import ramStyle from '../assets/ramStyle.jpeg';
+import developmentTeam from '../assets/developmentTeam.jpg';
+import faezee from '../assets/faezee.jpeg';
+import zahraKml from '../assets/zahrakml.jpeg';
+import faezeh from '../assets/faezeh.jpeg';
 
 export const assets = {
     carouselItem1: item1,
@@ -48,6 +55,13 @@ export const assets = {
     pic1: pic1,
     pic2: pic2,
     errorBox: errorBox,
-    empty:empty,
-    noImage: no_image
+    empty: empty,
+    noImage: no_image,
+    bankBackground: bankBackground,
+    bankMelli: bankMelli,
+    ramStyle: ramStyle,
+    developmentTeam: developmentTeam,
+    faezee: faezee,
+    zahraKml: zahraKml,
+    faezeh: faezeh
 };

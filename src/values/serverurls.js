@@ -16,5 +16,6 @@ export const serverUrls = {
     productImages: (productId) => `/store/products/${productId}/images/`,
     productImage: (imageName) => `/media/product/${imageName}`,
     sellers: '/store/salesmans/',
-    completedBaskets: '/store/baskets/'
+    completedBaskets: '/store/baskets/',
+    purchase: '/store/purchase/'
 };

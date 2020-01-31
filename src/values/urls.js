@@ -7,7 +7,11 @@ export const baseUrls = {
     categories: (id) => `/categories/${id}`,
     search: (query) => `/search/${query}`,
     cart: '/cart',
-    error500: '/500'
+    error500: '/500',
+    bankPort: '/sadadShaparak',
+    bankSuccessful: '/purchase-successful',
+    trackingCode: '/tracking-code',
+    aboutUs: '/about-us'
 };
 
 export const profileUrls = {
@@ -25,7 +29,11 @@ export const routeUrls = {
     mySales: `${baseUrls.profile}${profileUrls.mySales}`,
     changePassword: `${baseUrls.profile}${profileUrls.changePassword}`,
     cart: baseUrls.cart,
-    error500: `${baseUrls.error500}`
+    error500: baseUrls.error500,
+    bankPort: baseUrls.bankPort,
+    trackingCode: baseUrls.trackingCode,
+    bankSuccessful: baseUrls.bankSuccessful,
+    aboutUs: baseUrls.aboutUs
 };
 
 export const pageTitles = {

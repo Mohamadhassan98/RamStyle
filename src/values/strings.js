@@ -1,4 +1,4 @@
-const zwnj = '‌';
+export const zwnj = '‌';
 
 const appName = 'رم استایل';
 
@@ -91,7 +91,9 @@ export const strings = {
     undefinedCategory: `دسته${zwnj}بندی نامشخص`,
     unavailable: 'ناموجود',
     emptyBasket: 'سبد خالی است.',
-    maximumCountExceeded: 'کالا به تعداد کافی در انبار موجود نیست.'
+    maximumCountExceeded: 'کالا به تعداد کافی در انبار موجود نیست.',
+    purchaseFailed: toPersianNumbers('عملیات پرداخت با شکست مواجه شد.\n در صورت کم شدن وجه از حساب شما حداکثر تا 72 ساعت دیگر وجه به حساب شما برگشت داده خواهد شد.'),
+    developmentTeam: 'تیم توسعه'
 };
 
 export function toPersianNumbers(value) {
