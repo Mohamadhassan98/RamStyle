@@ -11,7 +11,7 @@ import {serverUrls} from "../values/serverurls";
 import {strings} from "../values/strings";
 import {assets} from "../values/assets";
 
-const useStyle = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({
     container: {
         position: "relative",
     },
@@ -61,7 +61,7 @@ const useStyle = makeStyles(theme => ({
 }));
 
 export default function CategoryList(props) {
-    const classes = useStyle();
+    const classes = useStyles();
     const [hoveredItem, setHoveredItem] = React.useState(-1);
     const [productCategories, setProductCategories] = React.useState([]);
 

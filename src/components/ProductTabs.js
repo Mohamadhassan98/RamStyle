@@ -1,15 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
 import Comment from "./CommentNew";
 import InteractiveList from "./ProductProperty";
-import {a11yProps, TabPanel} from "../pages/LoginInUp";
+import {a11yProps, TabPanel} from "../pages/SignInUp";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -54,8 +50,8 @@ export default function ProductTabs() {
                     aria-label="full width tabs example"
                     className={classes.myTabs}
                 >
-                    <Tab label="نظرات کاربران" className={classes.myTab} {...a11yProps(0)} />
-                    <Tab label="مشخصات محصول" className={classes.myTab} {...a11yProps(1)} />
+                    <Tab label="مشخصات محصول" className={classes.myTab} {...a11yProps(0)} />
+                    <Tab label="نظرات کاربران" className={classes.myTab} {...a11yProps(1)} />
                 </Tabs>
                 <SwipeableViews
                     axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -63,10 +59,10 @@ export default function ProductTabs() {
                     onChangeIndex={handleChangeIndex}
                 >
                     <TabPanel value={value} index={0} dir={theme.direction}>
-                        <Comment/>
+                        <InteractiveList/>
                     </TabPanel>
                     <TabPanel value={value} index={1} dir={theme.direction}>
-                        <InteractiveList/>
+                        <Comment/>
                     </TabPanel>
                 </SwipeableViews>
             </div>

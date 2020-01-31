@@ -3,14 +3,13 @@ import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import im from '../assets/shoes.jpeg';
-import im1 from '../assets/shoes1.jpeg';
 import ProductTabs from "../components/ProductTabs";
 import TransitionsModal from "../components/modal";
 import axios from 'axios';
 import {serverUrls} from '../values/serverurls';
 import {Container} from "@material-ui/core";
 import {pageTitles} from "../values/urls";
+import {assets} from "../values/assets";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -25,7 +24,7 @@ const useStyles = makeStyles(theme => ({
         width: 400,
         height: 400,
     },
-    smallimage: {
+    smallImage: {
         width: 100,
         height: 100,
     },
@@ -76,27 +75,27 @@ export default function ProductDetail(props) {
                 {/*<Paper className={classes.paper}>*/}
                     <Grid container spacing={2}>
                         <Grid item>
-                            <ButtonBase className={classes.image} onClick={() => handleOpen(im)}>
-                                <img className={classes.img} alt="complex" src={im}/>
+                            <ButtonBase className={classes.image} onClick={() => handleOpen(assets.image1)}>
+                                <img className={classes.img} alt="complex" src={assets.image1}/>
                             </ButtonBase>
                             <TransitionsModal open={open} handleClose={handleClose} image={imModal}/>
                             <Grid container spacing={3}>
                                 <Grid item xs>
-                                    <ButtonBase onClick={() => handleOpen(im1)}>
-                                        <img className={classes.smallimage} alt="complex" src={im1}/>
-                                    </ButtonBase> </Grid>
-
+                                    <ButtonBase onClick={() => handleOpen(assets.image1)}>
+                                        <img className={classes.smallImage} alt="complex" src={assets.image1}/>
+                                    </ButtonBase>
+                                </Grid>
                                 <Grid item xs>
-                                    <ButtonBase onClick={() => handleOpen(im)}>
-                                        <img className={classes.smallimage} alt="complex" src={im}/>
+                                    <ButtonBase onClick={() => handleOpen(assets.image1)}>
+                                        <img className={classes.smallImage} alt="complex" src={assets.image1}/>
                                     </ButtonBase> </Grid>
                                 <Grid item xs>
-                                    <ButtonBase onClick={() => handleOpen(im)}>
-                                        <img className={classes.smallimage} alt="complex" src={im}/>
-                                    </ButtonBase> </Grid>
+                                    <ButtonBase onClick={() => handleOpen(assets.image1)}>
+                                        <img className={classes.smallImage} alt="complex" src={assets.image1}/>
+                                    </ButtonBase>
+                                </Grid>
                             </Grid>
                         </Grid>
-
                         <Grid item xs={12} sm container>
                             <Grid item xs container direction="column" spacing={2}>
                                 <Grid item xs>

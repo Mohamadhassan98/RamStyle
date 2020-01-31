@@ -177,9 +177,9 @@ export default function Products(props) {
                                      style={{backgroundColor: 'black', height: 1, marginTop: 3}}/>
                         </FlexBoxItem>
                         <FlexBoxItem style={{marginTop: '10px'}}>
-                            <FlexBoxContainer flexWrap='wrap' justifyContent='space-between'>
+                            <FlexBoxContainer flexWrap='wrap' justifyContent='space-between' alignItems='center'>
                                 {searchResult.map(result => (
-                                    <FlexBoxItem flexBasis={null} key={result.id}>
+                                    <FlexBoxItem flexBasis='30%' key={result.id} justifySelf='center'>
                                         <Card className={classes.card}>
                                             <CardActionArea>
                                                 <CardMedia
