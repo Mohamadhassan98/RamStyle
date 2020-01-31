@@ -16,7 +16,6 @@ const useStyles = makeStyles(theme => ({
     },
     container: {
         marginTop: 10,
-        // maxWidth: theme.breakpoints.values.lg
     }
 }));
 
@@ -41,7 +40,7 @@ export default function HomePage(props) {
                     <img src={assets.carouselItem4} className={classes.img}/>
                 </AutoRotatingCarousel>
             </Container>
-            <BestSellers setError500={props.setError500}/>
+            <BestSellers setError500={props.setError500} allSellers={props.allSellers}/>
             <WeAreGood/>
             <CategoryList {...props}/>
             <OurApplication/>
@@ -53,5 +52,6 @@ HomePage.propTypes = {
     setShowHeaderButtons: PropTypes.func.isRequired,
     setShowFooter: PropTypes.func.isRequired,
     productCategories: PropTypes.array.isRequired,
-    setError500: PropTypes.func.isRequired
+    setError500: PropTypes.func.isRequired,
+    allSellers: PropTypes.array.isRequired
 };

@@ -7,10 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import {strings} from "../values/strings";
 import Slider from "react-slick";
-import axios from 'axios';
-import {serverUrls} from "../values/serverurls";
 import PropTypes from 'prop-types';
-import {assets} from "../values/assets";
 
 
 const CardStyles = makeStyles(theme => ({
@@ -49,23 +46,8 @@ export default function BestSellers(props) {
     };
 
     React.useEffect(() => {
-        axios.get(serverUrls.sellers).then(response => {
-            const sellers = response.data.filter((value, index) => index <= 6);
-            response.data.forEach(value => {
-                if (!value.profileImage) {
-                    value.profileImage = assets.noImage;
-                }
-            });
-            setSellers(sellers);
-        }).catch(error => {
-            console.log('catch get all sellers: ', error);
-            if (error.response && error.response.status === 500) {
-                props.setError500(true);
-            } else {
-                window.alert(`Error while getting sellers ${error}`);
-            }
-        });
-    });
+        setSellers(props.allSellers.filter((value, index) => index <= 6));
+    }, [props.allSellers]);
 
     return (
         <div className={classes.container}>
@@ -96,7 +78,7 @@ export default function BestSellers(props) {
                                         />
                                         <CardContent>
                                             <Typography gutterBottom variant="h6" align='center'>
-                                                {seller.username}
+                                                {seller.name}
                                             </Typography>
                                         </CardContent>
                                     </Card>
@@ -111,5 +93,5 @@ export default function BestSellers(props) {
 }
 
 BestSellers.propTypes = {
-    setError500: PropTypes.func.isRequired
+    allSellers: PropTypes.array.isRequired
 };

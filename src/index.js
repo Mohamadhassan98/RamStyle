@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 import RTL from "./tools/RTL";
@@ -9,10 +8,11 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {CssBaseline} from "@material-ui/core";
 import {useCookies} from 'react-cookie';
 import axios from 'axios';
+import App from "./App";
 
 function Index() {
 
-    const [cookies, setCookies, removeCookies] = useCookies(['csrftoken']);
+    const [cookies] = useCookies(['csrftoken']);
     const csrf = cookies['csrftoken'];
     if (csrf) {
         axios.defaults.headers['X-CSRFToken'] = csrf;

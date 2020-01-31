@@ -12,12 +12,13 @@ import Products from "./Products";
 
 export function Index(props) {
 
-    const {setShowHeaderButtons: showHeader, setShowFooter: showFooter, isLoggedIn, setLoggedIn, productCategories, setError500, lastBasket} = props;
+    const {setShowHeaderButtons: showHeader, setShowFooter: showFooter, isLoggedIn, setLoggedIn, productCategories, setError500, lastBasket, allSellers} = props;
     const matchUrl = props.match.url;
 
     return (
         <Switch>
             <Route exact path={`${matchUrl}`} render={(props) => <HomePage {...props} setShowHeaderButtons={showHeader}
+                                                                           allSellers={allSellers}
                                                                            setShowFooter={showFooter}
                                                                            setError500={setError500}
                                                                            productCategories={productCategories}/>}/>
@@ -32,6 +33,7 @@ export function Index(props) {
                                                                             isLoggedIn={isLoggedIn}
                                                                             setLoggedIn={setLoggedIn}/>}/>
             <Route path={routeUrls.cart} render={(props) => <Basket {...props} setShowHeaderButtons={showHeader}
+                                                                    allSellers={allSellers}
                                                                     setError500={setError500}
                                                                     lastBasket={lastBasket}
                                                                     setShowFooter={showFooter}
@@ -59,5 +61,6 @@ Index.propTypes = {
     setLoggedIn: PropTypes.func.isRequired,
     productCategories: PropTypes.array.isRequired,
     setError500: PropTypes.func.isRequired,
-    lastBasket: PropTypes.array.isRequired
+    lastBasket: PropTypes.array.isRequired,
+    allSellers: PropTypes.array.isRequired
 };

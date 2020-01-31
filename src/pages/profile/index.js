@@ -22,7 +22,13 @@ export default function Index(props) {
 
     return (
         <Container>
-            {!isLoggedIn && <Redirect to={baseUrls.auth}/>}
+            {!isLoggedIn && <Redirect to={{
+                pathname: baseUrls.auth,
+                state: {
+                    referer: baseUrls.profile
+                }
+            }}
+            />}
             <ProfileHeader {...props}/>
             <Switch>
                 <Route exact path={`${matchUrl}`} render={(props) => <Profile setError500={setError500} {...props}/>}/>

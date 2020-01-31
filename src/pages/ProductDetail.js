@@ -43,6 +43,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ProductDetail(props) {
+
     const [values, setValues] = React.useState(null);
     const [imModal, setImModal] = React.useState('');
     const [open, setOpen] = React.useState(false);
@@ -53,12 +54,14 @@ export default function ProductDetail(props) {
         axios.get(serverUrls.productDetail).then(response => {
             setValues({
                 values: response.data
-            })
-        })
+            });
+        });
     });
+
     const handleClose = () => {
         setOpen(false);
     };
+
     const handleOpen = (image) => {
         setOpen(true);
         setImModal(image);
@@ -66,60 +69,75 @@ export default function ProductDetail(props) {
     };
 
     React.useEffect(() => {
-        document.title =pageTitles.productDetail;
+        document.title = pageTitles.productDetail;
     }, []);
 
     return (
         <Container>
             <div className={classes.root}>
                 {/*<Paper className={classes.paper}>*/}
-                    <Grid container spacing={2}>
-                        <Grid item>
-                            <ButtonBase className={classes.image} onClick={() => handleOpen(assets.image1)}>
-                                <img className={classes.img} alt="complex" src={assets.image1}/>
-                            </ButtonBase>
-                            <TransitionsModal open={open} handleClose={handleClose} image={imModal}/>
-                            <Grid container spacing={3}>
-                                <Grid item xs>
-                                    <ButtonBase onClick={() => handleOpen(assets.image1)}>
-                                        <img className={classes.smallImage} alt="complex" src={assets.image1}/>
-                                    </ButtonBase>
-                                </Grid>
-                                <Grid item xs>
-                                    <ButtonBase onClick={() => handleOpen(assets.image1)}>
-                                        <img className={classes.smallImage} alt="complex" src={assets.image1}/>
-                                    </ButtonBase> </Grid>
-                                <Grid item xs>
-                                    <ButtonBase onClick={() => handleOpen(assets.image1)}>
-                                        <img className={classes.smallImage} alt="complex" src={assets.image1}/>
-                                    </ButtonBase>
-                                </Grid>
+                <Grid container spacing={2}>
+                    <Grid item>
+                        <ButtonBase className={classes.image} onClick={() => handleOpen(assets.image1)}>
+                            <img className={classes.img} alt="complex" src={assets.image1}/>
+                        </ButtonBase>
+                        <TransitionsModal open={open} handleClose={handleClose} image={imModal}/>
+                        <Grid container spacing={3}>
+                            <Grid item xs>
+                                <ButtonBase onClick={() => handleOpen(assets.image1)}>
+                                    <img className={classes.smallImage} alt="complex" src={assets.image1}/>
+                                </ButtonBase>
                             </Grid>
-                        </Grid>
-                        <Grid item xs={12} sm container>
-                            <Grid item xs container direction="column" spacing={2}>
-                                <Grid item xs>
-                                    <Typography gutterBottom variant="subtitle1">
-                                        Standard license
-                                    </Typography>
-                                    <Typography variant="body2" gutterBottom>
-                                        Full resolution 1920x1080 • JPEG
-                                    </Typography>
-                                    <Typography variant="body2" color="textSecondary">
-                                        ID: 1030114
-                                    </Typography>
-                                </Grid>
-                                {/*<Grid item>*/}
-                                {/*    <Typography variant="body2" style={{cursor: 'pointer'}}>*/}
-                                {/*        Remove*/}
-                                {/*    </Typography>*/}
-                                {/*</Grid>*/}
+                            <Grid item xs>
+                                <ButtonBase onClick={() => handleOpen(assets.image1)}>
+                                    <img className={classes.smallImage} alt="complex" src={assets.image1}/>
+                                </ButtonBase> </Grid>
+                            <Grid item xs>
+                                <ButtonBase onClick={() => handleOpen(assets.image1)}>
+                                    <img className={classes.smallImage} alt="complex" src={assets.image1}/>
+                                </ButtonBase>
                             </Grid>
-                            <Grid item>
-                                <Typography variant="subtitle1">$19.00</Typography>
+                            <Grid item xs>
+                                <ButtonBase onClick={() => handleOpen(assets.image1)}>
+                                    <img className={classes.smallImage} alt="complex" src={assets.image1}/>
+                                </ButtonBase>
+                            </Grid>
+                            <Grid item xs>
+                                <ButtonBase onClick={() => handleOpen(assets.image1)}>
+                                    <img className={classes.smallImage} alt="complex" src={assets.image1}/>
+                                </ButtonBase>
+                            </Grid>
+                            <Grid item xs>
+                                <ButtonBase onClick={() => handleOpen(assets.image1)}>
+                                    <img className={classes.smallImage} alt="complex" src={assets.image1}/>
+                                </ButtonBase>
                             </Grid>
                         </Grid>
                     </Grid>
+                    <Grid item xs={12} sm container>
+                        <Grid item xs container direction="column" spacing={2}>
+                            <Grid item xs>
+                                <Typography gutterBottom variant="subtitle1">
+                                    Standard license
+                                </Typography>
+                                <Typography variant="body2" gutterBottom>
+                                    Full resolution 1920x1080 • JPEG
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary">
+                                    ID: 1030114
+                                </Typography>
+                            </Grid>
+                            {/*<Grid item>*/}
+                            {/*    <Typography variant="body2" style={{cursor: 'pointer'}}>*/}
+                            {/*        Remove*/}
+                            {/*    </Typography>*/}
+                            {/*</Grid>*/}
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="subtitle1">$19.00</Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
                 {/*</Paper>*/}
                 <ProductTabs/>
             </div>

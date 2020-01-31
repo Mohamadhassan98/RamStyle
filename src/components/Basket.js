@@ -9,10 +9,14 @@ import FlexBoxContainer from "../tools/FlexBoxContainer";
 import FlexBoxItem from "../tools/FlexBoxItem";
 import {baseUrls, pageTitles} from "../values/urls";
 import PropTypes from "prop-types";
-import {Redirect} from "react-router";
+import axios from "axios";
+import {serverUrls} from "../values/serverurls";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import Dialog from "@material-ui/core/Dialog";
+import Redirect from "react-router/modules/Redirect";
 
 // noinspection JSUnusedLocalSymbols,JSCheckFunctionSignatures
-
 const useStyles = makeStyles(theme => ({
     style_container2: {
         display: "flex",
@@ -166,64 +170,109 @@ export default function Basket(props) {
 
     const classes = useStyles();
 
-    const array = [
-        {
-            id: 1,
-            name: 'پیراهن راه راه',
-            Seller: 'گل سرخ',
-            Warranty: 'گارانتی دارد',
-            num: 1,
-            price: 60000,
-            img: assets.image1
-        },
-        {
-            id: 2,
-            name: 'پیراهن راه راه',
-            Seller: 'گل سرخ',
-            Warranty: 'گارانتی دارد',
-            num: 1,
-            price: 60000,
-            img: assets.image1
-        },
-        {
-            id: 3,
-            name: 'پیراهن راه راه',
-            Seller: 'گل سرخ',
-            Warranty: 'گارانتی دارد',
-            num: 1,
-            price: 60000,
-            img: assets.image1
-        },
-    ];
+    const [data, setData] = React.useState([]);
+    const [totalPrice, setTotalPrice] = React.useState(0);
+    const [totalCount, setTotalCount] = React.useState(0);
+    const [maximumExceeded, setMaximumExceeded] = React.useState(false);
 
-    const [data, setData] = React.useState(props.lastBasket.products);
-    const [sum, setSum] = React.useState(0);
-    const [num, setNum] = React.useState(0);
+    React.useEffect(() => {
+        if (props.allSellers) {
+            const newData = props.lastBasket;
+            for (let i = 0; i < newData.length; i++) {
+                const data = newData[i];
+                // noinspection EqualityComparisonWithCoercionJS
+                const seller = props.allSellers.find(value => value.id == data.product.salesman);
+                if (seller) {
+                    data.seller = seller.name;
+                }
+            }
+            setData(newData);
+        }
+    }, [props.allSellers, props.lastBasket]);
+
+    React.useEffect(() => {
+        const newData = props.lastBasket;
+        setData(newData);
+        const totalPrice = newData.map(value => value.product.Price * value.count).reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+        const totalCount = newData.map(value => value.count).reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+        setTotalCount(totalCount);
+        setTotalPrice(totalPrice);
+        for (let i = 0; i < newData.length; i++) {
+            const product = newData[i];
+            const productId = product.product.id;
+            axios.get(serverUrls.productImages(productId)).then(response => {
+                if (!response.data || response.data.length === 0) {
+                    return;
+                }
+                const newArray = [...newData];
+                const image = response.data[0]['imageContent'];
+                newArray[i] = {...product, image: image};
+                product.image = response.data[0]['imageContent'];
+                setData(newArray);
+            }).catch(error => {
+                if (error.response && error.response.status === 500) {
+                    props.setError500(true);
+                } else {
+                    window.alert(`Error while retrieving images ${error}`);
+                }
+            });
+        }
+    }, [props.lastBasket]);
 
     const plus = (i) => {
-        const array = data;
-        const temp = array[i];
-        array[i].num++;
-        setNum(prevState => prevState + 1);
-        setSum(prevState => prevState + temp.price);
-        setData(array);
+        axios.put(serverUrls.basketProducts(data[i].id), {
+            count: data[i].count + 1
+        }).then(response => {
+            const array = data;
+            const temp = array[i];
+            array[i].count++;
+            setTotalCount(prevState => prevState + 1);
+            setTotalPrice(prevState => prevState + (+temp.product.Price));
+            setData(array);
+        }).catch(error => {
+            if (error.response) {
+                if (error.response.status === 400) {
+                    setMaximumExceeded(true);
+                } else if (error.response.status === 500) {
+                    props.setError500(true);
+                } else {
+                    window.alert(`Error while putting basket data ${error}`);
+                }
+            } else {
+                window.alert(`Error while putting basket data ${error}`);
+            }
+        });
     };
 
     const minus = (i) => {
-        const array = data;
-        const temp = array[i];
-        array[i].num--;
-        setNum(prevState => prevState - 1);
-        setSum(prevState => prevState - temp.price);
-        setData(array);
+        if (data[i].count === 1) {
+            axios.delete(serverUrls.basketProducts(data[i].id)).then(response => {
+                const array = data;
+                const temp = array[i];
+                setTotalCount(prevState => prevState - 1);
+                setTotalPrice(prevState => prevState - temp.product.Price);
+                setData(temp.filter((value, index) => index !== i));
+            }).catch(error => {
+                if (error.response && error.response.status === 500) {
+                    props.setError500(true);
+                }
+            });
+        }
+        axios.put(serverUrls.basketProducts(data[i].id), {
+            count: data[i].count - 1
+        }).then(response => {
+            const array = data;
+            const temp = array[i];
+            array[i].count--;
+            setTotalCount(prevState => prevState - 1);
+            setTotalPrice(prevState => prevState - temp.product.Price);
+            setData(array);
+        }).catch(error => {
+            if (error.response && error.response.status === 500) {
+                props.setError500(true);
+            }
+        });
     };
-
-    React.useEffect(() => {
-        const sum = data.map(value => value.price * value.num).reduce((previousValue, currentValue) => previousValue + currentValue, 0);
-        const num = data.map(value => value.num).reduce((previousValue, currentValue) => previousValue + currentValue, 0);
-        setSum(sum);
-        setNum(num);
-    }, []);
 
     React.useEffect(() => {
         document.title = pageTitles.basket;
@@ -231,119 +280,130 @@ export default function Basket(props) {
 
     /**************************************************************************************************/
     return (
-        data.length !== 0 ?
-            <div className={classes.empty}>
-                <img src={assets.empty} style={{width: "20%", marginTop: "10%"}}/>
-                <h1>سبد خالی است </h1>
-            </div>
-            :
-            <FlexBoxContainer alignItems='flex-start'>
-                {!props.isLoggedIn && <Redirect to={baseUrls.auth}/>}
-                <div className={classes.style_item1}>
-                    {
-                        data.map((item, index) =>
-                            <div className={item.num >= 1 ? classes.style_container2 : classes.Delete}>
-                                <div className={classes.img_container}>
-                                    <img src={item.img} className={classes.img}/>
-                                </div>
-                                <div className={classes.container2}>
-                                    <div className={classes.part}>
-                                        <Typography variant="h5" gutterBottom>
-                                            {item.name}
-                                        </Typography>
+        <div>
+            <Dialog
+                open={maximumExceeded}
+                onClose={() => setMaximumExceeded(false)}
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description" style={{
+                        color: 'red'
+                    }}>
+                        {strings.maximumCountExceeded}
+                    </DialogContentText>
+                </DialogContent>
+            </Dialog>
+            {!props.isLoggedIn && <Redirect to={{
+                pathname: baseUrls.auth,
+                state: {
+                    referer: baseUrls.cart
+                }
+            }}/>}
+            {data.length === 0 ?
+                <div className={classes.empty}>
+                    <img src={assets.empty} style={{width: "20%", marginTop: "10%"}}/>
+                    <h1>{strings.emptyBasket}</h1>
+                </div>
+                :
+                <FlexBoxContainer alignItems='flex-start'>
+                    <div className={classes.style_item1}>
+                        {
+                            data.map((item, index) =>
+                                <div className={item.count >= 1 ? classes.style_container2 : classes.Delete}
+                                     key={item.id}>
+                                    <div className={classes.img_container}>
+                                        <img src={item.image ? item.image : assets.noImage} className={classes.img}/>
                                     </div>
-                                    <div className={classes.part}>
-                                        <FlexBoxContainer alignItems='center'>
-                                            <FlexBoxItem flexBasis={null}>
-                                                <Store/>
-                                            </FlexBoxItem>
-                                            <FlexBoxItem flexBasis={null}>
-                                                <Typography variant="subtitle2" gutterBottom>
-                                                    {item.Seller}
-                                                </Typography>
-                                            </FlexBoxItem>
-                                        </FlexBoxContainer>
-                                    </div>
-                                    <div className={classes.part}>
-                                        <FlexBoxContainer alignItems='center'>
-                                            <FlexBoxItem flexBasis={null}>
-                                                {/* TODO Icon changed, find replace material one */}
-                                                <Add/>
-                                            </FlexBoxItem>
-                                            <FlexBoxItem flexBasis={null}>
-                                                <Typography variant="subtitle2" gutterBottom>
-                                                    {item.Warranty}
-                                                </Typography>
-                                            </FlexBoxItem>
-                                        </FlexBoxContainer>
-                                    </div>
-                                    <div className={classes.container3}>
-                                        <div className={classes.part2}>
-                                            <div className={classes.part3}>
-                                                <div className={classes.number}>
-                                                    {item.num !== 1 ?
-                                                        <Remove className={classes.icons} onClick={() => minus(index)}/>
-                                                        :
-                                                    <Delete className={classes.icons} onClick={() => minus(index)}/>
-                                                }
-                                                    {toPersianNumbers(item.num)}
-                                                    <Add className={classes.icons} onClick={() => plus(index)}/>
-                                                </div>
-                                            </div>
+                                    <div className={classes.container2}>
+                                        <div className={classes.part}>
+                                            <Typography variant="h5" gutterBottom>
+                                                {item.product.name}
+                                            </Typography>
                                         </div>
-                                        <FlexBoxContainer justifyContent='flex-end'>
-                                            <FlexBoxItem flexBasis={null} flexGrow={1}>
-                                                <div className={classes.price_style}>
-                                                    {toPersianNumbers(item.price)}
-                                                    <div className={classes.tooman_style}>
-                                                        {strings.rial}
+                                        <div className={classes.part}>
+                                            <FlexBoxContainer alignItems='center'>
+                                                <FlexBoxItem flexBasis={null}>
+                                                    <Store/>
+                                                </FlexBoxItem>
+                                                <FlexBoxItem flexBasis={null}>
+                                                    <Typography variant="subtitle2" gutterBottom>
+                                                        {item.seller}
+                                                    </Typography>
+                                                </FlexBoxItem>
+                                            </FlexBoxContainer>
+                                        </div>
+                                        <div className={classes.container3}>
+                                            <div className={classes.part2}>
+                                                <div className={classes.part3}>
+                                                    <div className={classes.number}>
+                                                        {item.count !== 1 ?
+                                                            <Remove className={classes.icons}
+                                                                    onClick={() => minus(index)}/>
+                                                            :
+                                                            <Delete className={classes.icons}
+                                                                    onClick={() => minus(index)}/>
+                                                        }
+                                                        {toPersianNumbers(item.count)}
+                                                        <Add className={classes.icons} onClick={() => plus(index)}/>
                                                     </div>
                                                 </div>
-                                            </FlexBoxItem>
-                                        </FlexBoxContainer>
+                                            </div>
+                                            <FlexBoxContainer justifyContent='flex-end'>
+                                                <FlexBoxItem flexBasis={null} flexGrow={1}>
+                                                    <div className={classes.price_style}>
+                                                        {toPersianNumbers(item.product.Price)}
+                                                        <div className={classes.tooman_style}>
+                                                            {strings.rial}
+                                                        </div>
+                                                    </div>
+                                                </FlexBoxItem>
+                                            </FlexBoxContainer>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        )}
-                </div>
-                <div className={classes.style_item2}>
-                    <div className={classes.style_sum}>
-                        <div className={classes.s_style}>
-                            {strings.productCount}
-                        </div>
-                        <div className={classes.sum_price_style}>
-                            {toPersianNumbers(num)}
-                        </div>
+                            )}
                     </div>
-                    <div className={classes.style_sum}>
-                        <div className={classes.s_style}>
-                            {strings.totalPrice}
-                        </div>
-                        <div className={classes.sum_price_style}>
-                            {toPersianNumbers(sum)}
-                            <div className={classes.tooman_style}>
-                                {strings.rial}
+                    <div className={classes.style_item2}>
+                        <div className={classes.style_sum}>
+                            <div className={classes.s_style}>
+                                {strings.productCount}
+                            </div>
+                            <div className={classes.sum_price_style}>
+                                {toPersianNumbers(totalCount)}
                             </div>
                         </div>
-                    </div>
-                    <div className={classes.style_sum}>
-                        <div className={classes.s_style}>
-                            {strings.priceToPay}
-                        </div>
-                        <div className={classes.sum_price_style}>
-                            {toPersianNumbers(sum)}
-                            <div className={classes.tooman_style}>
-                                {strings.rial}
+                        <div className={classes.style_sum}>
+                            <div className={classes.s_style}>
+                                {strings.totalPrice}
+                            </div>
+                            <div className={classes.sum_price_style}>
+                                {toPersianNumbers(totalPrice)}
+                                <div className={classes.tooman_style}>
+                                    {strings.rial}
+                                </div>
                             </div>
                         </div>
+                        <div className={classes.style_sum}>
+                            <div className={classes.s_style}>
+                                {strings.priceToPay}
+                            </div>
+                            <div className={classes.sum_price_style}>
+                                {toPersianNumbers(totalPrice)}
+                                <div className={classes.tooman_style}>
+                                    {strings.rial}
+                                </div>
+                            </div>
+                        </div>
+                        <div className={classes.style_button}>
+                            <Button variant="contained" color="secondary">
+                                {strings.continuePurchaseProcedure}
+                            </Button>
+                        </div>
                     </div>
-                    <div className={classes.style_button}>
-                        <Button variant="contained" color="secondary">
-                            {strings.continuePurchaseProcedure}
-                        </Button>
-                    </div>
-                </div>
-            </FlexBoxContainer>
+                </FlexBoxContainer>
+            }
+        </div>
     );
 }
 
@@ -351,6 +411,7 @@ Basket.propTypes = {
     setShowHeaderButtons: PropTypes.func.isRequired,
     setShowFooter: PropTypes.func.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
-    lastBasket: PropTypes.object.isRequired,
-    setError500: PropTypes.func.isRequired
+    lastBasket: PropTypes.array.isRequired,
+    setError500: PropTypes.func.isRequired,
+    allSellers: PropTypes.array.isRequired
 };

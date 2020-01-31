@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import axios from 'axios';
 import {serverUrls} from "./values/serverurls";
 import {useCookies} from "react-cookie";
+import {assets} from "./values/assets";
 
 export default function App(props) {
 
@@ -17,8 +18,10 @@ export default function App(props) {
     const [basketProducts, setBasketProducts] = React.useState([]);
     const [error500, setError500] = React.useState(false);
     const [cookies] = useCookies(['csrftoken']);
+    const [sellers, setSellers] = React.useState([]);
 
     React.useEffect(() => {
+        axios.defaults.headers['Content-Type'] = 'application/json';
         axios.get(serverUrls.allCategories).then(response => {
             setProductCategories(response.data);
         }).catch(error => {
@@ -49,16 +52,13 @@ export default function App(props) {
     }, []);
 
     React.useEffect(() => {
-        if (isLoggedIn) {
-            const csrf = cookies['csrftoken'];
-            while (!csrf) ;
-            axios.defaults.headers['X-CSRFToken'] = csrf;
+        if (isLoggedIn && cookies.csrftoken) {
             axios.get(serverUrls.lastBasket).then(response => {
                 if (response.data.length !== 0) {
                     const basket = response.data[0];
                     setBasketProducts(basket['products']);
                 } else {
-                    axios.post(serverUrls.lastBasket).then(response1 => {
+                    axios.post(serverUrls.createBasket).then(response1 => {
                         setBasketProducts([]);
                     }).catch(error => {
                         console.log('catch creating basket: ', error);
@@ -80,7 +80,33 @@ export default function App(props) {
         } else {
             setBasketProducts([]);
         }
-    }, [isLoggedIn]);
+    }, [isLoggedIn, cookies]);
+
+    React.useEffect(() => {
+        const csrf = cookies['csrftoken'];
+        console.log(csrf);
+        if (csrf) {
+            axios.defaults.headers['X-CSRFToken'] = csrf;
+        }
+    }, [cookies]);
+
+    React.useEffect(() => {
+        axios.get(serverUrls.sellers).then(response => {
+            for (let i = 0; i < response.data; i++) {
+                const value = response.data[i];
+                if (!value.profileImage) {
+                    value.profileImage = assets.noImage;
+                }
+            }
+            setSellers(response.data);
+        }).catch(error => {
+            if (error.response && error.response.status === 500) {
+                props.setError500(true);
+            } else {
+                window.alert(`Error while getting sellers ${error}`);
+            }
+        });
+    }, []);
 
     return (
         <div className="App">
@@ -90,6 +116,7 @@ export default function App(props) {
                         cartSize={basketProducts ? basketProducts.length : 0}/>
                 {error500 && <Redirect to={routeUrls.error500}/>}
                 <Route path={routeUrls.home} render={(props) => <Index {...props} setShowFooter={setShowFooter}
+                                                                       allSellers={sellers}
                                                                        setShowHeaderButtons={setHeaderButtonShow}
                                                                        isLoggedIn={isLoggedIn}
                                                                        setLoggedIn={setLoggedIn}

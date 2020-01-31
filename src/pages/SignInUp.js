@@ -82,7 +82,9 @@ export default function SignInUp(props) {
 
     return (
         <Container className={classes.root}>
-            {props.isLoggedIn && <Redirect to={baseUrls.profile}/>}
+            {props.isLoggedIn && <Redirect to={
+                props.location && props.location.state && props.location.state.referer ? props.location.state.referer : baseUrls.profile
+            }/>}
             <Grid container spacing={3}>
                 <Grid item xs>
                     <Paper className={classes.paper}>

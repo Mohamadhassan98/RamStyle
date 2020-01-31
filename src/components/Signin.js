@@ -100,7 +100,11 @@ export default function Signin(props) {
         axios.post(serverUrls.signIn, data).then(response => {
             // response is 201!
             props.setLoggedIn(true);
-            props.history.push(baseUrls.home);
+            if (props.location && props.location.state && props.location.state.referer) {
+                props.history.replace(props.location.state.referer);
+            } else {
+                props.history.push(baseUrls.home);
+            }
         }).catch(error => {
             if (error.response.status === 400) {
                 setWrongPassword(true);

@@ -89,7 +89,9 @@ export const strings = {
     aboutProject: 'درباره پروژه',
     mySale: 'سابقه خرید',
     undefinedCategory: `دسته${zwnj}بندی نامشخص`,
-    unavailable: 'ناموجود'
+    unavailable: 'ناموجود',
+    emptyBasket: 'سبد خالی است.',
+    maximumCountExceeded: 'کالا به تعداد کافی در انبار موجود نیست.'
 };
 
 export function toPersianNumbers(value) {
