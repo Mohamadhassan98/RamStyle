@@ -14,7 +14,7 @@ import {serverUrls} from "../values/serverurls";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import Dialog from "@material-ui/core/Dialog";
-import Redirect from "react-router/modules/Redirect";
+import {Redirect} from "react-router";
 
 // noinspection JSUnusedLocalSymbols,JSCheckFunctionSignatures
 const useStyles = makeStyles(theme => ({
