@@ -11,7 +11,7 @@ import {useCookies} from 'react-cookie';
 import axios from 'axios';
 import ShoppingPage from "./pages/shopping_page";
 import Products from "./pages/Products";
-
+import TrackingCode from "./pages/TrackingCode";
 function Index() {
 
     const [cookies, setCookies, removeCookies] = useCookies(['csrftoken']);
@@ -72,7 +72,7 @@ function Index() {
                 <RTL>
                     <div className="App">
                         <BrowserRouter>
-                            <Route path='/' component={App}/>
+                            <Route path='/' component={TrackingCode}/>
                         </BrowserRouter>
                     </div>
                 </RTL>
