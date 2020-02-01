@@ -1,7 +1,7 @@
 import {Route, Switch} from "react-router-dom";
 import React from "react";
 import HomePage from "./HomePage";
-import {routeUrls} from "../values/urls";
+import {baseUrls, routeUrls} from "../values/urls";
 import PropTypes from 'prop-types';
 import ProfilePage from './profile/index';
 import SignInUp from "./SignInUp";
@@ -11,6 +11,7 @@ import Basket from "./Basket";
 import Products from "./Products";
 import AboutProject from "./AboutProject";
 import ProductDetails from "./ProductDetails";
+import TrackingCode from "./TrackingCode";
 
 export function Index(props) {
 
@@ -48,6 +49,7 @@ export function Index(props) {
             <Route path={routeUrls.product}
                    render={(props) => <ProductDetails {...props} setError500={setError500} allSellers={allSellers}
                                                       isLoggedIn={isLoggedIn}/>}/>
+            <Route path={baseUrls.trackingCode} render={(props) => <TrackingCode {...props}/>}/>
             <Route path={routeUrls.error500} render={(props) => <ErrorPage {...props}
                                                                            errorTitle={strings.error500Title}
                                                                            setShowFooter={showFooter}
