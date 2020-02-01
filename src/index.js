@@ -8,7 +8,7 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {CssBaseline} from "@material-ui/core";
 import {useCookies} from 'react-cookie';
 import axios from 'axios';
-import App from "./App";
+import ProductDetail from "./pages/ProductDetail";
 
 function Index() {
 
@@ -71,7 +71,7 @@ function Index() {
                 <RTL>
                     <div className="App">
                         <BrowserRouter>
-                            <Route path='/' component={App}/>
+                            <Route path='/' component={ProductDetail}/>
                         </BrowserRouter>
                     </div>
                 </RTL>

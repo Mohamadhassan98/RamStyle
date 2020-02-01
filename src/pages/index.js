@@ -7,7 +7,7 @@ import ProfilePage from './profile/index';
 import SignInUp from "./SignInUp";
 import ErrorPage from "../components/ErrorPage";
 import {strings} from "../values/strings";
-import Basket from "../components/Basket";
+import Basket from "./Basket";
 import Products from "./Products";
 import AboutProject from "./AboutProject";
 

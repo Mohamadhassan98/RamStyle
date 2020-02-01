@@ -93,7 +93,13 @@ export const strings = {
     emptyBasket: 'سبد خالی است.',
     maximumCountExceeded: 'کالا به تعداد کافی در انبار موجود نیست.',
     purchaseFailed: toPersianNumbers('عملیات پرداخت با شکست مواجه شد.\n در صورت کم شدن وجه از حساب شما حداکثر تا 72 ساعت دیگر وجه به حساب شما برگشت داده خواهد شد.'),
-    developmentTeam: 'تیم توسعه'
+    developmentTeam: 'تیم توسعه',
+    originalTitle: 'کالای اصل',
+    originalBody: 'با اطمینان داشتن از اصالت کالا خریدی آسوده و بی دردسر انجام دهید.',
+    freeAndFastSendTitle: 'ارسال سریع و رایگان',
+    freeAndFastSendBody: 'کالای خود را در کمترین زمان و بدون هزینه در هر جای ایران تحویل بگیرید.',
+    warrantyTitle: 'ضمانت بازگشت کالا',
+    warrantyBody: 'در صورت عدم رضایت، کالای دریافتی را تا هفت روز باز پس دهید.'
 };
 
 export function toPersianNumbers(value) {

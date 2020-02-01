@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import {strings} from "../values/strings";
 import Slider from "react-slick";
 import PropTypes from 'prop-types';
+import {assets} from "../values/assets";
 
 
 const CardStyles = makeStyles(theme => ({
@@ -74,7 +75,7 @@ export default function BestSellers(props) {
                                     <Card classes={cardStyles} elevation={0} key={seller.id}>
                                         <CardMedia
                                             component="img"
-                                            image={seller['profileImage']}
+                                            image={seller['profileImage'] ? seller['profileImage'] : assets.noImage}
                                         />
                                         <CardContent>
                                             <Typography gutterBottom variant="h6" align='center'>

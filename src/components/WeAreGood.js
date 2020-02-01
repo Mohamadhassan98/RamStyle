@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import {Container} from "@material-ui/core";
 import {assets} from "../values/assets";
+import {strings} from "../values/strings";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -30,10 +31,10 @@ export default function WeAreGood() {
                     <Paper className={classes.paper}>
                         <img src={assets.quality} alt="original product"/>
                         <Typography variant="h5" gutterBottom>
-                            کالای اورجینال
+                            {strings.originalTitle}
                         </Typography>
                         <Typography variant="body1" gutterBottom>
-                            ..............................
+                            {strings.originalBody}
                         </Typography>
                     </Paper>
                 </Grid>
@@ -41,10 +42,10 @@ export default function WeAreGood() {
                     <Paper className={classes.paper}>
                         <img src={assets.fast} alt="fast send"/>
                         <Typography variant="h5" gutterBottom>
-                            ارسال سریع و رایگان
+                            {strings.freeAndFastSendTitle}
                         </Typography>
                         <Typography variant="body1" gutterBottom>
-                            ..............................
+                            {strings.freeAndFastSendBody}
                         </Typography>
                     </Paper>
                 </Grid>
@@ -52,10 +53,10 @@ export default function WeAreGood() {
                     <Paper className={classes.paper}>
                         <img src={assets.warranty} alt="warranty"/>
                         <Typography variant="h5" gutterBottom>
-                            ضمانت بازگشت کالا
+                            {strings.warrantyTitle}
                         </Typography>
                         <Typography variant="body1" gutterBottom>
-                            ..............................
+                            {strings.warrantyBody}
                         </Typography>
                     </Paper>
                 </Grid>

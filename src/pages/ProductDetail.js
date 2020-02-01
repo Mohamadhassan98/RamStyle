@@ -10,6 +10,7 @@ import {serverUrls} from '../values/serverurls';
 import {Container} from "@material-ui/core";
 import {pageTitles} from "../values/urls";
 import {assets} from "../values/assets";
+import Slider from 'react-slick';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -72,6 +73,17 @@ export default function ProductDetail(props) {
         document.title = pageTitles.productDetail;
     }, []);
 
+    const settings = {
+        dots: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        arrows: true,
+        afterChange: (index => {
+        })
+    };
+
     return (
         <Container>
             <div className={classes.root}>
@@ -82,7 +94,8 @@ export default function ProductDetail(props) {
                             <img className={classes.img} alt="complex" src={assets.image1}/>
                         </ButtonBase>
                         <TransitionsModal open={open} handleClose={handleClose} image={imModal}/>
-                        <Grid container spacing={3}>
+                        <Slider {...settings} style={{maxWidth: 400}}>
+                            {/*<Grid container spacing={3}>*/}
                             <Grid item xs>
                                 <ButtonBase onClick={() => handleOpen(assets.image1)}>
                                     <img className={classes.smallImage} alt="complex" src={assets.image1}/>
@@ -112,7 +125,8 @@ export default function ProductDetail(props) {
                                     <img className={classes.smallImage} alt="complex" src={assets.image1}/>
                                 </ButtonBase>
                             </Grid>
-                        </Grid>
+                            {/*</Grid>*/}
+                        </Slider>
                     </Grid>
                     <Grid item xs={12} sm container>
                         <Grid item xs container direction="column" spacing={2}>
