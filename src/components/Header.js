@@ -143,6 +143,7 @@ export default function Header(props) {
     const [searchQuery, setSearchQuery] = React.useState('');
 
     React.useEffect(() => {
+        setSearchOptions([]);
         if (searchQuery.toString().length >= 3) {
             console.log('requesting...');
             setSearchLoading(true);
@@ -208,7 +209,7 @@ export default function Header(props) {
     }
 
     const submitSearch = (option) => {
-        // TODO go to product detail page
+        props.history.push(baseUrls.product(option.id));
     };
 
     return (

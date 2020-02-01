@@ -11,7 +11,8 @@ export const baseUrls = {
     bankPort: '/sadadShaparak',
     bankSuccessful: '/purchase-successful',
     trackingCode: '/tracking-code',
-    aboutUs: '/about-us'
+    aboutUs: '/about-us',
+    product: (productId) => `/product/${productId}`
 };
 
 export const profileUrls = {
@@ -33,7 +34,8 @@ export const routeUrls = {
     bankPort: baseUrls.bankPort,
     trackingCode: baseUrls.trackingCode,
     bankSuccessful: baseUrls.bankSuccessful,
-    aboutUs: baseUrls.aboutUs
+    aboutUs: baseUrls.aboutUs,
+    product: `${baseUrls.product.name}/:id`
 };
 
 export const pageTitles = {

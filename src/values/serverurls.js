@@ -17,5 +17,7 @@ export const serverUrls = {
     productImage: (imageName) => `/media/product/${imageName}`,
     sellers: '/store/salesmans/',
     completedBaskets: '/store/baskets/',
-    purchase: '/store/purchase/'
+    purchase: '/store/purchase/',
+    productComments: (productId) => `/store/comment/${productId}/`,
+    createComment: '/store/create_comment'
 };

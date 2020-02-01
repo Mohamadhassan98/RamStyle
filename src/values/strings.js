@@ -99,7 +99,20 @@ export const strings = {
     freeAndFastSendTitle: 'ارسال سریع و رایگان',
     freeAndFastSendBody: 'کالای خود را در کمترین زمان و بدون هزینه در هر جای ایران تحویل بگیرید.',
     warrantyTitle: 'ضمانت بازگشت کالا',
-    warrantyBody: 'در صورت عدم رضایت، کالای دریافتی را تا هفت روز باز پس دهید.'
+    warrantyBody: 'در صورت عدم رضایت، کالای دریافتی را تا هفت روز باز پس دهید.',
+    addToCart: 'افزودن به سبد خرید',
+    seller: 'فروشنده',
+    yes: 'بله',
+    no: 'خیر',
+    inventory: 'موجودی',
+    productDetails: 'مشخصات کالا',
+    comments: 'نظرات کاربران',
+    commentTitle: 'عنوان نظر',
+    signInToComment: 'برای ثبت نظر ابتدا وارد شوید.',
+    purchaseToComment: `ثبت نظر فقط برای کالاهای خریداری شده امکان${zwnj}پذیر است.`,
+    saveComment: 'ثبت نظر',
+    commentBodyLabel: 'نظر خود را اینجا بنویسید...',
+    commentSuccessful: 'نظر با موفقیت ثبت شد.'
 };
 
 export function toPersianNumbers(value) {

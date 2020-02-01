@@ -10,6 +10,7 @@ import {strings} from "../values/strings";
 import Basket from "./Basket";
 import Products from "./Products";
 import AboutProject from "./AboutProject";
+import ProductDetails from "./ProductDetails";
 
 export function Index(props) {
 
@@ -44,6 +45,9 @@ export function Index(props) {
                    render={(props) => <Products {...props} productCategories={productCategories}
                                                 setShowFooter={showFooter}
                                                 setShowHeaderButtons={showHeader} setError500={setError500}/>}/>
+            <Route path={routeUrls.product}
+                   render={(props) => <ProductDetails {...props} setError500={setError500} allSellers={allSellers}
+                                                      isLoggedIn={isLoggedIn}/>}/>
             <Route path={routeUrls.error500} render={(props) => <ErrorPage {...props}
                                                                            errorTitle={strings.error500Title}
                                                                            setShowFooter={showFooter}
