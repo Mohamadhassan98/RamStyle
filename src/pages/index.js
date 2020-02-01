@@ -48,6 +48,7 @@ export function Index(props) {
                                                 setShowHeaderButtons={showHeader} setError500={setError500}/>}/>
             <Route path={routeUrls.product}
                    render={(props) => <ProductDetails {...props} setError500={setError500} allSellers={allSellers}
+                                                      setShowFooter={showFooter} setShowHeaderButtons={showHeader}
                                                       isLoggedIn={isLoggedIn}/>}/>
             <Route path={baseUrls.trackingCode} render={(props) => <TrackingCode {...props}/>}/>
             <Route path={routeUrls.error500} render={(props) => <ErrorPage {...props}

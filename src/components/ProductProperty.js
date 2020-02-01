@@ -30,7 +30,7 @@ export default function InteractiveList(props) {
                     </Typography>
                     <div className={classes.demo}>
                         <Typography variant='h6'>
-                            {props.product.description}
+                            {props.product && props.product.description}
                         </Typography>
                     </div>
                 </Grid>

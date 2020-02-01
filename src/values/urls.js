@@ -35,7 +35,7 @@ export const routeUrls = {
     trackingCode: baseUrls.trackingCode,
     bankSuccessful: baseUrls.bankSuccessful,
     aboutUs: baseUrls.aboutUs,
-    product: `${baseUrls.product.name}/:id`
+    product: `/${baseUrls.product.name}/:id`
 };
 
 export const pageTitles = {

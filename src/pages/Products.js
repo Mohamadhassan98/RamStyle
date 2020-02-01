@@ -18,6 +18,7 @@ import {assets} from "../values/assets";
 import axios from 'axios';
 import {serverUrls} from "../values/serverurls";
 import PropTypes from 'prop-types';
+import {baseUrls} from "../values/urls";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -181,7 +182,8 @@ export default function Products(props) {
                                 {searchResult.map(result => (
                                     <FlexBoxItem flexBasis='30%' key={result.id} justifySelf='center'>
                                         <Card className={classes.card}>
-                                            <CardActionArea>
+                                            <CardActionArea
+                                                onClick={() => props.history.push(baseUrls.product(result.id))}>
                                                 <CardMedia
                                                     className={classes.media}
                                                     image={result.image ? result.image : assets.noImage}

@@ -55,6 +55,9 @@ export default function ProductDetails(props) {
     const [comments, setComments] = React.useState([]);
     const [product, setProduct] = React.useState(null);
 
+    props.setShowFooter(true);
+    props.setShowHeaderButtons(true);
+
     React.useEffect(() => {
         axios.get(serverUrls.productDetails(props.match.params.id)).then(response => {
             // noinspection EqualityComparisonWithCoercionJS
@@ -70,7 +73,7 @@ export default function ProductDetails(props) {
                 window.alert(`Error while fetching product data ${error}`);
             }
         });
-        axios.get(serverUrls.productImages(props.match.id)).then(response => {
+        axios.get(serverUrls.productImages(props.match.params.id)).then(response => {
             setImages(response.data);
             if (response.data && response.data.length !== 0) {
                 setMainImage(response.data[0].imageContent);
@@ -150,7 +153,7 @@ export default function ProductDetails(props) {
             <div className={classes.root}>
                 <Grid container spacing={2}>
                     <Grid item>
-                        <ButtonBase className={classes.image} onClick={() => handleOpen(assets.image1)}>
+                        <ButtonBase className={classes.image} onClick={() => handleOpen(mainImage)}>
                             <img className={classes.img} alt="complex" src={mainImage}/>
                         </ButtonBase>
                         <TransitionsModal open={open} handleClose={handleClose} image={imModal}/>
@@ -205,5 +208,7 @@ export default function ProductDetails(props) {
 ProductDetails.propTypes = {
     setError500: PropTypes.func.isRequired,
     allSellers: PropTypes.array.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired
+    isLoggedIn: PropTypes.bool.isRequired,
+    setShowHeaderButtons: PropTypes.func.isRequired,
+    setShowFooter: PropTypes.func.isRequired
 };
