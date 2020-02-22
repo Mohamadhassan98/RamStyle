@@ -103,7 +103,7 @@ export default function App(props) {
             setSellers(response.data);
         }).catch(error => {
             if (error.response && error.response.status === 500) {
-                props.setError500(true);
+                setError500(true);
             } else {
                 window.alert(`Error while getting sellers ${error}`);
             }
